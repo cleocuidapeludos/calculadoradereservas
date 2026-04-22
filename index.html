@@ -1,239 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cleo Cuida Peludos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleo Cuida Peludos</title>
+    <style>
+        :root {
+            --orange: #f36d3b;
+            --bg: #f9f4ef;
+            --text: #2d2d2d;
+            --green-wa: #98e6b8;
+        }
 
-<style>
-body{
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background:#f6f1ea;
-  margin:0;
-  padding:20px;
-}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(180deg, #fff3e6 0%, #f9f4ef 100%);
+            margin: 0;
+            padding: 20px;
+            color: var(--text);
+            min-height: 100vh;
+        }
 
-.container{
-  max-width:420px;
-  margin:auto;
-}
+        .container { max-width: 420px; margin: auto; }
 
-.card{
-  background:white;
-  padding:20px;
-  border-radius:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-}
+        .logo-area { text-align: center; margin-bottom: 25px; }
+        .logo-icon { background: #fee2d5; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; }
 
-h1{
-  text-align:center;
-  font-size:22px;
-  margin-bottom:5px;
-}
+        h1 { font-size: 24px; text-align: center; margin: 0; font-weight: 800; line-height: 1.2; }
+        .sub { text-align: center; color: #888; margin: 8px 0 25px; font-size: 15px; }
 
-.sub{
-  text-align:center;
-  color:#777;
-  margin-bottom:20px;
-}
+        .card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
 
-input{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  background:#f3eee9;
-  margin-bottom:12px;
-}
+        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+        
+        input { 
+            width: 100%; padding: 15px; border-radius: 15px; border: none; 
+            background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
+        }
 
-.row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+        .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+        
+        .counter { display: flex; align-items: center; background: #f6f2ee; border-radius: 30px; padding: 5px 15px; gap: 20px; }
+        .counter button { border: none; background: #eee; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; }
+        .counter span { font-weight: bold; font-size: 18px; }
 
-.counter button{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-  border:none;
-  background:#eee;
-}
+        .pills { display: flex; gap: 10px; margin-top: 10px; }
+        .pill { 
+            flex: 1; padding: 14px; border-radius: 18px; background: #f6f2ee; 
+            text-align: center; cursor: pointer; font-weight: 600; transition: 0.3s;
+        }
+        .pill.active { background: var(--orange); color: white; }
 
-.counter span{
-  flex:1;
-  text-align:center;
-}
+        .check-container { 
+            display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; 
+            background: #fdfaf7; padding: 15px; border-radius: 15px; font-size: 13px; border: 1px solid #f2ece6;
+        }
 
-.pills{
-  display:flex;
-  gap:10px;
-}
+        .total-card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .price-row { display: flex; justify-content: space-between; align-items: flex-start; }
+        .price-big { font-size: 48px; font-weight: 800; color: var(--orange); line-height: 1; }
+        .price-big span { font-size: 24px; }
 
-.pill{
-  flex:1;
-  padding:12px;
-  border-radius:20px;
-  background:#eee;
-  text-align:center;
-  cursor:pointer;
-}
+        .review { background: #ffebd2; padding: 20px; border-radius: 20px; margin: 20px 0; font-size: 14px; line-height: 1.5; }
 
-.pill.active{
-  background:#ea6d2f;
-  color:white;
-}
-
-.totalCard{
-  background:#fff;
-  padding:20px;
-  border-radius:20px;
-  margin-top:20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-}
-
-.price{
-  font-size:32px;
-  color:#ea6d2f;
-}
-
-.button{
-  margin-top:20px;
-  background:#8fd3a9;
-  padding:16px;
-  text-align:center;
-  border-radius:16px;
-  color:white;
-  font-weight:bold;
-}
-
-.review{
-  background:#f5e3c7;
-  padding:15px;
-  border-radius:15px;
-  margin-top:15px;
-  font-size:14px;
-}
-</style>
+        .btn-wa { 
+            display: block; background: var(--green-wa); color: #1a4d2e; text-decoration: none;
+            text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; font-size: 18px;
+            box-shadow: 0 4px 15px rgba(152, 230, 184, 0.4); transition: 0.3s;
+        }
+        .btn-wa:active { transform: scale(0.98); }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <div class="logo-area">
+        <div class="logo-icon">🐾</div>
+        <h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
+        <div class="sub">Calcula el precio de tu reserva</div>
+    </div>
 
-<h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
-<div class="sub">Calcula el precio de tu reserva</div>
+    <div class="card">
+        <label>Nombre del perro</label>
+        <input id="nombre" placeholder="Ej. Luna" oninput="update()">
 
-<div class="card">
+        <div class="row">
+            <label style="margin:0">Número de perros</label>
+            <div class="counter">
+                <button onclick="change(-1)">−</button>
+                <span id="num">1</span>
+                <button onclick="change(1)">+</button>
+            </div>
+        </div>
 
-<input id="nombre" placeholder="Ej. Luna">
+        <label>Entrada</label>
+        <input type="datetime-local" id="entrada" onchange="update()">
+        
+        <label>Salida</label>
+        <input type="datetime-local" id="salida" onchange="update()">
 
-<div class="row counter">
-<button onclick="change(-1)">−</button>
-<span id="num">1</span>
-<button onclick="change(1)">+</button>
-</div>
+        <label>Sociabilidad</label>
+        <div class="pills">
+            <div id="p1" class="pill active" onclick="selectPill('Sociable')">Sociable</div>
+            <div id="p2" class="pill" onclick="selectPill('Prefiere estar solo')">Prefiere estar solo</div>
+        </div>
 
-<input type="datetime-local" id="entrada">
-<input type="datetime-local" id="salida">
+        <div class="check-container">
+            <input type="checkbox" id="check" style="width:20px; height:20px; margin:0;" onchange="update()">
+            <span>Confirmo que mi perro es <b>pequeño o mediano</b> (no razas grandes).</span>
+        </div>
+    </div>
 
-<p>Sociabilidad</p>
+    <div class="total-card">
+        <div class="price-row">
+            <div>
+                <label>TOTAL ESTIMADO</label>
+                <div class="price-big" id="total">0<span>€</span></div>
+            </div>
+            <div style="font-size:12px; color:#999; text-align:right;">Selecciona las fechas</div>
+        </div>
+        <p style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
+            Primeras 24 h: <b>20€</b> · tiempo extra dentro del mismo día: <b>18€</b> · cada nueva noche/ciclo de 24 h vuelve a ser <b>20€</b> (por perro).
+        </p>
+    </div>
 
-<div class="pills">
-<div class="pill active" onclick="selectPill(this,'Sociable')">Sociable</div>
-<div class="pill" onclick="selectPill(this,'Prefiere estar solo')">Prefiere estar solo</div>
-</div>
+    <div class="review">
+        🧡 <b>"Mi perrita volvió feliz."</b><br>
+        Trato cariñoso, paseos diarios y muchas fotos. ¡Repetiremos seguro! — María G.
+    </div>
 
-<br>
+    <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
 
-<label>
-<input type="checkbox" id="check">
-Confirmo que mi perro es pequeño o mediano
-</label>
-
-</div>
-
-<div class="totalCard">
-<div>Total estimado</div>
-<div class="price" id="total">0€</div>
-
-<p style="font-size:12px;color:#666;">
-Primeras 24h: 20€ · extra: 18€ · nueva noche: 20€
-</p>
-</div>
-
-<div class="review">
-"Mi perrita volvió feliz."  
-<br>— María G.
-</div>
-
-<a id="link" target="_blank">
-<div class="button">Reservar por WhatsApp</div>
-</a>
-
-<p style="text-align:center;font-size:12px;color:#666;">
-Cleo te responderá lo antes posible
-</p>
-
+    <p style="text-align:center; font-size:12px; color:#888; margin-top:15px;">
+        🛡️ Cleo te responderá lo antes posible 😊
+    </p>
 </div>
 
 <script>
+    let num = 1;
+    let sociabilidad = "Sociable";
 
-let num=1;
-let sociabilidad="Sociable";
+    function change(v) {
+        num += v;
+        if (num < 1) num = 1;
+        document.getElementById("num").innerText = num;
+        update();
+    }
 
-function change(v){
-  num+=v;
-  if(num<1) num=1;
-  document.getElementById("num").innerText=num;
-  update();
-}
+    function selectPill(val) {
+        sociabilidad = val;
+        document.getElementById("p1").classList.toggle("active", val === 'Sociable');
+        document.getElementById("p2").classList.toggle("active", val === 'Prefiere estar solo');
+        update();
+    }
 
-function selectPill(el,value){
-  document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
-  el.classList.add("active");
-  sociabilidad=value;
-}
+    function calc() {
+        let e = document.getElementById("entrada").value;
+        let s = document.getElementById("salida").value;
+        if (!e || !s) return 0;
 
-function calc(){
-let e=document.getElementById("entrada").value;
-let s=document.getElementById("salida").value;
-if(!e||!s) return 0;
+        let diffMs = new Date(s) - new Date(e);
+        let h = diffMs / 3600000;
+        if (h <= 0) return 0;
 
-let h=(new Date(s)-new Date(e))/3600000;
+        let total = 0;
+        // Lógica: 20€ las primeras 24h. Si pasa, +18€ el bloque extra.
+        // Si pasa de 48h, cuenta como otra noche (20€).
+        if (h <= 24) {
+            total = 20;
+        } else {
+            let nochesCompletas = Math.floor(h / 24);
+            let restoHoras = h % 24;
+            total = nochesCompletas * 20;
+            if (restoHoras > 0) total += 18; 
+        }
 
-if(h<=24) return 20*num;
+        return total * num;
+    }
 
-return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
-}
+    function update() {
+        let total = calc();
+        document.getElementById("total").innerHTML = total + "<span>€</span>";
+        
+        let nombre = document.getElementById("nombre").value || "Peludo";
+        let check = document.getElementById("check").checked;
+        let entrada = document.getElementById("entrada").value;
+        let salida = document.getElementById("salida").value;
 
-function update(){
-
-if(!document.getElementById("check").checked){
-document.getElementById("link").href="#";
-return;
-}
-
-let total=calc();
-document.getElementById("total").innerText=total+"€";
-
-let msg=`Hola Cleo
-
-Quiero consultar disponibilidad
-
-Nombre: ${nombre.value}
-Perros: ${num}
-Sociabilidad: ${sociabilidad}
-
-Precio estimado: ${total}€
-
-¿Tendrías disponibilidad?`;
-
-document.getElementById("link").href="https://wa.me/34640949118?text="+encodeURIComponent(msg);
-}
-
-document.querySelectorAll("input").forEach(i=>i.onchange=update);
-
+        if (total > 0 && check) {
+            let msg = `¡Hola Cleo! 🐶%0A%0AQuiero consultar disponibilidad para *${nombre}*%0A%0A🐾 *Perros:* ${num}%0A🤝 *Sociabilidad:* ${sociabilidad}%0A📅 *Entrada:* ${entrada.replace('T', ' ')}%0A📅 *Salida:* ${salida.replace('T', ' ')}%0A%0A💰 *Precio estimado:* ${total}€%0A%0A¿Tendrías disponibilidad?`;
+            document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
+            document.getElementById("link").style.opacity = "1";
+        } else {
+            document.getElementById("link").href = "javascript:alert('Por favor, rellena las fechas y confirma el tamaño del perro');";
+            document.getElementById("link").style.opacity = "0.5";
+        }
+    }
 </script>
 
 </body>
