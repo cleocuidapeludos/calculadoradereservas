@@ -10,7 +10,7 @@
             --bg-start: #fff3e6;
             --bg-end: #f9f4ef;
             --text: #2d2d2d;
-            --green-wa: #98e6b8;
+            --green-wa: #25d366; /* Verde oficial WhatsApp para cuando esté activo */
             --paw-bg: #fee2d5;
         }
 
@@ -57,8 +57,40 @@
         .price-big span { font-size: 24px; }
         
         .review { background: #ffebd2; padding: 20px; border-radius: 20px; margin: 20px 0; font-size: 14px; line-height: 1.5; }
-        .btn-wa { display: block; background: var(--green-wa); color: #1a4d2e; text-decoration: none; text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; font-size: 18px; box-shadow: 0 4px 15px rgba(152, 230, 184, 0.4); transition: 0.3s; }
-        .btn-wa:active { transform: scale(0.98); }
+
+        /* --- MEJORA DEL BOTÓN --- */
+        .btn-wa { 
+            display: block; 
+            background: #ccc; /* Gris por defecto */
+            color: white; 
+            text-decoration: none; 
+            text-align: center; 
+            padding: 20px; 
+            border-radius: 20px; 
+            font-weight: 800; 
+            font-size: 18px; 
+            transition: all 0.4s ease; 
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Clase que se activa cuando los datos están OK */
+        .btn-wa.active { 
+            background: var(--green-wa); 
+            color: white;
+            opacity: 1;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            animation: pulse 2s infinite; /* Efecto latido */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        .btn-wa:active { transform: scale(0.95) !important; }
     </style>
 </head>
 <body>
@@ -153,7 +185,6 @@
         update();
     }
 
-    // Función para corregir el orden de la fecha
     function format(dateStr) {
         if (!dateStr) return "";
         const [fecha, hora] = dateStr.split('T');
@@ -189,9 +220,9 @@
         let check = document.getElementById("check").checked;
         let entrada = format(document.getElementById("entrada").value);
         let salida = format(document.getElementById("salida").value);
+        let btn = document.getElementById("link");
 
         if (total > 0 && check) {
-            // EL MENSAJE CON TU NUEVA ESTRUCTURA
             let texto = `¡Hola, Cleo!
 
 Quiero consultar disponibilidad para ${nombre}
@@ -218,11 +249,14 @@ Precio: ${total}€
 ¿Tendrías disponibilidad?`;
 
             let msg = encodeURIComponent(texto);
-            document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
-            document.getElementById("link").style.opacity = "1";
+            btn.href = "https://wa.me/34640949118?text=" + msg;
+            btn.classList.add("active"); // Se pone verde y late
         } else {
-            document.getElementById("link").href = "javascript:alert('Rellena las fechas y confirma el tamaño');";
-            document.getElementById("link").style.opacity = "0.5";
+            btn.href = "javascript:void(0);";
+            btn.classList.remove("active"); // Se vuelve gris
+            btn.onclick = function() {
+                alert('Por favor, indica las fechas y confirma que tu perro es pequeño o mediano.');
+            };
         }
     }
 </script>
