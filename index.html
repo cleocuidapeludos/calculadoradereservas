@@ -8,7 +8,6 @@
 <style>
 :root{
   --orange:#f36d3b;
-  --green:#8fd3a9;
 }
 
 body{
@@ -42,11 +41,25 @@ label{font-weight:700;font-size:14px;display:block;margin-bottom:6px;}
 
 input{
   width:100%;
-  padding:14px;
-  border-radius:14px;
+  padding:18px 16px;
+  border-radius:16px;
   border:none;
   background:#f6f2ee;
-  margin-bottom:15px;
+  margin-bottom:18px;
+  font-size:16px;
+  font-weight:500;
+  min-height:56px;
+  box-sizing:border-box;
+}
+
+input[type="datetime-local"]{
+  appearance:none;
+  -webkit-appearance:none;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px rgba(243,109,59,0.2);
 }
 
 .counter{
@@ -86,12 +99,6 @@ input{
   color:var(--orange);
 }
 
-.info{
-  font-size:13px;
-  color:#777;
-  margin-top:8px;
-}
-
 .review{
   background:#ffe7c7;
   padding:15px;
@@ -99,15 +106,23 @@ input{
   margin:15px 0;
 }
 
+/* BOTÓN */
 .btn{
   display:block;
-  background:var(--green);
+  background:#cfd8d3;
   text-align:center;
   padding:16px;
   border-radius:18px;
   font-weight:bold;
   text-decoration:none;
-  color:#1a4d2e;
+  color:#ffffff;
+  transition:0.3s;
+}
+
+.btn.active{
+  background:#25D366;
+  color:white;
+  box-shadow:0 4px 12px rgba(37,211,102,0.3);
 }
 </style>
 </head>
@@ -118,7 +133,7 @@ input{
 
 <div class="logo">
 <div class="logo-circle">🐾</div>
-<h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
+<h1>Cuidamos de tu peludo como si fuera nuestro</h1>
 <div class="sub">Calcula el precio de tu reserva</div>
 </div>
 
@@ -126,6 +141,21 @@ input{
 
 <label>Nombre del perro</label>
 <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+
+<label>Raza</label>
+<input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+
+<div style="display:flex; gap:10px;">
+  <div style="flex:1;">
+    <label>Edad</label>
+    <input id="edad" placeholder="Ej. 2 años" oninput="update()">
+  </div>
+
+  <div style="flex:1;">
+    <label>Peso (kg)</label>
+    <input id="peso" placeholder="Ej. 8" oninput="update()">
+  </div>
+</div>
 
 <label>Número de perros</label>
 <div class="counter">
@@ -156,11 +186,6 @@ input{
 <div class="total">
 <div>TOTAL ESTIMADO</div>
 <div class="price" id="total">0€</div>
-<div id="infoExtra" class="info"></div>
-
-<p style="font-size:12px;color:#666;">
-Guardería de día: 18€ · Noche (24h): 20€
-</p>
 </div>
 
 <div class="review">
@@ -178,91 +203,93 @@ Cleo te responderá lo antes posible
 </div>
 
 <script>
+
 let num=1;
 let sociabilidad="Sociable";
 
 function change(v){
-num+=v;
-if(num<1) num=1;
-document.getElementById("num").innerText=num;
-update();
+  num+=v;
+  if(num<1) num=1;
+  document.getElementById("num").innerText=num;
+  update();
 }
 
 function setSoc(val){
-sociabilidad=val;
-document.getElementById("p1").classList.toggle("active",val==="Sociable");
-document.getElementById("p2").classList.toggle("active",val!=="Sociable");
-update();
+  sociabilidad=val;
+  document.getElementById("p1").classList.toggle("active",val==="Sociable");
+  document.getElementById("p2").classList.toggle("active",val!=="Sociable");
+  update();
 }
 
 function calc(){
-let e=entrada.value;
-let s=salida.value;
-if(!e||!s) return 0;
+  let e=entrada.value;
+  let s=salida.value;
+  if(!e||!s) return 0;
 
-let h=(new Date(s)-new Date(e))/3600000;
-if(h<=0) return 0;
+  let h=(new Date(s)-new Date(e))/3600000;
+  if(h<=0) return 0;
 
-if(h<=24) return 20*num;
+  if(h<=24) return 20*num;
 
-return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
+  return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
 }
 
 function update(){
 
-let e=entrada.value;
-let s=salida.value;
-let check=document.getElementById("check").checked;
+  let nombre=document.getElementById("nombre").value;
+  let raza=document.getElementById("raza").value;
+  let edad=document.getElementById("edad").value;
+  let peso=document.getElementById("peso").value;
 
-let entradaDate=new Date(e);
-let salidaDate=new Date(s);
+  let e=entrada.value;
+  let s=salida.value;
+  let check=document.getElementById("check").checked;
 
-let total=calc();
-document.getElementById("total").innerText=total+"€";
+  let total=calc();
+  document.getElementById("total").innerText=total+"€";
 
-// MENSAJE INFO (día / noche)
-let info="";
+  let boton=document.getElementById("link");
 
-let horas=(salidaDate-entradaDate)/3600000;
-let mismoDia=entradaDate.toDateString()===salidaDate.toDateString();
+  if(!e || !s || !check || total===0){
+    boton.href="#";
+    boton.classList.remove("active");
+    boton.style.opacity="0.6";
+    return;
+  }
 
-if(e && s){
-if(mismoDia && horas<=12){
-info="Guardería de día";
-}else if(horas<=24){
-info="Guardería de noche";
-}else{
-info="Incluye noches y días adicionales";
-}
-}
+  boton.classList.add("active");
+  boton.style.opacity="1";
 
-document.getElementById("infoExtra").innerText=info;
+  let texto=`¡Hola, Cleo!
 
-// VALIDACIÓN
-if(!e||!s||!check||total===0){
-document.getElementById("link").href="#";
-return;
-}
+Quiero consultar disponibilidad
 
-// MENSAJE WHATSAPP
-let texto=`¡Hola, Cleo!
+────────────
 
-Quiero consultar disponibilidad para ${nombre.value}
+Nombre del perro: ${nombre || "-"}
+Raza: ${raza || "-"}
+Edad: ${edad || "-"}
+Peso: ${peso ? peso + " kg" : "-"}
+
+────────────
 
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
+
 Entrada: ${e.replace('T',' ')}
 Salida: ${s.replace('T',' ')}
+
+────────────
 
 Precio: ${total}€
 
 ¿Tendrías disponibilidad?`;
 
-let msg=encodeURIComponent(texto);
+  let msg=encodeURIComponent(texto);
 
-document.getElementById("link").href=
-"https://wa.me/34640949118?text="+msg;
+  boton.href="https://wa.me/34640949118?text="+msg;
 }
+
 </script>
 
 </body>
