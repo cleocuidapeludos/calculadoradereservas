@@ -39,11 +39,20 @@
             font-size: 16px; font-family: inherit;
         }
 
+        .flex-row { display: flex; gap: 10px; }
+        .flex-row div { flex: 1; }
+
+        /* Contador de perros corregido para móvil */
+        .counter-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .counter { display: flex; align-items: center; background: #f6f2ee; border-radius: 30px; padding: 5px 10px; gap: 15px; }
+        .counter button { border: none; background: white; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .counter span { font-weight: 800; font-size: 18px; }
+
         .check-group { 
             background: #fdfaf7; padding: 15px; border-radius: 15px; 
             margin-bottom: 10px; font-size: 14px; display: flex; 
             align-items: flex-start; gap: 12px; text-align: left;
-            line-height: 1.3;
+            line-height: 1.3; border: 1px solid #f2ece6;
         }
 
         .check-group input[type="checkbox"] {
@@ -71,7 +80,7 @@
             font-size: 16px;
         }
 
-        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; }
+        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; box-shadow: 0 5px 15px rgba(37,211,102,0.3); }
     </style>
 </head>
 <body>
@@ -81,7 +90,30 @@
     
     <div class="card">
         <label>Nombre del perro</label>
-        <input id="nombre" placeholder="¿Cómo se llama?" oninput="update()">
+        <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+
+        <label>Raza</label>
+        <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+
+        <div class="flex-row">
+            <div>
+                <label>Edad</label>
+                <input id="edad" placeholder="2 años" oninput="update()">
+            </div>
+            <div>
+                <label>Peso (kg)</label>
+                <input id="peso" type="number" placeholder="8" oninput="update()">
+            </div>
+        </div>
+
+        <div class="counter-row">
+            <label style="margin:0">Número de perros</label>
+            <div class="counter">
+                <button onclick="change(-1)">-</button>
+                <span id="num">1</span>
+                <button onclick="change(1)">+</button>
+            </div>
+        </div>
 
         <label>Entrada (Entrega)</label>
         <input type="datetime-local" id="entrada" onchange="update()">
@@ -91,7 +123,7 @@
 
         <div class="check-group" style="background: #fff3e6;">
             <input type="checkbox" id="soloDia" onchange="update()">
-            <span><b>Solo reserva el día</b><br><small>(Sin noche · Máx 22:00h)</small></span>
+            <span><b>Solo reserva el día</b><br><small>(Máx 22:00h · Sin noche)</small></span>
         </div>
 
         <div class="check-group">
@@ -103,12 +135,23 @@
     <div class="total-card">
         <label>TOTAL ESTIMADO</label>
         <div class="price-big" id="total">0€</div>
+        
         <div id="error-msg"></div>
+
         <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
     </div>
 </div>
 
 <script>
+    let numPerros = 1;
+
+    function change(v) {
+        numPerros += v;
+        if (numPerros < 1) numPerros = 1;
+        document.getElementById("num").innerText = numPerros;
+        update();
+    }
+
     window.onload = function() {
         const ahora = new Date();
         const isoStr = ahora.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
@@ -146,14 +189,15 @@
                 if (soloDia) {
                     if (!mismoDia || horaSalida >= 22) {
                         errorTxt = "⚠️ 'Solo día' requiere mismo día y antes 22h.";
-                    } else { total = 18; }
+                    } else { total = 18 * numPerros; }
                 } else {
-                    if (h < 24 && mismoDia && horaSalida < 22) { total = 18; }
+                    if (h < 24 && mismoDia && horaSalida < 22) { total = 18 * numPerros; }
                     else {
                         let noches = Math.max(1, Math.floor(h / 24));
                         let resto = h % 24;
-                        total = (noches * 20);
-                        if (resto > 0 && h >= 24) total += 18;
+                        let precioBase = (noches * 20);
+                        if (resto > 0 && h >= 24) precioBase += 18;
+                        total = precioBase * numPerros;
                     }
                 }
             }
@@ -170,9 +214,10 @@
             errorDiv.innerText = errorTxt;
             errorDiv.style.display = "block";
             btn.classList.remove("active");
+            btn.href = "javascript:void(0);";
         } else if (total > 0 && nombre && checkSize) {
             btn.classList.add("active");
-            const texto = `¡Hola Cleo! Reserva para ${nombre}.\nEntrada: ${eVal.replace('T',' ')}\nSalida: ${sVal.replace('T',' ')}\nTotal: ${total}€`;
+            const texto = `¡Hola Cleo! Reserva para ${nombre}.\nPerros: ${numPerros}\nEntrada: ${eVal.replace('T',' ')}\nSalida: ${sVal.replace('T',' ')}\nTotal: ${total}€`;
             btn.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
         }
     }
