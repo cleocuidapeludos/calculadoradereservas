@@ -145,7 +145,7 @@
 
         <div class="check-container special">
             <input type="checkbox" id="soloDia" style="width:20px; height:20px; margin:0;" onchange="update()">
-            <span><b>Solo reserva el día</b> (18€ por perro).</span>
+            <span><b>Solo reserva el día</b> (18€ · mismo día).</span>
         </div>
 
         <label style="margin-top:20px">Sociabilidad</label>
@@ -163,7 +163,7 @@
     <div class="total-card">
         <label>TOTAL ESTIMADO</label>
         <div class="price-big" id="total">0<span>€</span></div>
-        <p style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
+        <p id="info-precio" style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
             Día suelto: 18€ · Noche (24h): 20€ · Perro extra: +18€/día.
         </p>
     </div>
@@ -198,29 +198,39 @@
 
     function calc() {
         let esSoloDia = document.getElementById("soloDia").checked;
-        let e = document.getElementById("entrada").value;
-        let s = document.getElementById("salida").value;
+        let eVal = document.getElementById("entrada").value;
+        let sVal = document.getElementById("salida").value;
         
-        // Si marca el botón de solo día, son 18€ directo
-        if (esSoloDia) return 18 * num;
-        if (!e || !s) return 0;
+        if (!eVal || !sVal) return 0;
 
-        let diffMs = new Date(s) - new Date(e);
+        let d1 = new Date(eVal);
+        let d2 = new Date(sVal);
+        let diffMs = d2 - d1;
         let h = diffMs / 3600000;
+        
         if (h <= 0) return 0;
 
+        // Verificar si las fechas son del mismo día natural
+        let mismoDia = d1.toDateString() === d2.toDateString();
+
         let total = 0;
-        // NUEVA LÓGICA:
-        // Si dura menos de 24 horas, es precio de día (18€)
-        if (h < 24) { 
-            total = 18; 
-        } 
-        // Si dura exactamente 24 horas o más, ya cuenta como noche (20€)
-        else {
-            let noches = Math.floor(h / 24);
-            let resto = h % 24;
-            total = (noches * 20);
-            if (resto > 0) total += 18; // El tiempo extra después de la noche son 18€
+
+        // Lógica de seguridad: Si marca "Solo día" pero pone días distintos, 
+        // el sistema prioriza el cobro por noche para proteger a Cleo.
+        if (esSoloDia && mismoDia) {
+            total = 18;
+        } else {
+            // Si dura menos de 24 horas es un día (18€)
+            if (h < 24) { 
+                total = 18; 
+            } 
+            // Si son 24h o más, calculamos noches (20€)
+            else {
+                let noches = Math.floor(h / 24);
+                let resto = h % 24;
+                total = (noches * 20);
+                if (resto > 0) total += 18; 
+            }
         }
         return total * num;
     }
@@ -229,20 +239,33 @@
         let total = calc();
         document.getElementById("total").innerHTML = `${total}<span>€</span>`;
         
-        let nombre = document.getElementById("nombre").value || "Peludo";
-        let checkSize = document.getElementById("check").checked;
-        let esSoloDia = document.getElementById("soloDia").checked;
         let eVal = document.getElementById("entrada").value;
         let sVal = document.getElementById("salida").value;
+        let esSoloDia = document.getElementById("soloDia").checked;
+        let checkSize = document.getElementById("check").checked;
         let btn = document.getElementById("link");
+
+        // Alerta visual si intenta poner varios días siendo "Solo día"
+        if (eVal && sVal) {
+            let d1 = new Date(eVal);
+            let d2 = new Date(sVal);
+            if (esSoloDia && d1.toDateString() !== d2.toDateString()) {
+                document.getElementById("info-precio").innerHTML = "<b style='color:red;'>Aviso:</b> Has seleccionado varios días. Se aplicará tarifa de noche.";
+            } else {
+                document.getElementById("info-precio").innerText = "Día suelto: 18€ · Noche (24h): 20€ · Perro extra: +18€/día.";
+            }
+        }
 
         let listo = checkSize && eVal && sVal && total > 0;
 
         if (listo) {
-            // Detectar si es solo día por horas aunque no marque el botón
-            let diffMs = new Date(sVal) - new Date(eVal);
+            let d1 = new Date(eVal);
+            let d2 = new Date(sVal);
+            let diffMs = d2 - d1;
             let horas = diffMs / 3600000;
-            let tipo = (esSoloDia || horas < 24) ? "SOLO DÍA (Sin pernoctar)" : "RESERVA CON NOCHE";
+            
+            let tipo = (esSoloDia && d1.toDateString() === d2.toDateString()) || horas < 24 ? "SOLO DÍA" : "RESERVA NOCHE";
+            let nombre = document.getElementById("nombre").value || "Peludo";
 
             let texto = `¡Hola, Cleo! 
 Reserva para ${nombre} (${tipo})
@@ -259,7 +282,7 @@ Precio: ${total}€`;
             btn.href = "javascript:void(0);";
             btn.classList.remove("active"); 
             btn.onclick = function() {
-                alert('Por favor, indica las horas de entrega/recogida y confirma el tamaño del perro.');
+                alert('Por favor, indica las horas y confirma el tamaño del perro.');
             };
         }
     }
