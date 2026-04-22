@@ -29,21 +29,34 @@
         .logo-icon { background: var(--paw-bg); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; }
         h1 { font-size: 24px; text-align: center; margin: 0; font-weight: 800; line-height: 1.2; }
         .sub { text-align: center; color: #888; margin: 8px 0 25px; font-size: 15px; }
+        
         .card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
         label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
-        input { width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px; font-family: inherit; }
+        
+        input { 
+            width: 100%; padding: 15px; border-radius: 15px; border: none; 
+            background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
+            font-family: inherit;
+        }
+
+        /* Estilo para los campos pequeños en línea (Edad y Peso) */
+        .flex-row { display: flex; gap: 10px; }
+        .flex-row div { flex: 1; }
+
         .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
         .counter { display: flex; align-items: center; background: #f6f2ee; border-radius: 30px; padding: 5px 15px; gap: 20px; }
         .counter button { border: none; background: #eee; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; }
         .counter span { font-weight: bold; font-size: 18px; }
+        
         .pills { display: flex; gap: 10px; margin-top: 10px; }
         .pill { flex: 1; padding: 14px; border-radius: 18px; background: #f6f2ee; text-align: center; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .pill.active { background: var(--orange); color: white; }
+        
         .check-container { display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; background: #fdfaf7; padding: 15px; border-radius: 15px; font-size: 13px; border: 1px solid #f2ece6; }
         .total-card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .price-row { display: flex; justify-content: space-between; align-items: flex-start; }
         .price-big { font-size: 48px; font-weight: 800; color: var(--orange); line-height: 1; }
         .price-big span { font-size: 24px; }
+        
         .review { background: #ffebd2; padding: 20px; border-radius: 20px; margin: 20px 0; font-size: 14px; line-height: 1.5; }
         .btn-wa { display: block; background: var(--green-wa); color: #1a4d2e; text-decoration: none; text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; font-size: 18px; box-shadow: 0 4px 15px rgba(152, 230, 184, 0.4); transition: 0.3s; }
         .btn-wa:active { transform: scale(0.98); }
@@ -61,6 +74,20 @@
     <div class="card">
         <label>Nombre del perro</label>
         <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+
+        <label>Raza</label>
+        <input id="raza" placeholder="Ej. Beagle, Mestizo..." oninput="update()">
+
+        <div class="flex-row">
+            <div>
+                <label>Edad</label>
+                <input id="edad" placeholder="Ej. 3 años" oninput="update()">
+            </div>
+            <div>
+                <label>Peso (aprox.)</label>
+                <input id="peso" placeholder="Ej. 8kg" oninput="update()">
+            </div>
+        </div>
 
         <div class="row">
             <label style="margin:0">Número de perros</label>
@@ -90,13 +117,8 @@
     </div>
 
     <div class="total-card">
-        <div class="price-row">
-            <div>
-                <label>TOTAL ESTIMADO</label>
-                <div class="price-big" id="total">0<span>€</span></div>
-            </div>
-            <div style="font-size:12px; color:#999; text-align:right;">Selecciona las fechas</div>
-        </div>
+        <label>TOTAL ESTIMADO</label>
+        <div class="price-big" id="total">0<span>€</span></div>
         <p style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
             Primeras 24 h: 20€ · extra mismo día: 18€ · nueva noche: 20€ (por perro).
         </p>
@@ -132,15 +154,11 @@
         update();
     }
 
-    // Función para que la fecha salga bonita en el mensaje
     function format(dateStr) {
         if (!dateStr) return "";
-        const d = new Date(dateStr);
-        return d.getDate().toString().padStart(2, '0') + "/" + 
-               (d.getMonth() + 1).toString().padStart(2, '0') + "/" + 
-               d.getFullYear() + " " + 
-               d.getHours().toString().padStart(2, '0') + ":" + 
-               d.getMinutes().toString().padStart(2, '0');
+        const [fecha, hora] = dateStr.split('T');
+        const [ano, mes, dia] = fecha.split('-');
+        return `${dia}/${mes}/${ano} ${hora}`;
     }
 
     function calc() {
@@ -163,21 +181,27 @@
     function update() {
         let total = calc();
         document.getElementById("total").innerHTML = `${total}<span>€</span>`;
+        
         let nombre = document.getElementById("nombre").value || "Peludo";
+        let raza = document.getElementById("raza").value || "No especificada";
+        let edad = document.getElementById("edad").value || "-";
+        let peso = document.getElementById("peso").value || "-";
         let check = document.getElementById("check").checked;
-        let entrada = format(document.getElementById("entrada").value);
-        let salida = format(document.getElementById("salida").value);
+        let entradaTexto = format(document.getElementById("entrada").value);
+        let salidaTexto = format(document.getElementById("salida").value);
 
         if (total > 0 && check) {
-            // EL MENSAJE TAL CUAL LO HAS PEDIDO
             let texto = `¡Hola, Cleo!
 
 Quiero consultar disponibilidad para ${nombre}
 
+Raza: ${raza}
+Edad: ${edad}
+Peso: ${peso}
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
-Entrada: ${entrada}
-Salida: ${salida}
+Entrada: ${entradaTexto}
+Salida: ${salidaTexto}
 
 El precio estimado es ${total} euros
 
