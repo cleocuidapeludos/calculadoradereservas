@@ -62,6 +62,15 @@ input:focus{
   box-shadow:0 0 0 2px rgba(243,109,59,0.2);
 }
 
+/* 🔥 FIX CHECKBOX */
+input[type="checkbox"]{
+  width:20px;
+  height:20px;
+  min-height:auto;
+  margin:0;
+  accent-color:#f36d3b;
+}
+
 .counter{
   display:flex;align-items:center;justify-content:space-between;
   background:#f6f2ee;border-radius:20px;padding:5px 10px;margin-bottom:15px;
@@ -78,12 +87,16 @@ input:focus{
 }
 .pill.active{background:var(--orange);color:white;}
 
+/* 🔥 FIX CHECKBOX CONTENEDOR */
 .check{
   margin-top:15px;
   background:#f6f2ee;
-  padding:12px;
+  padding:14px;
   border-radius:14px;
   font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
 .total{
@@ -99,11 +112,31 @@ input:focus{
   color:var(--orange);
 }
 
+/* 🔥 CARD MARÍA PRO */
 .review{
-  background:#ffe7c7;
-  padding:15px;
-  border-radius:18px;
-  margin:15px 0;
+  background:#fff4e5;
+  border:1px solid #f3d2a2;
+  padding:18px 18px 18px 50px;
+  border-radius:20px;
+  margin:20px 0;
+  font-size:14px;
+  line-height:1.5;
+  position:relative;
+}
+
+.review::before{
+  content:"❤";
+  position:absolute;
+  left:18px;
+  top:18px;
+  font-size:18px;
+  color:#f36d3b;
+}
+
+.review strong{
+  display:block;
+  font-size:15px;
+  margin-bottom:4px;
 }
 
 /* BOTÓN */
@@ -178,7 +211,7 @@ input:focus{
 
 <div class="check">
 <input type="checkbox" id="check" onchange="update()">
- Confirmo que mi perro es pequeño o mediano
+<span>Confirmo que mi perro es pequeño o mediano</span>
 </div>
 
 </div>
@@ -189,7 +222,9 @@ input:focus{
 </div>
 
 <div class="review">
-"Mi perrita volvió feliz." — María G.
+<strong>Mi perrita volvió feliz.</strong>
+Trato cariñoso, paseos diarios y muchas fotos.<br>
+Repetiremos seguro — María G.
 </div>
 
 <a id="link" class="btn" target="_blank">
@@ -203,7 +238,6 @@ Cleo te responderá lo antes posible
 </div>
 
 <script>
-
 let num=1;
 let sociabilidad="Sociable";
 
@@ -289,7 +323,6 @@ Precio: ${total}€
 
   boton.href="https://wa.me/34640949118?text="+msg;
 }
-
 </script>
 
 </body>
