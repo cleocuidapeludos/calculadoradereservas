@@ -7,14 +7,18 @@
     <style>
         :root {
             --orange: #f36d3b;
-            --bg: #f9f4ef;
+            --bg-start: #fff3e6; /* Color inicio degradado */
+            --bg-end: #f9f4ef;   /* Color fin degradado */
             --text: #2d2d2d;
             --green-wa: #98e6b8;
+            --paw-bg: #fee2d5;  /* Color círculo huellita */
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(180deg, #fff3e6 0%, #f9f4ef 100%);
+            /* FONDO DEGRADADO */
+            background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            background-attachment: fixed;
             margin: 0;
             padding: 20px;
             color: var(--text);
@@ -24,7 +28,19 @@
         .container { max-width: 420px; margin: auto; }
 
         .logo-area { text-align: center; margin-bottom: 25px; }
-        .logo-icon { background: #fee2d5; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; }
+        
+        /* ESTILO DE LA HUELLITA SUPERIOR */
+        .logo-icon { 
+            background: var(--paw-bg); 
+            width: 50px; 
+            height: 50px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0 auto 10px; 
+            font-size: 24px; 
+        }
 
         h1 { font-size: 24px; text-align: center; margin: 0; font-weight: 800; line-height: 1.2; }
         .sub { text-align: center; color: #888; margin: 8px 0 25px; font-size: 15px; }
@@ -178,7 +194,7 @@
 
     function update() {
         let total = calc();
-        document.getElementById("total").innerHTML = total + "<span>€</span>";
+        document.getElementById("total").innerHTML = `${total}<span>€</span>`;
         
         let nombre = document.getElementById("nombre").value || "Peludo";
         let check = document.getElementById("check").checked;
@@ -186,8 +202,8 @@
         let salida = document.getElementById("salida").value;
 
         if (total > 0 && check) {
-            // USANDO BACKTICKS Y TEXTO LIMPIO
-            let texto = `¡Hola,Cleo!
+            // TEXTO CON BACKTICKS PARA LIMPIEZA TOTAL
+            let texto = `Hola Cleo!
 Quiero consultar disponibilidad para ${nombre}
 
 Perros: ${num}
@@ -197,7 +213,7 @@ Salida: ${salida.replace('T', ' ')}
 
 Precio estimado: ${total} euros
 
-¿Tienes disponibilidad?`;
+Tienes disponibilidad?`;
 
             let msg = encodeURIComponent(texto);
             document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
