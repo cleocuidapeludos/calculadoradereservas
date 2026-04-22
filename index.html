@@ -187,7 +187,7 @@
 
         if (total > 0 && check) {
             // USANDO BACKTICKS Y TEXTO LIMPIO
-            let texto = `Hola Cleo!
+            let texto = `¡Hola,Cleo!
 Quiero consultar disponibilidad para ${nombre}
 
 Perros: ${num}
@@ -197,7 +197,7 @@ Salida: ${salida.replace('T', ' ')}
 
 Precio estimado: ${total} euros
 
-Tienes disponibilidad?`;
+¿Tienes disponibilidad?`;
 
             let msg = encodeURIComponent(texto);
             document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
