@@ -36,6 +36,7 @@
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: none; 
             background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
+            font-family: inherit;
         }
 
         .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
@@ -120,7 +121,7 @@
             <div style="font-size:12px; color:#999; text-align:right;">Selecciona las fechas</div>
         </div>
         <p style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
-            Primeras 24 h: <b>20€</b> · tiempo extra dentro del mismo día: <b>18€</b> · cada nueva noche/ciclo de 24 h vuelve a ser <b>20€</b> (por perro).
+            Primeras 24 h: 20€ · extra mismo día: 18€ · nueva noche: 20€ (por perro).
         </p>
     </div>
 
@@ -132,7 +133,7 @@
     <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
 
     <p style="text-align:center; font-size:12px; color:#888; margin-top:15px;">
-        🛡️ Cleo te responderá lo antes posible 😊
+        Cleo te responderá lo antes posible 😊
     </p>
 </div>
 
@@ -164,8 +165,6 @@
         if (h <= 0) return 0;
 
         let total = 0;
-        // Lógica: 20€ las primeras 24h. Si pasa, +18€ el bloque extra.
-        // Si pasa de 48h, cuenta como otra noche (20€).
         if (h <= 24) {
             total = 20;
         } else {
@@ -174,7 +173,6 @@
             total = nochesCompletas * 20;
             if (restoHoras > 0) total += 18; 
         }
-
         return total * num;
     }
 
@@ -188,11 +186,20 @@
         let salida = document.getElementById("salida").value;
 
         if (total > 0 && check) {
-            let msg = `¡Hola Cleo! 🐶%0A%0AQuiero consultar disponibilidad para *${nombre}*%0A%0A🐾 *Perros:* ${num}%0A🤝 *Sociabilidad:* ${sociabilidad}%0A📅 *Entrada:* ${entrada.replace('T', ' ')}%0A📅 *Salida:* ${salida.replace('T', ' ')}%0A%0A💰 *Precio estimado:* ${total}€%0A%0A¿Tendrías disponibilidad?`;
+            // MENSAJE PLANO SIN CARACTERES ESPECIALES
+            let msg = "Hola Cleo!%0A" +
+                      "Quiero consultar disponibilidad para " + nombre + "%0A" +
+                      "Perros: " + num + "%0A" +
+                      "Sociabilidad: " + sociabilidad + "%0A" +
+                      "Entrada: " + entrada.replace('T', ' ') + "%0A" +
+                      "Salida: " + salida.replace('T', ' ') + "%0A" +
+                      "Precio estimado: " + total + " euros%0A" +
+                      "Tienes disponibilidad?";
+            
             document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
             document.getElementById("link").style.opacity = "1";
         } else {
-            document.getElementById("link").href = "javascript:alert('Por favor, rellena las fechas y confirma el tamaño del perro');";
+            document.getElementById("link").href = "javascript:alert('Por favor, rellena las fechas y confirma el tamano del perro');";
             document.getElementById("link").style.opacity = "0.5";
         }
     }
