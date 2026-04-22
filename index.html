@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Calculadora Cleo</title>
     <style>
         :root {
@@ -17,43 +17,67 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            margin: 0; padding: 20px; color: var(--text); min-height: 100vh;
+            margin: 0; padding: 15px; color: var(--text); min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        .container { max-width: 420px; margin: auto; }
-        .card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .container { width: 100%; max-width: 400px; box-sizing: border-box; }
         
-        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+        .card { 
+            background: white; padding: 20px; border-radius: 24px; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        
+        h1 { font-size: 22px; text-align: center; margin-bottom: 20px; font-weight: 800; }
+
+        label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 13px; color: #555; }
+        
         input { 
-            width: 100%; padding: 15px; border-radius: 15px; border: none; 
-            background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
+            width: 100%; padding: 12px 15px; border-radius: 12px; border: none; 
+            background: #f6f2ee; margin-bottom: 15px; box-sizing: border-box; 
+            font-size: 16px; font-family: inherit;
         }
 
-        /* MENSAJE ABAJO: Estilo mejorado */
-        #error-msg {
-            background: #fff0f0; color: var(--error); padding: 15px; border-radius: 18px;
-            font-size: 13px; font-weight: 600; margin-top: 15px; display: none;
-            border: 1px solid #ffcdd2; text-align: center;
+        .check-group { 
+            background: #fdfaf7; padding: 15px; border-radius: 15px; 
+            margin-bottom: 10px; font-size: 14px; display: flex; 
+            align-items: flex-start; gap: 12px; text-align: left;
+            line-height: 1.3;
         }
 
-        .total-card { background: white; padding: 25px; border-radius: 28px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .price-big { font-size: 48px; font-weight: 800; color: var(--orange); }
+        .check-group input[type="checkbox"] {
+            width: 20px; height: 20px; margin: 0; flex-shrink: 0;
+        }
+
+        .total-card { 
+            background: white; padding: 20px; border-radius: 24px; 
+            text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            box-sizing: border-box;
+        }
+
+        .price-big { font-size: 42px; font-weight: 800; color: var(--orange); margin: 5px 0; }
         
+        #error-msg {
+            background: #fff0f0; color: var(--error); padding: 12px; border-radius: 12px;
+            font-size: 13px; font-weight: 600; margin-top: 10px; display: none;
+            border: 1px solid #ffcdd2;
+        }
+
         .btn-wa { 
             display: block; background: #ccc; color: white; text-decoration: none; 
-            text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; 
+            text-align: center; padding: 18px; border-radius: 18px; font-weight: 800; 
             margin-top: 15px; opacity: 0.6; cursor: not-allowed; transition: 0.3s;
+            font-size: 16px;
         }
 
-        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
-
-        .check-group { background: #fdfaf7; padding: 15px; border-radius: 15px; margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px; align-items: center; text-align: left; }
+        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 style="text-align:center;">Calculadora Cleo 🐾</h1>
+    <h1>Calculadora Cleo 🐾</h1>
     
     <div class="card">
         <label>Nombre del perro</label>
@@ -67,7 +91,7 @@
 
         <div class="check-group" style="background: #fff3e6;">
             <input type="checkbox" id="soloDia" onchange="update()">
-            <span><b>Solo reserva el día</b> (Sin noche · Máx 22:00h)</span>
+            <span><b>Solo reserva el día</b><br><small>(Sin noche · Máx 22:00h)</small></span>
         </div>
 
         <div class="check-group">
@@ -79,18 +103,15 @@
     <div class="total-card">
         <label>TOTAL ESTIMADO</label>
         <div class="price-big" id="total">0€</div>
-        
         <div id="error-msg"></div>
-
         <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
     </div>
 </div>
 
 <script>
-    // Configuración inicial de fechas mínimas
     window.onload = function() {
         const ahora = new Date();
-        const isoStr = ahora.toISOString().slice(0, 16);
+        const isoStr = ahora.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
         document.getElementById("entrada").min = isoStr;
         document.getElementById("salida").min = isoStr;
     };
@@ -115,25 +136,20 @@
             const h = (d2 - d1) / 3600000;
 
             if (d1 < ahora - 300000) {
-                errorTxt = "⚠️ La fecha de entrada no puede ser en el pasado.";
+                errorTxt = "⚠️ La fecha no puede ser en el pasado.";
             } else if (h <= 0) {
-                errorTxt = "⚠️ La recogida debe ser posterior a la entrega.";
+                errorTxt = "⚠️ La recogida debe ser después.";
             } else {
                 const mismoDia = d1.toDateString() === d2.toDateString();
                 const horaSalida = d2.getHours();
 
                 if (soloDia) {
-                    if (!mismoDia) {
-                        errorTxt = "⚠️ Para 'Solo día', entrada y salida deben ser el mismo día.";
-                    } else if (horaSalida >= 22) {
-                        errorTxt = "⚠️ Máximo hasta las 22:00h para tarifa de día.";
-                    } else {
-                        total = 18;
-                    }
+                    if (!mismoDia || horaSalida >= 22) {
+                        errorTxt = "⚠️ 'Solo día' requiere mismo día y antes 22h.";
+                    } else { total = 18; }
                 } else {
-                    if (h < 24 && mismoDia && horaSalida < 22) {
-                        total = 18;
-                    } else {
+                    if (h < 24 && mismoDia && horaSalida < 22) { total = 18; }
+                    else {
                         let noches = Math.max(1, Math.floor(h / 24));
                         let resto = h % 24;
                         total = (noches * 20);
@@ -145,27 +161,21 @@
 
         document.getElementById("total").innerText = total + "€";
 
-        // Validaciones de flujo (solo aparecen si no hay errores de fecha previos)
         if (!errorTxt) {
-            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Escribe el nombre del perrito.";
-            else if (eVal && sVal && !checkSize) errorTxt = "📏 Confirma el tamaño pequeño o mediano.";
+            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Escribe el nombre del perro.";
+            else if (eVal && sVal && !checkSize) errorTxt = "📏 Confirma el tamaño.";
         }
 
         if (errorTxt) {
             errorDiv.innerText = errorTxt;
             errorDiv.style.display = "block";
             btn.classList.remove("active");
-            btn.href = "javascript:void(0);";
         } else if (total > 0 && nombre && checkSize) {
             btn.classList.add("active");
             const texto = `¡Hola Cleo! Reserva para ${nombre}.\nEntrada: ${eVal.replace('T',' ')}\nSalida: ${sVal.replace('T',' ')}\nTotal: ${total}€`;
             btn.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
-        } else {
-            btn.classList.remove("active");
-            btn.href = "javascript:void(0);";
         }
     }
 </script>
-
 </body>
 </html>
