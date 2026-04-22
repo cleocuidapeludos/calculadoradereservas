@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleo Cuida Peludos</title>
+<style>
+body {font-family: Arial; background:#f6f3ef; padding:20px;}
+.container {max-width:420px; margin:auto; background:white; padding:20px; border-radius:16px;}
+h1{font-size:20px;}
+input{width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #ddd;}
+button{width:100%; padding:14px; background:#25D366; color:white; border:none; border-radius:12px;}
+.total{font-size:22px; font-weight:bold; margin:15px 0;}
+.note{font-size:12px; color:#666;}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Cuidamos de tu peludo como si fuera nuestro</h1>
+<p>Calcula el precio de tu reserva</p>
+
+<input id="nombre" placeholder="Nombre del perro">
+<input id="num" type="number" value="1" min="1">
+<input id="entrada" type="datetime-local">
+<input id="salida" type="datetime-local">
+
+<div class="total" id="total">Introduce fechas</div>
+
+<p class="note">
+20€ la primera noche (24h).<br>
+Tiempo adicional: 18€.<br>
+Cada nueva noche vuelve a 20€.
+</p>
+
+<p class="note">Cleo te responderá lo antes posible</p>
+
+<a id="link" target="_blank">
+<button>Consultar disponibilidad por WhatsApp</button>
+</a>
+
+</div>
+
+<script>
+function calc(){
+let e=document.getElementById("entrada").value;
+let s=document.getElementById("salida").value;
+if(!e||!s)return 0;
+let h=(new Date(s)-new Date(e))/3600000;
+let total=0;
+if(h<=24) total=20;
+else total=Math.floor(h/24)*20+(h%24>0?18:0);
+return total;
+}
+
+function update(){
+let t=calc();
+document.getElementById("total").innerText=t? "Total estimado: "+t+"€":"Introduce fechas";
+
+let msg=`Hola Cleo
+
+Nombre: ${nombre.value}
+Número de perros: ${num.value}
+Fechas: ${entrada.value} → ${salida.value}
+
+Precio estimado: ${t}€
+
+¿Tendrías disponibilidad?`;
+
+document.getElementById("link").href="https://wa.me/34640949118?text="+encodeURIComponent(msg);
+}
+
+document.querySelectorAll("input").forEach(i=>i.onchange=update);
+</script>
+
+</body>
+</html>
