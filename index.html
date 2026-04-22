@@ -11,125 +11,54 @@
             --bg-end: #f9f4ef;
             --text: #2d2d2d;
             --green-wa: #25d366;
-            --paw-bg: #fee2d5;
+            --error: #e74c3c;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
-            background-attachment: fixed;
-            margin: 0;
-            padding: 20px;
-            color: var(--text);
-            min-height: 100vh;
+            margin: 0; padding: 20px; color: var(--text); min-height: 100vh;
         }
 
         .container { max-width: 420px; margin: auto; }
-        .logo-area { text-align: center; margin-bottom: 25px; }
-        .logo-icon { background: var(--paw-bg); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; }
-        h1 { font-size: 24px; text-align: center; margin: 0; font-weight: 800; line-height: 1.2; }
-        .sub { text-align: center; color: #888; margin: 8px 0 25px; font-size: 15px; }
-        
         .card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
         
+        label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: none; 
             background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
-            font-family: inherit;
         }
 
-        input[type="datetime-local"] {
-            color: var(--text);
-            font-weight: 700;
-            cursor: pointer;
+        #error-msg {
+            background: #fff0f0; color: var(--error); padding: 15px; border-radius: 15px;
+            font-size: 13px; font-weight: 600; margin-bottom: 15px; display: none;
+            border: 1px solid #ffcdd2; line-height: 1.4;
         }
 
-        .flex-row { display: flex; gap: 10px; }
-        .flex-row div { flex: 1; }
-
-        .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-        .counter { display: flex; align-items: center; background: #f6f2ee; border-radius: 30px; padding: 5px 15px; gap: 20px; }
-        .counter button { border: none; background: #eee; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; }
-        .counter span { font-weight: bold; font-size: 18px; }
-        
-        .pills { display: flex; gap: 10px; margin-top: 10px; }
-        .pill { flex: 1; padding: 14px; border-radius: 18px; background: #f6f2ee; text-align: center; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .pill.active { background: var(--orange); color: white; }
-        
-        .check-container { display: flex; align-items: flex-start; gap: 12px; margin-top: 10px; background: #fdfaf7; padding: 15px; border-radius: 15px; font-size: 13px; border: 1px solid #f2ece6; }
-        .check-container.special { background: #fff0eb; border-color: #ffd8cc; }
-
-        .total-card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .price-big { font-size: 48px; font-weight: 800; color: var(--orange); line-height: 1; }
-        .price-big span { font-size: 24px; }
+        .total-card { background: white; padding: 25px; border-radius: 28px; text-align: center; }
+        .price-big { font-size: 48px; font-weight: 800; color: var(--orange); }
         
         .btn-wa { 
-            display: block; 
-            background: #ccc; 
-            color: white; 
-            text-decoration: none; 
-            text-align: center; 
-            padding: 20px; 
-            border-radius: 20px; 
-            font-weight: 800; 
-            font-size: 18px; 
-            transition: all 0.4s ease; 
-            opacity: 0.6;
-            cursor: not-allowed;
-            margin-top: 20px;
+            display: block; background: #ccc; color: white; text-decoration: none; 
+            text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; 
+            margin-top: 20px; opacity: 0.6; cursor: not-allowed;
         }
 
-        .btn-wa.active { 
-            background: var(--green-wa); 
-            opacity: 1;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-            animation: pulse 2s infinite;
-        }
+        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
+        .check-group { background: #fdfaf7; padding: 15px; border-radius: 15px; margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px; align-items: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="logo-area">
-        <div class="logo-icon">🐾</div>
-        <h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
-        <div class="sub">Calcula el precio de tu reserva</div>
-    </div>
+    <h1 style="text-align:center;">Calculadora Cleo 🐾</h1>
+    
+    <div id="error-msg"></div>
 
     <div class="card">
         <label>Nombre del perro</label>
-        <input id="nombre" placeholder="Ej. Luna" oninput="update()">
-
-        <label>Raza</label>
-        <input id="raza" placeholder="Ej. Beagle, Mestizo..." oninput="update()">
-
-        <div class="flex-row">
-            <div>
-                <label>Edad</label>
-                <input id="edad" placeholder="Ej. 3 años" oninput="update()">
-            </div>
-            <div>
-                <label>Peso (aprox.)</label>
-                <input id="peso" placeholder="Ej. 8" oninput="update()">
-            </div>
-        </div>
-
-        <div class="row">
-            <label style="margin:0">Número de perros</label>
-            <div class="counter">
-                <button onclick="change(-1)">−</button>
-                <span id="num">1</span>
-                <button onclick="change(1)">+</button>
-            </div>
-        </div>
+        <input id="nombre" placeholder="¿Cómo se llama?" oninput="update()">
 
         <label>Entrada (Entrega)</label>
         <input type="datetime-local" id="entrada" onchange="update()">
@@ -137,151 +66,101 @@
         <label>Salida (Recogida)</label>
         <input type="datetime-local" id="salida" onchange="update()">
 
-        <div class="check-container special">
-            <input type="checkbox" id="soloDia" style="width:20px; height:20px; margin:0;" onchange="update()">
-            <span><b>Solo reserva el día</b> (18€ · Máximo hasta las 22:00).</span>
+        <div class="check-group" style="background: #fff3e6;">
+            <input type="checkbox" id="soloDia" onchange="update()">
+            <span><b>Solo reserva el día</b> (Sin noche · Máx 22:00h)</span>
         </div>
 
-        <label style="margin-top:20px">Sociabilidad</label>
-        <div class="pills">
-            <div id="p1" class="pill active" onclick="selectPill('Sociable')">Sociable</div>
-            <div id="p2" class="pill" onclick="selectPill('Prefiere estar solo')">Prefiere estar solo</div>
-        </div>
-
-        <div class="check-container">
-            <input type="checkbox" id="check" style="width:20px; height:20px; margin:0;" onchange="update()">
-            <span>Confirmo que mi perro es <b>pequeño o mediano</b>.</span>
+        <div class="check-group">
+            <input type="checkbox" id="check" onchange="update()">
+            <span>Confirmo perro <b>pequeño o mediano</b>.</span>
         </div>
     </div>
 
     <div class="total-card">
         <label>TOTAL ESTIMADO</label>
-        <div class="price-big" id="total">0<span>€</span></div>
-        <p id="info-precio" style="font-size:12px; color:#777; margin-top:15px; line-height:1.4;">
-            Día suelto (hasta las 22h): 18€ · Noche: 20€.
-        </p>
+        <div class="price-big" id="total">0€</div>
     </div>
 
     <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
 </div>
 
 <script>
-    let num = 1;
-    let sociabilidad = "Sociable";
-
-    function change(v) {
-        num += v;
-        if (num < 1) num = 1;
-        document.getElementById("num").innerText = num;
-        update();
-    }
-
-    function selectPill(val) {
-        sociabilidad = val;
-        document.getElementById("p1").classList.toggle("active", val === 'Sociable');
-        document.getElementById("p2").classList.toggle("active", val === 'Prefiere estar solo');
-        update();
-    }
-
-    function format(dateStr) {
-        if (!dateStr) return "";
-        const [fecha, hora] = dateStr.split('T');
-        const [ano, mes, dia] = fecha.split('-');
-        return `${dia}/${mes}/${ano} ${hora}`;
-    }
-
-    function calc() {
-        let soloDiaCheckbox = document.getElementById("soloDia");
-        let eVal = document.getElementById("entrada").value;
-        let sVal = document.getElementById("salida").value;
-        
-        if (!eVal || !sVal) return 0;
-
-        let d1 = new Date(eVal);
-        let d2 = new Date(sVal);
-        let diffMs = d2 - d1;
-        let h = diffMs / 3600000;
-        
-        if (h <= 0) return 0;
-
-        let mismoDia = d1.toDateString() === d2.toDateString();
-        let horaSalida = d2.getHours();
-        let precioPorPerro = 0;
-
-        // REGLA ESTRICTA: Si es solo día, debe ser el mismo día y antes de las 22:00
-        if (soloDiaCheckbox.checked) {
-            if (mismoDia && horaSalida < 22) {
-                precioPorPerro = 18;
-            } else {
-                // Si no cumple, forzamos tarifa de noche y desmarcamos el check para que el usuario lo vea
-                soloDiaCheckbox.checked = false;
-                return calc(); // Recalculamos como noche
-            }
-        } else {
-            // Lógica normal de noches
-            if (h < 24 && mismoDia && horaSalida < 22) { 
-                precioPorPerro = 18; 
-            } else {
-                let noches = Math.floor(h / 24);
-                let resto = h % 24;
-                precioPorPerro = (noches === 0) ? 20 : (noches * 20); // Si es menos de 24h pero no es "día", cobramos 1 noche
-                if (resto > 0 && h >= 24) precioPorPerro += 18; 
-            }
-        }
-        return precioPorPerro * num;
-    }
-
     function update() {
-        let total = calc();
-        document.getElementById("total").innerHTML = `${total}<span>€</span>`;
+        const errorDiv = document.getElementById("error-msg");
+        const eVal = document.getElementById("entrada").value;
+        const sVal = document.getElementById("salida").value;
+        const nombre = document.getElementById("nombre").value.trim();
+        const checkSize = document.getElementById("check").checked;
+        const soloDia = document.getElementById("soloDia").checked;
+        const btn = document.getElementById("link");
         
-        let eVal = document.getElementById("entrada").value;
-        let sVal = document.getElementById("salida").value;
-        let checkSize = document.getElementById("check").checked;
-        let soloDiaCheckbox = document.getElementById("soloDia");
-        let btn = document.getElementById("link");
+        errorDiv.style.display = "none";
+        let errorTxt = "";
+        let total = 0;
 
         if (eVal && sVal) {
-            let d1 = new Date(eVal);
-            let d2 = new Date(sVal);
-            let mismoDia = d1.toDateString() === d2.toDateString();
-            let horaSalida = d2.getHours();
+            const d1 = new Date(eVal);
+            const d2 = new Date(sVal);
+            const ahora = new Date();
+            const h = (d2 - d1) / 3600000;
 
-            if (mismoDia && horaSalida >= 22) {
-                document.getElementById("info-precio").innerHTML = "<b style='color:red;'>Horario:</b> Recogidas después de las 22:00 cuentan como noche.";
-            } else if (!mismoDia) {
-                document.getElementById("info-precio").innerHTML = "Tarifa por noche aplicada.";
-            } else {
-                document.getElementById("info-precio").innerText = "Día suelto (hasta las 22h): 18€ · Noche: 20€.";
+            // 1. Error de Fecha en el pasado
+            if (d1 < ahora - 600000) { // Margen de 10 min
+                errorTxt = "⚠️ La fecha de entrada no puede ser en el pasado.";
+            } 
+            // 2. Error de Orden Cronológico
+            else if (h <= 0) {
+                errorTxt = "⚠️ La recogida debe ser posterior a la entrega.";
+            } 
+            // 3. Error de Tiempo Mínimo (ej. 15 min)
+            else if (h < 0.25) {
+                errorTxt = "⚠️ La estancia es demasiado corta.";
+            }
+            else {
+                const mismoDia = d1.toDateString() === d2.toDateString();
+                const horaSalida = d2.getHours();
+
+                if (soloDia) {
+                    // 4. Error de Solo Día con horas de Noche
+                    if (!mismoDia) {
+                        errorTxt = "⚠️ Si es 'Solo día', la entrega y recogida deben ser la misma fecha.";
+                    } else if (horaSalida >= 22) {
+                        errorTxt = "⚠️ Para guardería de día, la recogida máxima es a las 22:00h.";
+                    } else {
+                        total = 18;
+                    }
+                } else {
+                    // Cálculo normal
+                    if (h < 24 && mismoDia && horaSalida < 22) {
+                        total = 18;
+                    } else {
+                        let noches = Math.max(1, Math.floor(h / 24));
+                        let resto = h % 24;
+                        total = (noches * 20);
+                        if (resto > 0 && h >= 24) total += 18;
+                    }
+                }
             }
         }
 
-        let listo = checkSize && eVal && sVal && total > 0;
+        document.getElementById("total").innerText = total + "€";
 
-        if (listo) {
-            let d1 = new Date(eVal);
-            let d2 = new Date(sVal);
-            let esDiaReal = (d1.toDateString() === d2.toDateString() && d2.getHours() < 22);
-            let tipo = esDiaReal ? "SOLO DÍA" : "RESERVA NOCHE";
-            let nombre = document.getElementById("nombre").value || "Peludo";
+        // 5. Errores de campos vacíos
+        if (!errorTxt) {
+            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Por favor, escribe el nombre del perrito.";
+            else if (eVal && sVal && !checkSize) errorTxt = "📏 Debes confirmar que es un perro pequeño o mediano.";
+        }
 
-            let texto = `¡Hola, Cleo! 
-Reserva para ${nombre} (${tipo})
-
-Entrada: ${format(eVal)}
-Salida: ${format(sVal)}
-Perros: ${num}
-Precio total: ${total}€`;
-
-            btn.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
-            btn.classList.add("active"); 
-            btn.onclick = null;
-        } else {
+        if (errorTxt) {
+            errorDiv.innerText = errorTxt;
+            errorDiv.style.display = "block";
+            btn.classList.remove("active");
             btn.href = "javascript:void(0);";
-            btn.classList.remove("active"); 
-            btn.onclick = function() {
-                alert('Por favor, indica las horas, confirma el tamaño y recuerda que después de las 22h es tarifa de noche.');
-            };
+        } else if (total > 0 && nombre && checkSize) {
+            btn.classList.add("active");
+            const texto = `¡Hola Cleo! Reserva para ${nombre}.\nEntrada: ${eVal.replace('T',' ')}\nSalida: ${sVal.replace('T',' ')}\nTotal: ${total}€`;
+            btn.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
         }
     }
 </script>
