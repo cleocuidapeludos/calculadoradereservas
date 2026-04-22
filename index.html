@@ -39,7 +39,6 @@
             font-family: inherit;
         }
 
-        /* Estilo para los campos pequeños en línea (Edad y Peso) */
         .flex-row { display: flex; gap: 10px; }
         .flex-row div { flex: 1; }
 
@@ -85,7 +84,7 @@
             </div>
             <div>
                 <label>Peso (aprox.)</label>
-                <input id="peso" placeholder="Ej. 8kg" oninput="update()">
+                <input id="peso" placeholder="Ej. 8" oninput="update()">
             </div>
         </div>
 
@@ -154,6 +153,7 @@
         update();
     }
 
+    // Función para corregir el orden de la fecha
     function format(dateStr) {
         if (!dateStr) return "";
         const [fecha, hora] = dateStr.split('T');
@@ -187,23 +187,33 @@
         let edad = document.getElementById("edad").value || "-";
         let peso = document.getElementById("peso").value || "-";
         let check = document.getElementById("check").checked;
-        let entradaTexto = format(document.getElementById("entrada").value);
-        let salidaTexto = format(document.getElementById("salida").value);
+        let entrada = format(document.getElementById("entrada").value);
+        let salida = format(document.getElementById("salida").value);
 
         if (total > 0 && check) {
+            // EL MENSAJE CON TU NUEVA ESTRUCTURA
             let texto = `¡Hola, Cleo!
 
 Quiero consultar disponibilidad para ${nombre}
 
+———
+
+Nombre del perro: ${nombre}
 Raza: ${raza}
 Edad: ${edad}
-Peso: ${peso}
+Peso: ${peso} kg
+
+———
+
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
-Entrada: ${entradaTexto}
-Salida: ${salidaTexto}
 
-El precio estimado es ${total} euros
+Entrada: ${entrada}
+Salida: ${salida}
+
+———
+
+Precio: ${total}€
 
 ¿Tendrías disponibilidad?`;
 
