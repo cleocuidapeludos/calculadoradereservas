@@ -27,6 +27,7 @@
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: none; 
             background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
+            color: var(--text);
         }
 
         #error-msg {
@@ -41,7 +42,7 @@
         .btn-wa { 
             display: block; background: #ccc; color: white; text-decoration: none; 
             text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; 
-            margin-top: 20px; opacity: 0.6; cursor: not-allowed;
+            margin-top: 20px; opacity: 0.6; cursor: not-allowed; transition: 0.3s;
         }
 
         .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; }
@@ -86,6 +87,14 @@
 </div>
 
 <script>
+    // Bloqueamos fechas pasadas en el calendario nada más cargar la página
+    window.onload = function() {
+        const ahora = new Date();
+        const isoStr = ahora.toISOString().slice(0, 16);
+        document.getElementById("entrada").min = isoStr;
+        document.getElementById("salida").min = isoStr;
+    };
+
     function update() {
         const errorDiv = document.getElementById("error-msg");
         const eVal = document.getElementById("entrada").value;
@@ -105,33 +114,27 @@
             const ahora = new Date();
             const h = (d2 - d1) / 3600000;
 
-            // 1. Error de Fecha en el pasado
-            if (d1 < ahora - 600000) { // Margen de 10 min
+            // VALIDACIÓN 1: No permitir fechas pasadas
+            if (d1 < ahora - 300000) { // Margen de 5 min por si tardan en rellenar
                 errorTxt = "⚠️ La fecha de entrada no puede ser en el pasado.";
             } 
-            // 2. Error de Orden Cronológico
+            // VALIDACIÓN 2: Orden cronológico
             else if (h <= 0) {
                 errorTxt = "⚠️ La recogida debe ser posterior a la entrega.";
             } 
-            // 3. Error de Tiempo Mínimo (ej. 15 min)
-            else if (h < 0.25) {
-                errorTxt = "⚠️ La estancia es demasiado corta.";
-            }
             else {
                 const mismoDia = d1.toDateString() === d2.toDateString();
                 const horaSalida = d2.getHours();
 
                 if (soloDia) {
-                    // 4. Error de Solo Día con horas de Noche
                     if (!mismoDia) {
-                        errorTxt = "⚠️ Si es 'Solo día', la entrega y recogida deben ser la misma fecha.";
+                        errorTxt = "⚠️ Para 'Solo día', la entrega y recogida deben ser el mismo día.";
                     } else if (horaSalida >= 22) {
                         errorTxt = "⚠️ Para guardería de día, la recogida máxima es a las 22:00h.";
                     } else {
                         total = 18;
                     }
                 } else {
-                    // Cálculo normal
                     if (h < 24 && mismoDia && horaSalida < 22) {
                         total = 18;
                     } else {
@@ -146,7 +149,7 @@
 
         document.getElementById("total").innerText = total + "€";
 
-        // 5. Errores de campos vacíos
+        // Validaciones de campos obligatorios
         if (!errorTxt) {
             if (!nombre && (eVal || sVal)) errorTxt = "✍️ Por favor, escribe el nombre del perrito.";
             else if (eVal && sVal && !checkSize) errorTxt = "📏 Debes confirmar que es un perro pequeño o mediano.";
