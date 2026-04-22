@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleo Cuida Peludos</title>
+    <title>Calculadora Cleo</title>
     <style>
         :root {
             --orange: #f36d3b;
-            --bg-start: #fff3e6; /* Color inicio degradado */
-            --bg-end: #f9f4ef;   /* Color fin degradado */
+            --bg-start: #fff3e6;
+            --bg-end: #f9f4ef;
             --text: #2d2d2d;
             --green-wa: #98e6b8;
-            --paw-bg: #fee2d5;  /* Color círculo huellita */
+            --paw-bg: #fee2d5;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            /* FONDO DEGRADADO */
             background: linear-gradient(180deg, var(--bg-start) 0%, var(--bg-end) 100%);
             background-attachment: fixed;
             margin: 0;
@@ -26,65 +25,27 @@
         }
 
         .container { max-width: 420px; margin: auto; }
-
         .logo-area { text-align: center; margin-bottom: 25px; }
-        
-        /* ESTILO DE LA HUELLITA SUPERIOR */
-        .logo-icon { 
-            background: var(--paw-bg); 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin: 0 auto 10px; 
-            font-size: 24px; 
-        }
-
+        .logo-icon { background: var(--paw-bg); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; }
         h1 { font-size: 24px; text-align: center; margin: 0; font-weight: 800; line-height: 1.2; }
         .sub { text-align: center; color: #888; margin: 8px 0 25px; font-size: 15px; }
-
         .card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 20px; }
-
         label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 14px; }
-        
-        input { 
-            width: 100%; padding: 15px; border-radius: 15px; border: none; 
-            background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
-            font-family: inherit;
-        }
-
+        input { width: 100%; padding: 15px; border-radius: 15px; border: none; background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px; font-family: inherit; }
         .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
-        
         .counter { display: flex; align-items: center; background: #f6f2ee; border-radius: 30px; padding: 5px 15px; gap: 20px; }
         .counter button { border: none; background: #eee; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; }
         .counter span { font-weight: bold; font-size: 18px; }
-
         .pills { display: flex; gap: 10px; margin-top: 10px; }
-        .pill { 
-            flex: 1; padding: 14px; border-radius: 18px; background: #f6f2ee; 
-            text-align: center; cursor: pointer; font-weight: 600; transition: 0.3s;
-        }
+        .pill { flex: 1; padding: 14px; border-radius: 18px; background: #f6f2ee; text-align: center; cursor: pointer; font-weight: 600; transition: 0.3s; }
         .pill.active { background: var(--orange); color: white; }
-
-        .check-container { 
-            display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; 
-            background: #fdfaf7; padding: 15px; border-radius: 15px; font-size: 13px; border: 1px solid #f2ece6;
-        }
-
+        .check-container { display: flex; align-items: flex-start; gap: 12px; margin-top: 20px; background: #fdfaf7; padding: 15px; border-radius: 15px; font-size: 13px; border: 1px solid #f2ece6; }
         .total-card { background: white; padding: 25px; border-radius: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .price-row { display: flex; justify-content: space-between; align-items: flex-start; }
         .price-big { font-size: 48px; font-weight: 800; color: var(--orange); line-height: 1; }
         .price-big span { font-size: 24px; }
-
         .review { background: #ffebd2; padding: 20px; border-radius: 20px; margin: 20px 0; font-size: 14px; line-height: 1.5; }
-
-        .btn-wa { 
-            display: block; background: var(--green-wa); color: #1a4d2e; text-decoration: none;
-            text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; font-size: 18px;
-            box-shadow: 0 4px 15px rgba(152, 230, 184, 0.4); transition: 0.3s;
-        }
+        .btn-wa { display: block; background: var(--green-wa); color: #1a4d2e; text-decoration: none; text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; font-size: 18px; box-shadow: 0 4px 15px rgba(152, 230, 184, 0.4); transition: 0.3s; }
         .btn-wa:active { transform: scale(0.98); }
     </style>
 </head>
@@ -171,19 +132,26 @@
         update();
     }
 
+    // Función para que la fecha salga bonita en el mensaje
+    function format(dateStr) {
+        if (!dateStr) return "";
+        const d = new Date(dateStr);
+        return d.getDate().toString().padStart(2, '0') + "/" + 
+               (d.getMonth() + 1).toString().padStart(2, '0') + "/" + 
+               d.getFullYear() + " " + 
+               d.getHours().toString().padStart(2, '0') + ":" + 
+               d.getMinutes().toString().padStart(2, '0');
+    }
+
     function calc() {
         let e = document.getElementById("entrada").value;
         let s = document.getElementById("salida").value;
         if (!e || !s) return 0;
-
         let diffMs = new Date(s) - new Date(e);
         let h = diffMs / 3600000;
         if (h <= 0) return 0;
-
         let total = 0;
-        if (h <= 24) {
-            total = 20;
-        } else {
+        if (h <= 24) { total = 20; } else {
             let nochesCompletas = Math.floor(h / 24);
             let restoHoras = h % 24;
             total = nochesCompletas * 20;
@@ -195,31 +163,31 @@
     function update() {
         let total = calc();
         document.getElementById("total").innerHTML = `${total}<span>€</span>`;
-        
         let nombre = document.getElementById("nombre").value || "Peludo";
         let check = document.getElementById("check").checked;
-        let entrada = document.getElementById("entrada").value;
-        let salida = document.getElementById("salida").value;
+        let entrada = format(document.getElementById("entrada").value);
+        let salida = format(document.getElementById("salida").value);
 
         if (total > 0 && check) {
-            // TEXTO CON BACKTICKS PARA LIMPIEZA TOTAL
-            let texto = `Hola Cleo!
+            // EL MENSAJE TAL CUAL LO HAS PEDIDO
+            let texto = `¡Hola, Cleo!
+
 Quiero consultar disponibilidad para ${nombre}
 
-Perros: ${num}
+Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
-Entrada: ${entrada.replace('T', ' ')}
-Salida: ${salida.replace('T', ' ')}
+Entrada: ${entrada}
+Salida: ${salida}
 
-Precio estimado: ${total} euros
+El precio estimado es ${total} euros
 
-Tienes disponibilidad?`;
+¿Tendrías disponibilidad?`;
 
             let msg = encodeURIComponent(texto);
             document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
             document.getElementById("link").style.opacity = "1";
         } else {
-            document.getElementById("link").href = "javascript:alert('Por favor, rellena las fechas y confirma el tamano del perro');";
+            document.getElementById("link").href = "javascript:alert('Rellena las fechas y confirma el tamaño');";
             document.getElementById("link").style.opacity = "0.5";
         }
     }
