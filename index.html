@@ -4,66 +4,228 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cleo Cuida Peludos</title>
+
 <style>
-body {font-family: Arial; background:#f6f3ef; padding:20px;}
-.container {max-width:420px; margin:auto; background:white; padding:20px; border-radius:16px;}
-h1{font-size:20px;}
-input{width:100%; padding:12px; margin-bottom:10px; border-radius:10px; border:1px solid #ddd;}
-button{width:100%; padding:14px; background:#25D366; color:white; border:none; border-radius:12px;}
-.total{font-size:22px; font-weight:bold; margin:15px 0;}
-.note{font-size:12px; color:#666;}
+body{
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background:#f6f1ea;
+  margin:0;
+  padding:20px;
+}
+
+.container{
+  max-width:420px;
+  margin:auto;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+
+h1{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:5px;
+}
+
+.sub{
+  text-align:center;
+  color:#777;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  background:#f3eee9;
+  margin-bottom:12px;
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.counter button{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  border:none;
+  background:#eee;
+}
+
+.counter span{
+  flex:1;
+  text-align:center;
+}
+
+.pills{
+  display:flex;
+  gap:10px;
+}
+
+.pill{
+  flex:1;
+  padding:12px;
+  border-radius:20px;
+  background:#eee;
+  text-align:center;
+  cursor:pointer;
+}
+
+.pill.active{
+  background:#ea6d2f;
+  color:white;
+}
+
+.totalCard{
+  background:#fff;
+  padding:20px;
+  border-radius:20px;
+  margin-top:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
+
+.price{
+  font-size:32px;
+  color:#ea6d2f;
+}
+
+.button{
+  margin-top:20px;
+  background:#8fd3a9;
+  padding:16px;
+  text-align:center;
+  border-radius:16px;
+  color:white;
+  font-weight:bold;
+}
+
+.review{
+  background:#f5e3c7;
+  padding:15px;
+  border-radius:15px;
+  margin-top:15px;
+  font-size:14px;
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
 
-<h1>Cuidamos de tu peludo como si fuera nuestro</h1>
-<p>Calcula el precio de tu reserva</p>
+<h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
+<div class="sub">Calcula el precio de tu reserva</div>
 
-<input id="nombre" placeholder="Nombre del perro">
-<input id="num" type="number" value="1" min="1">
-<input id="entrada" type="datetime-local">
-<input id="salida" type="datetime-local">
+<div class="card">
 
-<div class="total" id="total">Introduce fechas</div>
+<input id="nombre" placeholder="Ej. Luna">
 
-<p class="note">
-20€ la primera noche (24h).<br>
-Tiempo adicional: 18€.<br>
-Cada nueva noche vuelve a 20€.
+<div class="row counter">
+<button onclick="change(-1)">−</button>
+<span id="num">1</span>
+<button onclick="change(1)">+</button>
+</div>
+
+<input type="datetime-local" id="entrada">
+<input type="datetime-local" id="salida">
+
+<p>Sociabilidad</p>
+
+<div class="pills">
+<div class="pill active" onclick="selectPill(this,'Sociable')">Sociable</div>
+<div class="pill" onclick="selectPill(this,'Prefiere estar solo')">Prefiere estar solo</div>
+</div>
+
+<br>
+
+<label>
+<input type="checkbox" id="check">
+Confirmo que mi perro es pequeño o mediano
+</label>
+
+</div>
+
+<div class="totalCard">
+<div>Total estimado</div>
+<div class="price" id="total">0€</div>
+
+<p style="font-size:12px;color:#666;">
+Primeras 24h: 20€ · extra: 18€ · nueva noche: 20€
 </p>
+</div>
 
-<p class="note">Cleo te responderá lo antes posible</p>
+<div class="review">
+"Mi perrita volvió feliz."  
+<br>— María G.
+</div>
 
 <a id="link" target="_blank">
-<button>Consultar disponibilidad por WhatsApp</button>
+<div class="button">Reservar por WhatsApp</div>
 </a>
+
+<p style="text-align:center;font-size:12px;color:#666;">
+Cleo te responderá lo antes posible
+</p>
 
 </div>
 
 <script>
+
+let num=1;
+let sociabilidad="Sociable";
+
+function change(v){
+  num+=v;
+  if(num<1) num=1;
+  document.getElementById("num").innerText=num;
+  update();
+}
+
+function selectPill(el,value){
+  document.querySelectorAll(".pill").forEach(p=>p.classList.remove("active"));
+  el.classList.add("active");
+  sociabilidad=value;
+}
+
 function calc(){
 let e=document.getElementById("entrada").value;
 let s=document.getElementById("salida").value;
-if(!e||!s)return 0;
+if(!e||!s) return 0;
+
 let h=(new Date(s)-new Date(e))/3600000;
-let total=0;
-if(h<=24) total=20;
-else total=Math.floor(h/24)*20+(h%24>0?18:0);
-return total;
+
+if(h<=24) return 20*num;
+
+return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
 }
 
 function update(){
-let t=calc();
-document.getElementById("total").innerText=t? "Total estimado: "+t+"€":"Introduce fechas";
+
+if(!document.getElementById("check").checked){
+document.getElementById("link").href="#";
+return;
+}
+
+let total=calc();
+document.getElementById("total").innerText=total+"€";
 
 let msg=`Hola Cleo
 
-Nombre: ${nombre.value}
-Número de perros: ${num.value}
-Fechas: ${entrada.value} → ${salida.value}
+Quiero consultar disponibilidad
 
-Precio estimado: ${t}€
+Nombre: ${nombre.value}
+Perros: ${num}
+Sociabilidad: ${sociabilidad}
+
+Precio estimado: ${total}€
 
 ¿Tendrías disponibilidad?`;
 
@@ -71,6 +233,7 @@ document.getElementById("link").href="https://wa.me/34640949118?text="+encodeURI
 }
 
 document.querySelectorAll("input").forEach(i=>i.onchange=update);
+
 </script>
 
 </body>
