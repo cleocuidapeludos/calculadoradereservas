@@ -10,7 +10,7 @@
             --bg-start: #fff3e6;
             --bg-end: #f9f4ef;
             --text: #2d2d2d;
-            --green-wa: #25d366; /* Verde oficial WhatsApp para cuando esté activo */
+            --green-wa: #25d366;
             --paw-bg: #fee2d5;
         }
 
@@ -39,6 +39,29 @@
             font-family: inherit;
         }
 
+        /* --- MEJORA VISUAL DE LOS CAMPOS DE FECHA Y HORA --- */
+        input[type="datetime-local"] {
+            color: var(--text);
+            font-weight: 700; /* Hora más visible */
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        input[type="datetime-local"]:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: white;
+        }
+
+        /* Icono de calendario en color naranja */
+        input::-webkit-calendar-picker-indicator {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23f36d3b" viewBox="0 0 16 16"><path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/></svg>');
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+        }
+
         .flex-row { display: flex; gap: 10px; }
         .flex-row div { flex: 1; }
 
@@ -58,10 +81,9 @@
         
         .review { background: #ffebd2; padding: 20px; border-radius: 20px; margin: 20px 0; font-size: 14px; line-height: 1.5; }
 
-        /* --- MEJORA DEL BOTÓN --- */
         .btn-wa { 
             display: block; 
-            background: #ccc; /* Gris por defecto */
+            background: #ccc; 
             color: white; 
             text-decoration: none; 
             text-align: center; 
@@ -74,14 +96,12 @@
             cursor: not-allowed;
         }
 
-        /* Clase que se activa cuando los datos están OK */
         .btn-wa.active { 
             background: var(--green-wa); 
-            color: white;
             opacity: 1;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-            animation: pulse 2s infinite; /* Efecto latido */
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -89,8 +109,6 @@
             50% { transform: scale(1.03); }
             100% { transform: scale(1); }
         }
-
-        .btn-wa:active { transform: scale(0.95) !important; }
     </style>
 </head>
 <body>
@@ -222,7 +240,6 @@
         let sVal = document.getElementById("salida").value;
         let btn = document.getElementById("link");
 
-        // Solo si hay total, el check marcado y las fechas puestas
         if (total > 0 && check && eVal && sVal) {
             let entrada = format(eVal);
             let salida = format(sVal);
@@ -255,7 +272,7 @@ Precio: ${total}€
             let msg = encodeURIComponent(texto);
             btn.href = "https://wa.me/34640949118?text=" + msg;
             btn.classList.add("active"); 
-            btn.onclick = null; // ELIMINA LA ALERTA CUANDO TODO ESTÁ OK
+            btn.onclick = null; // LIMPIA LA ALERTA
         } else {
             btn.href = "javascript:void(0);";
             btn.classList.remove("active"); 
