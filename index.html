@@ -218,11 +218,15 @@
         let edad = document.getElementById("edad").value || "-";
         let peso = document.getElementById("peso").value || "-";
         let check = document.getElementById("check").checked;
-        let entrada = format(document.getElementById("entrada").value);
-        let salida = format(document.getElementById("salida").value);
+        let eVal = document.getElementById("entrada").value;
+        let sVal = document.getElementById("salida").value;
         let btn = document.getElementById("link");
 
-        if (total > 0 && check) {
+        // Solo si hay total, el check marcado y las fechas puestas
+        if (total > 0 && check && eVal && sVal) {
+            let entrada = format(eVal);
+            let salida = format(sVal);
+
             let texto = `¡Hola, Cleo!
 
 Quiero consultar disponibilidad para ${nombre}
@@ -250,10 +254,11 @@ Precio: ${total}€
 
             let msg = encodeURIComponent(texto);
             btn.href = "https://wa.me/34640949118?text=" + msg;
-            btn.classList.add("active"); // Se pone verde y late
+            btn.classList.add("active"); 
+            btn.onclick = null; // ELIMINA LA ALERTA CUANDO TODO ESTÁ OK
         } else {
             btn.href = "javascript:void(0);";
-            btn.classList.remove("active"); // Se vuelve gris
+            btn.classList.remove("active"); 
             btn.onclick = function() {
                 alert('Por favor, indica las fechas y confirma que tu perro es pequeño o mediano.');
             };
