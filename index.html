@@ -128,7 +128,7 @@
 
         <div class="check-group" style="background: #fff3e6;">
             <input type="checkbox" id="soloDia" onchange="update()">
-            <span><b>Solo reserva el día</b><br><small>(Máx 22:00h · Sin noche)</small></span>
+            <span><b>Solo reserva el día</b><br><small>(Entre 7:00h y 22:00h · Sin noche)</small></span>
         </div>
 
         <div class="check-group">
@@ -155,7 +155,6 @@
         update();
     }
 
-    // Bloqueo de fechas pasadas
     window.onload = function() {
         const ahora = new Date();
         const isoStr = ahora.toLocaleString('sv-SE').replace(' ', 'T').slice(0, 16);
@@ -163,7 +162,6 @@
         document.getElementById("salida").min = isoStr;
     };
 
-    // Función que avisa al usuario si el botón no está en verde
     function intentarEnviar() {
         const btn = document.getElementById("link");
         const errorDiv = document.getElementById("error-msg");
@@ -172,7 +170,7 @@
             if (errorDiv.style.display === "block") {
                 alert(errorDiv.innerText);
             } else {
-                alert("Por favor, rellena los datos del perro y las fechas para poder calcular el precio.");
+                alert("Por favor, completa los datos y verifica los horarios (7:00 a 22:00) para calcular el precio.");
             }
         } else {
             window.location.href = btn.getAttribute("data-url");
@@ -201,22 +199,31 @@
             const d2 = new Date(sVal);
             const ahora = new Date();
             const h = (d2 - d1) / 3600000;
+            
+            const horaEntrada = d1.getHours();
+            const horaSalida = d2.getHours();
 
-            if (d1 < ahora - 300000) {
+            // REGLA DE HORARIO COMERCIAL (7:00 a 22:00)
+            if (horaEntrada < 7 || horaEntrada >= 22 || horaSalida < 7 || horaSalida >= 22) {
+                errorTxt = "⚠️ Las entregas y recogidas son exclusivamente de 07:00h a 22:00h.";
+            } 
+            else if (d1 < ahora - 300000) {
                 errorTxt = "⚠️ La fecha de entrada no puede ser anterior a hoy.";
-            } else if (h <= 0) {
+            } 
+            else if (h <= 0) {
                 errorTxt = "⚠️ La hora de recogida debe ser posterior a la hora de entrega.";
-            } else {
+            } 
+            else {
                 const mismoDia = d1.toDateString() === d2.toDateString();
-                const horaSalida = d2.getHours();
 
                 if (soloDia) {
-                    if (!mismoDia || horaSalida >= 22) {
-                        errorTxt = "⚠️ Para la tarifa de 'Solo día', el perro debe recogerse el mismo día antes de las 22:00h.";
+                    if (!mismoDia) {
+                        errorTxt = "⚠️ Para la tarifa de 'Solo día', la recogida debe ser el mismo día.";
                     } else { total = 18 * numPerros; }
                 } else {
-                    if (h < 24 && mismoDia && horaSalida < 22) { total = 18 * numPerros; }
-                    else {
+                    if (h < 24 && mismoDia) { 
+                        total = 18 * numPerros; 
+                    } else {
                         let noches = Math.max(1, Math.floor(h / 24));
                         let resto = h % 24;
                         let precioBase = (noches * 20);
@@ -229,13 +236,9 @@
 
         document.getElementById("total").innerText = total + "€";
 
-        // Validaciones de los pasos finales
         if (!errorTxt) {
-            if (!nombre && (eVal || sVal)) {
-                errorTxt = "✍️ Por favor, escribe el nombre del perrito para continuar.";
-            } else if (eVal && sVal && !checkSize) {
-                errorTxt = "📏 Debes confirmar que tu perro es de tamaño pequeño o mediano.";
-            }
+            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Por favor, escribe el nombre del perrito.";
+            else if (eVal && sVal && !checkSize) errorTxt = "📏 Confirma que tu perro es pequeño o mediano.";
         }
 
         if (errorTxt) {
