@@ -186,16 +186,18 @@
         let salida = document.getElementById("salida").value;
 
         if (total > 0 && check) {
-            // MENSAJE PLANO SIN CARACTERES ESPECIALES
-            let msg = "Hola Cleo!%0A" +
-                      "Quiero consultar disponibilidad para " + nombre + "%0A" +
-                      "Perros: " + num + "%0A" +
-                      "Sociabilidad: " + sociabilidad + "%0A" +
-                      "Entrada: " + entrada.replace('T', ' ') + "%0A" +
-                      "Salida: " + salida.replace('T', ' ') + "%0A" +
-                      "Precio estimado: " + total + " euros%0A" +
-                      "Tienes disponibilidad?";
+            // MENSAJE PLANO SIN CODIFICACIÓN RARA
+            let texto = "Hola Cleo!\n" +
+                        "Quiero consultar disponibilidad para " + nombre + "\n\n" +
+                        "Perros: " + num + "\n" +
+                        "Sociabilidad: " + sociabilidad + "\n" +
+                        "Entrada: " + entrada.replace('T', ' ') + "\n" +
+                        "Salida: " + salida.replace('T', ' ') + "\n\n" +
+                        "Precio estimado: " + total + " euros\n\n" +
+                        "Tienes disponibilidad?";
             
+            // Usamos encodeURI para que sea 100% seguro
+            let msg = encodeURIComponent(texto);
             document.getElementById("link").href = "https://wa.me/34640949118?text=" + msg;
             document.getElementById("link").style.opacity = "1";
         } else {
