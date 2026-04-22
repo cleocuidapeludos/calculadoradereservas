@@ -27,27 +27,27 @@
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: none; 
             background: #f6f2ee; margin-bottom: 18px; box-sizing: border-box; font-size: 16px;
-            color: var(--text);
         }
 
+        /* MENSAJE ABAJO: Estilo mejorado */
         #error-msg {
-            background: #fff0f0; color: var(--error); padding: 15px; border-radius: 15px;
-            font-size: 13px; font-weight: 600; margin-bottom: 15px; display: none;
-            border: 1px solid #ffcdd2; line-height: 1.4;
+            background: #fff0f0; color: var(--error); padding: 15px; border-radius: 18px;
+            font-size: 13px; font-weight: 600; margin-top: 15px; display: none;
+            border: 1px solid #ffcdd2; text-align: center;
         }
 
-        .total-card { background: white; padding: 25px; border-radius: 28px; text-align: center; }
+        .total-card { background: white; padding: 25px; border-radius: 28px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .price-big { font-size: 48px; font-weight: 800; color: var(--orange); }
         
         .btn-wa { 
             display: block; background: #ccc; color: white; text-decoration: none; 
             text-align: center; padding: 20px; border-radius: 20px; font-weight: 800; 
-            margin-top: 20px; opacity: 0.6; cursor: not-allowed; transition: 0.3s;
+            margin-top: 15px; opacity: 0.6; cursor: not-allowed; transition: 0.3s;
         }
 
-        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; }
+        .btn-wa.active { background: var(--green-wa); opacity: 1; cursor: pointer; box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
 
-        .check-group { background: #fdfaf7; padding: 15px; border-radius: 15px; margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px; align-items: center; }
+        .check-group { background: #fdfaf7; padding: 15px; border-radius: 15px; margin-bottom: 10px; font-size: 13px; display: flex; gap: 10px; align-items: center; text-align: left; }
     </style>
 </head>
 <body>
@@ -55,8 +55,6 @@
 <div class="container">
     <h1 style="text-align:center;">Calculadora Cleo 🐾</h1>
     
-    <div id="error-msg"></div>
-
     <div class="card">
         <label>Nombre del perro</label>
         <input id="nombre" placeholder="¿Cómo se llama?" oninput="update()">
@@ -81,13 +79,15 @@
     <div class="total-card">
         <label>TOTAL ESTIMADO</label>
         <div class="price-big" id="total">0€</div>
-    </div>
+        
+        <div id="error-msg"></div>
 
-    <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
+        <a id="link" href="#" class="btn-wa">Reservar por WhatsApp</a>
+    </div>
 </div>
 
 <script>
-    // Bloqueamos fechas pasadas en el calendario nada más cargar la página
+    // Configuración inicial de fechas mínimas
     window.onload = function() {
         const ahora = new Date();
         const isoStr = ahora.toISOString().slice(0, 16);
@@ -114,23 +114,19 @@
             const ahora = new Date();
             const h = (d2 - d1) / 3600000;
 
-            // VALIDACIÓN 1: No permitir fechas pasadas
-            if (d1 < ahora - 300000) { // Margen de 5 min por si tardan en rellenar
+            if (d1 < ahora - 300000) {
                 errorTxt = "⚠️ La fecha de entrada no puede ser en el pasado.";
-            } 
-            // VALIDACIÓN 2: Orden cronológico
-            else if (h <= 0) {
+            } else if (h <= 0) {
                 errorTxt = "⚠️ La recogida debe ser posterior a la entrega.";
-            } 
-            else {
+            } else {
                 const mismoDia = d1.toDateString() === d2.toDateString();
                 const horaSalida = d2.getHours();
 
                 if (soloDia) {
                     if (!mismoDia) {
-                        errorTxt = "⚠️ Para 'Solo día', la entrega y recogida deben ser el mismo día.";
+                        errorTxt = "⚠️ Para 'Solo día', entrada y salida deben ser el mismo día.";
                     } else if (horaSalida >= 22) {
-                        errorTxt = "⚠️ Para guardería de día, la recogida máxima es a las 22:00h.";
+                        errorTxt = "⚠️ Máximo hasta las 22:00h para tarifa de día.";
                     } else {
                         total = 18;
                     }
@@ -149,10 +145,10 @@
 
         document.getElementById("total").innerText = total + "€";
 
-        // Validaciones de campos obligatorios
+        // Validaciones de flujo (solo aparecen si no hay errores de fecha previos)
         if (!errorTxt) {
-            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Por favor, escribe el nombre del perrito.";
-            else if (eVal && sVal && !checkSize) errorTxt = "📏 Debes confirmar que es un perro pequeño o mediano.";
+            if (!nombre && (eVal || sVal)) errorTxt = "✍️ Escribe el nombre del perrito.";
+            else if (eVal && sVal && !checkSize) errorTxt = "📏 Confirma el tamaño pequeño o mediano.";
         }
 
         if (errorTxt) {
@@ -164,6 +160,9 @@
             btn.classList.add("active");
             const texto = `¡Hola Cleo! Reserva para ${nombre}.\nEntrada: ${eVal.replace('T',' ')}\nSalida: ${sVal.replace('T',' ')}\nTotal: ${total}€`;
             btn.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
+        } else {
+            btn.classList.remove("active");
+            btn.href = "javascript:void(0);";
         }
     }
 </script>
