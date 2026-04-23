@@ -274,9 +274,10 @@ Trato cariñoso, paseos diarios y muchas fotos.
 ¡Repetiremos seguro! — María G.
 </div>
 
-<a id="link" class="btn" target="_blank">
+<a id="link" class="btn" href="#" onclick="handleClick(event)" target="_blank">
 Reservar por WhatsApp
 </a>
+  <p id="error" style="color:#d9534f; text-align:center; font-size:13px; margin-top:10px;"></p>
 
 <p style="text-align:center;font-size:12px;color:#888;">
 Cleo te responderá lo antes posible 😊
@@ -305,6 +306,31 @@ function change(v){
   if(num<1) num=1;
   document.getElementById("num").innerText=num;
   update();
+} // 👈 ESTA LLAVE FALTABA
+function handleClick(e){
+
+  let nombre = document.getElementById("nombre").value;
+  let raza = document.getElementById("raza").value;
+  let eDate = entrada.value;
+  let sDate = salida.value;
+  let check = document.getElementById("check").checked;
+
+  let error = "";
+
+  if(!nombre) error = "Falta el nombre del perrito";
+  else if(!raza) error = "Falta la raza";
+  else if(!eDate) error = "Falta la fecha de entrada";
+  else if(!sDate) error = "Falta la fecha de salida";
+  else if(new Date(sDate) <= new Date(eDate)) error = "La salida debe ser posterior a la entrada";
+  else if(!check) error = "Debes confirmar el tamaño del perro";
+
+  if(error){
+    e.preventDefault();
+    document.getElementById("error").innerText = error;
+    return;
+  }
+
+  document.getElementById("error").innerText = "";
 }
 
 function setSoc(val){
