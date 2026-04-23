@@ -216,7 +216,7 @@ input[type="checkbox"]{
 <div style="display:flex; gap:16px; width:100%;">
   <div style="flex:1; min-width:0;">
     <label>Edad</label>
-    <input id="edad" placeholder="Ej. 2 años (aprox.)">
+    <input id="edad" placeholder="Ej. 2 años (aprox.)" oninput="update()">
   </div>
   <div style="flex:1; min-width:0;">
     <label>Peso (kg)</label>
@@ -233,9 +233,10 @@ input[type="checkbox"]{
 
 <label>Entrada</label>
 <input type="datetime-local" id="entrada" onchange="update()">
-
+<div id="errorEntrada" ...></div>
 <label>Salida</label>
 <input type="datetime-local" id="salida" onchange="update()">
+<div id="errorSalida" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
 
 <label>Sociabilidad</label>
 <div class="pills">
@@ -334,18 +335,14 @@ function handleClick(e){
 
   let errores = [];
 
-  // campos obligatorios
-if(!nombre) errores.push("Nombre del perro");
-if(!raza) errores.push("Raza");
-if(!document.getElementById("edad").value) errores.push("Edad del perro");
-if(!document.getElementById("peso").value) errores.push("Peso"); 
-if(num <= 0) errores.push("Número de perros");
-
-if(!eDate) errores.push("Fecha de entrada");
-if(!sDate) errores.push("Fecha de salida");
-
-// 👇 IMPORTANTE: dejar este SIEMPRE AL FINAL
-if(!check) errores.push("Confirma que es un perro pequeño o mediano");
+  // datos básicos
+  if(!nombre) errores.push("Nombre del perro");
+  if(!raza) errores.push("Raza");
+  if(!edad) errores.push("Edad del perro");
+  if(!peso) errores.push("Peso");
+  if(num <= 0) errores.push("Número de perros");
+  if(!eDate) errores.push("Fecha de entrada");
+  if(!sDate) errores.push("Fecha de salida");
 
   // validar hora entrada
   if(eDate){
@@ -377,6 +374,9 @@ if(!check) errores.push("Confirma que es un perro pequeño o mediano");
     }
   }
 
+  // 👇 SIEMPRE AL FINAL
+  if(!check) errores.push("Confirma que es un perro pequeño o mediano");
+
   // mostrar errores
   if(errores.length > 0){
     e.preventDefault();
@@ -393,7 +393,6 @@ if(!check) errores.push("Confirma que es un perro pequeño o mediano");
   box.style.display = "none";
   box.innerText = "";
 }
-
 function setSoc(val){
   sociabilidad=val;
   document.getElementById("p1").classList.toggle("active",val==="Sociable");
@@ -415,38 +414,6 @@ function calc(){
 }
   // 👇 AQUÍ MISMO PEGAS ESTO
 
-function hayErrores(){
-
-  let errores = [];
-
-  let nombre = document.getElementById("nombre").value;
-  let raza = document.getElementById("raza").value;
-  let edad = document.getElementById("edad").value;
-  let peso = document.getElementById("peso").value;
-  let e = entrada.value;
-  let s = salida.value;
-  let check = document.getElementById("check").checked;
-
-  if(!nombre) errores.push(1);
-  if(!raza) errores.push(1);
-  if(!edad) errores.push(1);
-  if(!peso) errores.push(1);
-  if(num <= 0) errores.push(1);
-  if(!e || !s) errores.push(1);
-  if(!check) errores.push(1);
-  if(e && s){
-
-    let entradaDate = new Date(e);
-    let salidaDate = new Date(s);
-    let entradaHora = entradaDate.getHours();
-    let salidaHora = salidaDate.getHours();
-    if(salidaDate <= entradaDate) errores.push(1);
-    if(entradaHora < 7 || entradaHora >= 22) errores.push(1);
-    if(salidaHora < 7 || salidaHora >= 22) errores.push(1);
-  }
-  return errores.length > 0;
-}
-
 function update(){
 
   let nombreInput = document.getElementById("nombre").value;
@@ -463,12 +430,22 @@ function update(){
 
   let boton=document.getElementById("link");
 
-  if(!e || !s || !check || total===0){
-    boton.href="#";
-    boton.classList.remove("active");
-    boton.style.opacity="0.6";
-    return;
-  }
+if(
+  !nombreInput ||
+  !razaInput ||
+  !edadInput ||
+  !pesoInput ||
+  num <= 0 ||
+  !e ||
+  !s ||
+  !check ||
+  total === 0
+){
+  boton.href="#";
+  boton.classList.remove("active");
+  boton.style.opacity="0.6";
+  return;
+}
 
   boton.classList.add("active");
   boton.style.opacity="1";
