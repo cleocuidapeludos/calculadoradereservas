@@ -193,7 +193,7 @@ input[type="checkbox"]{
 <div class="logo">
   <div class="logo-circle">
     <!-- ✅ HUELLA GRANDE + SOLO BORDE -->
-    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#f36d3b" stroke-width="1.8">
+    <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="#f36d3b" stroke-width="1.8">
       <circle cx="7" cy="8" r="2"/>
       <circle cx="12" cy="6" r="2"/>
       <circle cx="17" cy="8" r="2"/>
@@ -264,11 +264,14 @@ Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo
 
 <!-- ✅ TEXTO DE PRECIOS -->
 <p style="font-size:13px; color:#6f6f6f; margin-top:10px; line-height:1.4;">
-  Guardería de día (sin noche): <b>18€</b><br>
-  Estancia de 24 h (con noche): <b>20€</b><br>
-  Día adicional: <b>18€</b> • Noche adicional: <b>20€</b> (por perro)
+  Guardería de día: <b>18€</b><br>
+  Estancia con noche (24 h): <b>20€</b><br>
+  Día adicional: <b>18€</b><br>
+  <span style="white-space:nowrap;">
+    Noche adicional: <b>20€</b>
+  </span>
+  (por perro)
 </p>
-
 </div>
 
 </div>
@@ -450,7 +453,7 @@ function calc(){
     let entradaHora = entradaDate.getHours();
 
     if(entradaHora < 7 || entradaHora >= 22){
-      errorEntrada.innerText = "Hora fuera de horario (07:00–22:00)";
+      errorEntrada.innerText = "Solo recibimos perritos entre 07:00 y 22:00 🐾";
     }
   }
 
@@ -460,7 +463,7 @@ function calc(){
     let salidaHora = salidaDate.getHours();
 
     if(salidaHora < 7 || salidaHora >= 22){
-      errorSalida.innerText = "Hora fuera de horario (07:00–22:00)";
+      errorSalida.innerText = "Horario de recogida: 07:00–22:00 🐾";
     }
   }
 
@@ -470,7 +473,7 @@ function calc(){
     let salidaDate = new Date(s);
 
     if(salidaDate <= entradaDate){
-      errorSalida.innerText = "Debe ser posterior a la entrada";
+      errorSalida.innerText = "La salida debe ser después de la entrada ";
     }
   }
 }
