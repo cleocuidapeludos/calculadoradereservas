@@ -268,6 +268,8 @@ Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo
 
 </div>
 
+</div>
+
 <div class="review">
 🧡 <strong>"Mi perrita volvió feliz."</strong><br>
 Trato cariñoso, paseos diarios y muchas fotos.  
@@ -277,7 +279,17 @@ Trato cariñoso, paseos diarios y muchas fotos.
 <a id="link" class="btn" href="#" onclick="handleClick(event)" target="_blank">
 Reservar por WhatsApp
 </a>
-  <p id="error" style="color:#d9534f; text-align:center; font-size:13px; margin-top:10px;"></p>
+  <div id="errorBox" style="
+  display:none;
+  background:#fff4f4;
+  border:1px solid #f5c2c2;
+  color:#b94a48;
+  padding:14px 16px;
+  border-radius:14px;
+  font-size:13px;
+  margin-top:12px;
+  line-height:1.4;
+"></div>
 
 <p style="text-align:center;font-size:12px;color:#888;">
 Cleo te responderá lo antes posible 😊
@@ -323,23 +335,44 @@ if(!document.getElementById("peso").value) errores.push("Peso");
 if(num <= 0) errores.push("Número de perros");
 if(!eDate) errores.push("Fecha de entrada");
 if(!sDate) errores.push("Fecha de salida");
-if(!check) errores.push("Confirmación del tamaño");
+if(!check) errores.push("Confirma que es un perro pequeño o mediano");
 
 // validar fechas
 if(eDate && sDate){
-  if(new Date(sDate) <= new Date(eDate)){
+
+  let entradaDate = new Date(eDate);
+  let salidaDate = new Date(sDate);
+
+  let entradaHora = entradaDate.getHours();
+  let salidaHora = salidaDate.getHours();
+
+  if(salidaDate <= entradaDate){
     errores.push("La salida debe ser posterior a la entrada");
+  }
+
+  if(entradaHora < 7 || entradaHora >= 22){
+    errores.push("La hora de entrada debe ser entre 07:00 y 22:00");
+  }
+
+  if(salidaHora < 7 || salidaHora >= 22){
+    errores.push("La hora de salida debe ser entre 07:00 y 22:00");
   }
 }
 
 if(errores.length > 0){
   e.preventDefault();
-  document.getElementById("error").innerText =
-    "Completa estos datos:\n• " + errores.join("\n• ");
+
+  let box = document.getElementById("errorBox");
+  box.style.display = "block";
+  box.innerText = "Revisa estos datos:\n• " + errores.join("\n• ");
+
   return;
 }
 
-document.getElementById("error").innerText = "";
+// si todo está bien → ocultar error
+let box = document.getElementById("errorBox");
+box.style.display = "none";
+box.innerText = "";
 }
 
 function setSoc(val){
