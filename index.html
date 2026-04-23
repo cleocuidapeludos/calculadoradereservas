@@ -335,14 +335,17 @@ function handleClick(e){
   let errores = [];
 
   // campos obligatorios
-  if(!nombre) errores.push("Nombre del perro");
-  if(!raza) errores.push("Raza");
-  if(!edad) errores.push("Edad del perro");
-  if(!peso) errores.push("Peso");
-  if(num <= 0) errores.push("Número de perros");
-  if(!eDate) errores.push("Fecha de entrada");
-  if(!sDate) errores.push("Fecha de salida");
-  if(!check) errores.push("Confirma que es un perro pequeño o mediano");
+if(!nombre) errores.push("Nombre del perro");
+if(!raza) errores.push("Raza");
+if(!document.getElementById("edad").value) errores.push("Edad del perro");
+if(!document.getElementById("peso").value) errores.push("Peso"); 
+if(num <= 0) errores.push("Número de perros");
+
+if(!eDate) errores.push("Fecha de entrada");
+if(!sDate) errores.push("Fecha de salida");
+
+// 👇 IMPORTANTE: dejar este SIEMPRE AL FINAL
+if(!check) errores.push("Confirma que es un perro pequeño o mediano");
 
   // validar hora entrada
   if(eDate){
