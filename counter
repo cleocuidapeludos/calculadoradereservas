@@ -216,7 +216,7 @@ input[type="checkbox"]{
 <div style="display:flex; gap:16px; width:100%;">
   <div style="flex:1; min-width:0;">
     <label>Edad</label>
-    <input id="edad" placeholder="Ej. 2 años" oninput="update()">
+    <input id="edad" placeholder="Ej. 2 años (aprox.)">
   </div>
   <div style="flex:1; min-width:0;">
     <label>Peso (kg)</label>
@@ -404,6 +404,7 @@ function hayErrores(){
 
   let nombre = document.getElementById("nombre").value;
   let raza = document.getElementById("raza").value;
+  let edad = document.getElementById("edad").value;
   let peso = document.getElementById("peso").value;
   let e = entrada.value;
   let s = salida.value;
@@ -411,6 +412,7 @@ function hayErrores(){
 
   if(!nombre) errores.push(1);
   if(!raza) errores.push(1);
+  if(!edad) errores.push(1);
   if(!peso) errores.push(1);
   if(num <= 0) errores.push(1);
   if(!e || !s) errores.push(1);
