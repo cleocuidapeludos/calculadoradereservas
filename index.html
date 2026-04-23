@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -386,7 +385,7 @@ function handleClick(e){
 
     let box = document.getElementById("errorBox");
     box.style.display = "block";
-    box.innerText = "Revisa estos datos:\n• " + errores.join("\n• ");
+    box.innerText = "Casi listo 🐾 Solo nos falta:\n•  " + errores.join("\n• ");
 
     return;
   }
@@ -494,7 +493,27 @@ function update(){
   document.getElementById("total").innerText=total+"€";
 
   let boton=document.getElementById("link");
+let errores = [];
 
+if(!nombreInput) errores.push("Nombre del perro");
+if(!razaInput) errores.push("Raza");
+if(!edadInput) errores.push("Edad del perro");
+if(!pesoInput) errores.push("Peso");
+if(num <= 0) errores.push("Número de perros");
+if(!e) errores.push("Fecha de entrada");
+if(!s) errores.push("Fecha de salida");
+if(hayErrorFechas()) errores.push("Revisa fechas y horarios");
+if(!check) errores.push("Confirma tamaño del perro");
+
+let box = document.getElementById("errorBox");
+
+if(errores.length > 0){
+  box.style.display = "block";
+  box.innerText = "Revisa estos datos:\n• " + errores.join("\n• ");
+}else{
+  box.style.display = "none";
+  box.innerText = "";
+}
 if(
   !nombreInput ||
   !razaInput ||
