@@ -96,8 +96,10 @@ input[type="checkbox"]{
   justify-content:space-between;
   background:#f6f2ee;
   border-radius:20px;
-  padding:5px 10px;
-  margin-bottom:15px;
+  padding:10px 16px;
+  margin-bottom:18px;
+  width:100%;
+  box-sizing:border-box;
 }
 
 .counter button{
@@ -393,6 +395,37 @@ function calc(){
   if(h<=24) return 20*num;
 
   return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
+}
+  // 👇 AQUÍ MISMO PEGAS ESTO
+
+function hayErrores(){
+
+  let errores = [];
+
+  let nombre = document.getElementById("nombre").value;
+  let raza = document.getElementById("raza").value;
+  let peso = document.getElementById("peso").value;
+  let e = entrada.value;
+  let s = salida.value;
+  let check = document.getElementById("check").checked;
+
+  if(!nombre) errores.push(1);
+  if(!raza) errores.push(1);
+  if(!peso) errores.push(1);
+  if(num <= 0) errores.push(1);
+  if(!e || !s) errores.push(1);
+  if(!check) errores.push(1);
+  if(e && s){
+
+    let entradaDate = new Date(e);
+    let salidaDate = new Date(s);
+    let entradaHora = entradaDate.getHours();
+    let salidaHora = salidaDate.getHours();
+    if(salidaDate <= entradaDate) errores.push(1);
+    if(entradaHora < 7 || entradaHora >= 22) errores.push(1);
+    if(salidaHora < 7 || salidaHora >= 22) errores.push(1);
+  }
+  return errores.length > 0;
 }
 
 function update(){
