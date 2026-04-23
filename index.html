@@ -10,25 +10,50 @@
   --orange:#f36d3b;
 }
 
+/* 🔥 FONDO MEJORADO */
 body{
   font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  background:linear-gradient(180deg,#fff3e6 0%,#f9f4ef 100%);
+  background:linear-gradient(180deg,#fff3e6 0%, #f5efe7 60%, #efe7dc 100%);
   margin:0;
   padding:20px;
 }
 
 .container{max-width:420px;margin:auto;}
 
-.logo{text-align:center;margin-bottom:20px;}
-.logo-circle{
-  width:60px;height:60px;background:#ffe5d6;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  margin:auto;font-size:24px;
+/* 🔥 HEADER BONITO */
+.logo{
+  text-align:center;
+  margin-bottom:30px;
 }
 
-h1{text-align:center;font-size:24px;margin:10px 0;font-weight:800;}
-.sub{text-align:center;color:#888;margin-bottom:20px;}
+.logo-circle{
+  width:70px;
+  height:70px;
+  background:#fde6d6;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  font-size:26px;
+}
 
+h1{
+  text-align:center;
+  font-size:26px;
+  margin:0;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.sub{
+  text-align:center;
+  color:#8c8c8c;
+  margin-top:8px;
+  font-size:15px;
+}
+
+/* CARD */
 .card{
   background:white;
   padding:20px;
@@ -62,7 +87,7 @@ input:focus{
   box-shadow:0 0 0 2px rgba(243,109,59,0.2);
 }
 
-/* 🔥 FIX CHECKBOX */
+/* checkbox */
 input[type="checkbox"]{
   width:20px;
   height:20px;
@@ -75,19 +100,33 @@ input[type="checkbox"]{
   display:flex;align-items:center;justify-content:space-between;
   background:#f6f2ee;border-radius:20px;padding:5px 10px;margin-bottom:15px;
 }
+
 .counter button{
   border:none;background:#eee;width:35px;height:35px;border-radius:50%;
 }
+
 .counter span{font-weight:bold;}
 
 .pills{display:flex;gap:10px;}
-.pill{
-  flex:1;padding:12px;border-radius:20px;background:#eee;
-  text-align:center;cursor:pointer;font-weight:600;
-}
-.pill.active{background:var(--orange);color:white;}
 
-/* 🔥 FIX CHECKBOX CONTENEDOR */
+.pill{
+  flex:1;
+  height:60px;
+  border-radius:20px;
+  background:#eee;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.pill.active{
+  background:var(--orange);
+  color:white;
+}
+
 .check{
   margin-top:15px;
   background:#f6f2ee;
@@ -112,31 +151,15 @@ input[type="checkbox"]{
   color:var(--orange);
 }
 
-/* 🔥 CARD MARÍA PRO */
+/* 🔥 CARD MARÍA BONITA (la buena) */
 .review{
-  background:#fff4e5;
-  border:1px solid #f3d2a2;
-  padding:18px 18px 18px 50px;
+  background:#fdebd3;
+  border:1px solid #f3cfa4;
+  padding:18px;
   border-radius:20px;
   margin:20px 0;
   font-size:14px;
   line-height:1.5;
-  position:relative;
-}
-
-.review::before{
-  content:"❤";
-  position:absolute;
-  left:18px;
-  top:18px;
-  font-size:18px;
-  color:#f36d3b;
-}
-
-.review strong{
-  display:block;
-  font-size:15px;
-  margin-bottom:4px;
 }
 
 /* BOTÓN */
@@ -164,10 +187,11 @@ input[type="checkbox"]{
 
 <div class="container">
 
+<!-- 🔥 HEADER -->
 <div class="logo">
-<div class="logo-circle">🐾</div>
-<h1>Cuidamos de tu peludo como si fuera nuestro</h1>
-<div class="sub">Calcula el precio de tu reserva</div>
+  <div class="logo-circle">🐾</div>
+  <h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
+  <div class="sub">Calcula el precio de tu reserva</div>
 </div>
 
 <div class="card">
@@ -183,7 +207,6 @@ input[type="checkbox"]{
     <label>Edad</label>
     <input id="edad" placeholder="Ej. 2 años" oninput="update()">
   </div>
-
   <div style="flex:1;">
     <label>Peso (kg)</label>
     <input id="peso" placeholder="Ej. 8" oninput="update()">
@@ -221,10 +244,11 @@ input[type="checkbox"]{
 <div class="price" id="total">0€</div>
 </div>
 
+<!-- 🔥 REVIEW CORRECTA -->
 <div class="review">
-<strong>Mi perrita volvió feliz.</strong>
-Trato cariñoso, paseos diarios y muchas fotos.<br>
-Repetiremos seguro — María G.
+🧡 <strong>"Mi perrita volvió feliz."</strong><br>
+Trato cariñoso, paseos diarios y muchas fotos.  
+¡Repetiremos seguro! — María G.
 </div>
 
 <a id="link" class="btn" target="_blank">
@@ -232,14 +256,28 @@ Reservar por WhatsApp
 </a>
 
 <p style="text-align:center;font-size:12px;color:#888;">
-Cleo te responderá lo antes posible
+Cleo te responderá lo antes posible 😊
 </p>
 
 </div>
 
 <script>
+
 let num=1;
 let sociabilidad="Sociable";
+
+/* FECHA BONITA */
+function formatearFecha(f){
+  if(!f) return "-";
+  let d = new Date(f);
+  return d.toLocaleString('es-ES', {
+    day:'2-digit',
+    month:'2-digit',
+    year:'numeric',
+    hour:'2-digit',
+    minute:'2-digit'
+  });
+}
 
 function change(v){
   num+=v;
@@ -298,22 +336,22 @@ function update(){
 
 Quiero consultar disponibilidad
 
-────────────
+———
 
 Nombre del perro: ${nombre || "-"}
 Raza: ${raza || "-"}
 Edad: ${edad || "-"}
 Peso: ${peso ? peso + " kg" : "-"}
 
-────────────
+———
 
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
 
-Entrada: ${e.replace('T',' ')}
-Salida: ${s.replace('T',' ')}
+Entrada: ${formatearFecha(e)}
+Salida: ${formatearFecha(s)}
 
-────────────
+———
 
 Precio: ${total}€
 
@@ -323,6 +361,7 @@ Precio: ${total}€
 
   boton.href="https://wa.me/34640949118?text="+msg;
 }
+
 </script>
 
 </body>
