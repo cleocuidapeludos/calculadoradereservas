@@ -232,10 +232,10 @@ input[type="checkbox"]{
 </div>
 
 <label>Entrada</label>
-<input type="datetime-local" id="entrada" onchange="update()">
-<div id="errorEntrada" ...></div>
+<input type="datetime-local" id="entrada" oninput="validarFechas(); update()">
+<div id="errorEntrada" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
 <label>Salida</label>
-<input type="datetime-local" id="salida" onchange="update()">
+<input type="datetime-local" id="salida" oninput="validarFechas(); update()">
 <div id="errorSalida" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
 
 <label>Sociabilidad</label>
@@ -321,7 +321,7 @@ function change(v){
   if(num<1) num=1;
   document.getElementById("num").innerText=num;
   update();
-} // 👈 ESTA LLAVE FALTABA
+} 
 
 function handleClick(e){
 
@@ -412,6 +412,68 @@ function calc(){
 
   return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
 }
+
+  function hayErrorFechas(){
+
+  let e = entrada.value;
+  let s = salida.value;
+
+  if(!e || !s) return false;
+
+  let entradaDate = new Date(e);
+  let salidaDate = new Date(s);
+
+  let entradaHora = entradaDate.getHours();
+  let salidaHora = salidaDate.getHours();
+
+  if(entradaHora < 7 || entradaHora >= 22) return true;
+  if(salidaHora < 7 || salidaHora >= 22) return true;
+  if(salidaDate <= entradaDate) return true;
+
+  return false;
+}
+
+  function validarFechas(){
+
+  let e = entrada.value;
+  let s = salida.value;
+
+  let errorEntrada = document.getElementById("errorEntrada");
+  let errorSalida = document.getElementById("errorSalida");
+
+  errorEntrada.innerText = "";
+  errorSalida.innerText = "";
+
+  // validar entrada
+  if(e){
+    let entradaDate = new Date(e);
+    let entradaHora = entradaDate.getHours();
+
+    if(entradaHora < 7 || entradaHora >= 22){
+      errorEntrada.innerText = "Hora fuera de horario (07:00–22:00)";
+    }
+  }
+
+  // validar salida
+  if(s){
+    let salidaDate = new Date(s);
+    let salidaHora = salidaDate.getHours();
+
+    if(salidaHora < 7 || salidaHora >= 22){
+      errorSalida.innerText = "Hora fuera de horario (07:00–22:00)";
+    }
+  }
+
+  // validar orden
+  if(e && s){
+    let entradaDate = new Date(e);
+    let salidaDate = new Date(s);
+
+    if(salidaDate <= entradaDate){
+      errorSalida.innerText = "Debe ser posterior a la entrada";
+    }
+  }
+}
   // 👇 AQUÍ MISMO PEGAS ESTO
 
 function update(){
@@ -439,13 +501,16 @@ if(
   !e ||
   !s ||
   !check ||
-  total === 0
+  total === 0 ||
+  hayErrorFechas()
 ){
   boton.href="#";
   boton.classList.remove("active");
   boton.style.opacity="0.6";
+  validarFechas();
   return;
 }
+  validarFechas();
 
   boton.classList.add("active");
   boton.style.opacity="1";
