@@ -121,8 +121,14 @@ input[type="checkbox"]{
   border-radius:14px;
   font-size:13px;
   display:flex;
-  align-items:center;
+  align-items:flex-start; /* 👈 IMPORTANTE */
   gap:10px;
+  line-height:1.4;
+}
+
+.check span{
+  flex:1; /* 👈 evita que se rompa */
+  word-break:break-word; /* 👈 fuerza ajuste */
 }
 
 .total{
@@ -170,7 +176,7 @@ input[type="checkbox"]{
 <div class="logo">
   <div class="logo-circle">
     <!-- ✅ HUELLA GRANDE + SOLO BORDE -->
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f36d3b" stroke-width="1.8">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#f36d3b" stroke-width="1.8">
       <circle cx="7" cy="8" r="2"/>
       <circle cx="12" cy="6" r="2"/>
       <circle cx="17" cy="8" r="2"/>
@@ -239,9 +245,9 @@ Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo
 
 <!-- ✅ TEXTO DE PRECIOS -->
 <p style="font-size:13px; color:#6f6f6f; margin-top:10px; line-height:1.4;">
-  Guardería de día (sin noche): <b>18€</b> • Estancia de 24 h (noche): <b>20€</b> • 
-  si se supera ese tiempo, se añade tiempo extra: <b>18€</b> • 
-  cada nuevo ciclo completo de 24 h vuelve a ser <b>20€</b> (por perro).
+  Guardería de día (sin noche): <b>18€</b><br>
+  Estancia de 24 h (con noche): <b>20€</b><br>
+  Día adicional: <b>18€</b> • Noche adicional: <b>20€</b> (por perro)
 </p>
 
 </div>
