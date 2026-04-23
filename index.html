@@ -10,10 +10,10 @@
   --orange:#f36d3b;
 }
 
-/* 🔥 FONDO MEJORADO */
+/* 🔥 FONDO CON DEGRADADO (ajustado) */
 body{
   font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  background:linear-gradient(180deg,#fff3e6 0%, #f5efe7 60%, #efe7dc 100%);
+  background:linear-gradient(180deg,#fde7d3 0%, #f5efe7 60%, #efe7dc 100%);
   margin:0;
   padding:20px;
 }
@@ -29,7 +29,8 @@ body{
 .logo-circle{
   width:70px;
   height:70px;
-  background:#fde6d6;
+  background:#fde7d3;
+  color:#f36d3b;
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -151,7 +152,7 @@ input[type="checkbox"]{
   color:var(--orange);
 }
 
-/* 🔥 CARD MARÍA BONITA (la buena) */
+/* 🔥 CARD MARÍA BONITA */
 .review{
   background:#fdebd3;
   border:1px solid #f3cfa4;
@@ -232,10 +233,18 @@ input[type="checkbox"]{
 <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
 </div>
 
+<!-- ✅ CHECKBOX ACTUALIZADO -->
 <div class="check">
 <input type="checkbox" id="check" onchange="update()">
-<span>Confirmo que mi perro es pequeño o mediano</span>
+<span>
+Confirmo que mi perro es <b>pequeño o mediano</b> (<b>no razas grandes</b>)
+</span>
 </div>
+
+<!-- ✅ TEXTO DE AVISO -->
+<p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:8px;">
+Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo y seguro 🐾
+</p>
 
 </div>
 
@@ -244,7 +253,6 @@ input[type="checkbox"]{
 <div class="price" id="total">0€</div>
 </div>
 
-<!-- 🔥 REVIEW CORRECTA -->
 <div class="review">
 🧡 <strong>"Mi perrita volvió feliz."</strong><br>
 Trato cariñoso, paseos diarios y muchas fotos.  
@@ -262,15 +270,13 @@ Cleo te responderá lo antes posible 😊
 </div>
 
 <script>
-
 let num=1;
 let sociabilidad="Sociable";
 
-/* FECHA BONITA */
 function formatearFecha(f){
   if(!f) return "-";
   let d = new Date(f);
-  return d.toLocaleString('es-ES', {
+  return d.toLocaleString('es-ES',{
     day:'2-digit',
     month:'2-digit',
     year:'numeric',
@@ -307,11 +313,10 @@ function calc(){
 }
 
 function update(){
-
-  let nombre=document.getElementById("nombre").value;
-  let raza=document.getElementById("raza").value;
-  let edad=document.getElementById("edad").value;
-  let peso=document.getElementById("peso").value;
+  let nombre=nombre.value;
+  let raza=raza.value;
+  let edad=edad.value;
+  let peso=peso.value;
 
   let e=entrada.value;
   let s=salida.value;
@@ -334,16 +339,10 @@ function update(){
 
   let texto=`¡Hola, Cleo!
 
-Quiero consultar disponibilidad
-
-———
-
 Nombre del perro: ${nombre || "-"}
 Raza: ${raza || "-"}
 Edad: ${edad || "-"}
 Peso: ${peso ? peso + " kg" : "-"}
-
-———
 
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
@@ -351,17 +350,10 @@ Sociabilidad: ${sociabilidad}
 Entrada: ${formatearFecha(e)}
 Salida: ${formatearFecha(s)}
 
-———
+Precio: ${total}€`;
 
-Precio: ${total}€
-
-¿Tendrías disponibilidad?`;
-
-  let msg=encodeURIComponent(texto);
-
-  boton.href="https://wa.me/34640949118?text="+msg;
+  boton.href="https://wa.me/34640949118?text="+encodeURIComponent(texto);
 }
-
 </script>
 
 </body>
