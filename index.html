@@ -225,7 +225,7 @@ input[type="checkbox"]{
 <label>Número de perros</label>
 <div class="counter">
 <button onclick="change(-1)">−</button>
-<span id="num">1</span>
+<span id="num">0</span>
 <button onclick="change(1)">+</button>
 </div>
 
@@ -286,7 +286,7 @@ Cleo te responderá lo antes posible 😊
 </div>
 
 <script>
-let num=1;
+let num=0;
 let sociabilidad="Sociable";
 
 function formatearFecha(f){
@@ -315,22 +315,31 @@ function handleClick(e){
   let sDate = salida.value;
   let check = document.getElementById("check").checked;
 
-  let error = "";
+  let errores = [];
 
-  if(!nombre) error = "Falta el nombre del perrito";
-  else if(!raza) error = "Falta la raza";
-  else if(!eDate) error = "Falta la fecha de entrada";
-  else if(!sDate) error = "Falta la fecha de salida";
-  else if(new Date(sDate) <= new Date(eDate)) error = "La salida debe ser posterior a la entrada";
-  else if(!check) error = "Debes confirmar el tamaño del perro";
+if(!nombre) errores.push("Nombre del perro");
+if(!raza) errores.push("Raza");
+if(!document.getElementById("peso").value) errores.push("Peso");
+if(num <= 0) errores.push("Número de perros");
+if(!eDate) errores.push("Fecha de entrada");
+if(!sDate) errores.push("Fecha de salida");
+if(!check) errores.push("Confirmación del tamaño");
 
-  if(error){
-    e.preventDefault();
-    document.getElementById("error").innerText = error;
-    return;
+// validar fechas
+if(eDate && sDate){
+  if(new Date(sDate) <= new Date(eDate)){
+    errores.push("La salida debe ser posterior a la entrada");
   }
+}
 
-  document.getElementById("error").innerText = "";
+if(errores.length > 0){
+  e.preventDefault();
+  document.getElementById("error").innerText =
+    "Completa estos datos:\n• " + errores.join("\n• ");
+  return;
+}
+
+document.getElementById("error").innerText = "";
 }
 
 function setSoc(val){
