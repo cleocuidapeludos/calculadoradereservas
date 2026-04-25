@@ -235,11 +235,17 @@ input[type="checkbox"]{
 
 <div class="card">
 
-<label>Nombre del perro</label>
-<input id="nombre" placeholder="Ej. Luna" oninput="update()">
+<div class="row">
+  <div>
+    <label>Nombre</label>
+    <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+  </div>
 
-<label>Raza</label>
-<input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+  <div>
+    <label>Raza</label>
+    <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+  </div>
+</div>
 
 <div style="display:flex; gap:16px; width:100%;">
   <div style="flex:1; min-width:0;">
