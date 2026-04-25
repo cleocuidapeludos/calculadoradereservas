@@ -325,7 +325,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 ¡Repetiremos seguro! — María G.
 </div>
 
-<a id="link" class="btn" href="#" target="_blank">
+<a id="link" class="btn" target="_blank">
 Reservar por WhatsApp
 </a>
   <div id="errorBox" style="
@@ -502,9 +502,10 @@ function update(){
     box.style.display = "block";
     box.innerText = "Revisa los datos 👇";
 
-    boton.href="#";
+    boton.removeAttribute("href");
     boton.classList.remove("active");
     boton.style.opacity="0.6";
+    boton.style.pointerEvents = "none";
     return;
   }else{
     box.style.display = "none";
@@ -512,6 +513,7 @@ function update(){
 
   boton.classList.add("active");
   boton.style.opacity="1";
+  boton.style.pointerEvents = "auto"; 
 
   let texto=`¡Hola, Cleo!
 
@@ -531,12 +533,10 @@ Precio: ${total}€`;
   boton.href="https://wa.me/34640949118?text="+encodeURIComponent(texto);
 }
 
-
-</html>
-
 update();
 
-  </script>
+</script>
 
 </body>
+
 </html>
