@@ -207,6 +207,13 @@ input[type="checkbox"]{
   background:#25D366;
 }
 
+  .error-text{
+  color:#d9534f;
+  font-size:12px;
+  margin-top:-10px;
+  margin-bottom:10px;
+}
+
 @media (min-width: 768px){
   .review{
     max-width:420px;
@@ -239,11 +246,13 @@ input[type="checkbox"]{
   <div>
     <label>Nombre</label>
     <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+    <div id="errorNombre" class="error-text"></div>
   </div>
 
   <div>
     <label>Raza</label>
     <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+    <div id="errorRaza" class="error-text"></div>
   </div>
 </div>
 
@@ -251,10 +260,12 @@ input[type="checkbox"]{
   <div style="flex:1; min-width:0;">
     <label>Edad</label>
     <input id="edad" placeholder="Ej. 2 años (aprox.)" oninput="update()">
+    <div id="errorEdad" class="error-text"></div>
   </div>
   <div style="flex:1; min-width:0;">
     <label>Peso (kg)</label>
     <input id="peso" placeholder="Ej. 8" oninput="update()">
+    <div id="errorPeso" class="error-text"></div>
   </div>
 </div>
 
@@ -314,7 +325,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 ¡Repetiremos seguro! — María G.
 </div>
 
-<a id="link" class="btn" href="#" onclick="handleClick(event)" target="_blank">
+<a id="link" class="btn" href="#" target="_blank">
 Reservar por WhatsApp
 </a>
   <div id="errorBox" style="
@@ -360,98 +371,20 @@ function change(v){
   update();
 } 
 
-function handleClick(e){
+  function calc(){
+  let e = entrada.value;
+  let s = salida.value;
+  if(!e || !s) return 0;
 
-  let nombre = document.getElementById("nombre").value;
-  let raza = document.getElementById("raza").value;
-  let edad = document.getElementById("edad").value;
-  let peso = document.getElementById("peso").value;
-  let eDate = entrada.value;
-  let sDate = salida.value;
-  let check = document.getElementById("check").checked;
+  let h = (new Date(s) - new Date(e)) / 3600000;
+  if(h <= 0) return 0;
 
-  let errores = [];
+  if(h <= 24) return 20 * num;
 
-  // datos básicos
-  if(!nombre) errores.push("Nombre del perro");
-  if(!raza) errores.push("Raza");
-  if(!edad) errores.push("Edad");
-  if(!peso) errores.push("Peso");
-  if(num <= 0) errores.push("Número de perros");
-  if(!eDate) errores.push("Fecha de entrada");
-  if(!sDate) errores.push("Fecha de salida");
-
-  // validar hora entrada
-  if(eDate){
-    let entradaDate = new Date(eDate);
-    let entradaHora = entradaDate.getHours();
-
-    if(entradaHora < 7 || entradaHora >= 22){
-      errores.push("Hora de entrada fuera de horario (07:00–22:00)");
-    }
-  }
-
-  // validar hora salida
-  if(sDate){
-    let salidaDate = new Date(sDate);
-    let salidaHora = salidaDate.getHours();
-
-    if(salidaHora < 7 || salidaHora >= 22){
-      errores.push("Hora de salida fuera de horario (07:00–22:00)");
-    }
-  }
-
-  // validar orden fechas
-  if(eDate && sDate){
-    let entradaDate = new Date(eDate);
-    let salidaDate = new Date(sDate);
-
-    if(salidaDate <= entradaDate){
-      errores.push("La salida debe ser posterior a la entrada");
-    }
-  }
-
-  // 👇 SIEMPRE AL FINAL
-  if(!check) errores.push("Confirma que es un perro pequeño o mediano");
-
-  // mostrar errores
-  if(errores.length > 0){
-    e.preventDefault();
-
-    let box = document.getElementById("errorBox");
-    box.style.display = "block";
-    box.innerText = "Casi listo 🐾 Solo nos falta:\n•  " + errores.join("\n• ");
-
-    return;
-  }
-
-  // ocultar error si todo ok
-  let box = document.getElementById("errorBox");
-  box.style.display = "none";
-  box.innerText = "";
-}
-function setSoc(val){
-  sociabilidad=val;
-  document.getElementById("p1").classList.toggle("active",val==="Sociable");
-  document.getElementById("p2").classList.toggle("active",val!=="Sociable");
-  update();
+  return (Math.floor(h/24)*20 + (h%24>0?18:0)) * num;
 }
 
-function calc(){
-  let e=entrada.value;
-  let s=salida.value;
-  if(!e||!s) return 0;
-
-  let h=(new Date(s)-new Date(e))/3600000;
-  if(h<=0) return 0;
-
-  if(h<=24) return 20*num;
-
-  return (Math.floor(h/24)*20 + (h%24>0?18:0))*num;
-}
-
-  function hayErrorFechas(){
-
+function hayErrorFechas(){
   let e = entrada.value;
   let s = salida.value;
 
@@ -470,8 +403,7 @@ function calc(){
   return false;
 }
 
-  function validarFechas(){
-
+function validarFechas(){
   let e = entrada.value;
   let s = salida.value;
 
@@ -481,103 +413,112 @@ function calc(){
   errorEntrada.innerText = "";
   errorSalida.innerText = "";
 
-  // validar entrada
   if(e){
     let entradaDate = new Date(e);
     let entradaHora = entradaDate.getHours();
 
     if(entradaHora < 7 || entradaHora >= 22){
-      errorEntrada.innerText = "Solo recibimos perritos entre 07:00 y 22:00 🐾";
+      errorEntrada.innerText = "Horario: 07:00–22:00 🐾";
     }
   }
 
-  // validar salida
   if(s){
     let salidaDate = new Date(s);
     let salidaHora = salidaDate.getHours();
 
     if(salidaHora < 7 || salidaHora >= 22){
-      errorSalida.innerText = "Horario de recogida: 07:00–22:00 🐾";
+      errorSalida.innerText = "Horario: 07:00–22:00 🐾";
     }
   }
 
-  // validar orden
   if(e && s){
     let entradaDate = new Date(e);
     let salidaDate = new Date(s);
 
     if(salidaDate <= entradaDate){
-      errorSalida.innerText = "La salida debe ser después de la entrada ";
+      errorSalida.innerText = "La salida debe ser después";
     }
   }
 }
-  // 👇 AQUÍ MISMO PEGAS ESTO
+
+function limpiarErrores(){
+  const ids = ["errorNombre","errorRaza","errorEdad","errorPeso"];
+  ids.forEach(id=>{
+    let el = document.getElementById(id);
+    if(el) el.innerText = "";
+  });
+}
 
 function update(){
+
 
   let nombreInput = document.getElementById("nombre").value;
   let razaInput = document.getElementById("raza").value;
   let edadInput = document.getElementById("edad").value;
   let pesoInput = document.getElementById("peso").value;
 
-  let e=entrada.value;
-  let s=salida.value;
-  let check=document.getElementById("check").checked;
+  let e = entrada.value;
+  let s = salida.value;
+  let check = document.getElementById("check").checked;
 
-  let total=calc();
-  document.getElementById("total").innerText=total+"€";
+  let total = calc();
+  document.getElementById("total").innerText = total + "€";
 
-  let boton=document.getElementById("link");
-let errores = [];
+  let boton = document.getElementById("link");
+  let box = document.getElementById("errorBox");
 
-if(!nombreInput) errores.push("Nombre del perro");
-if(!razaInput) errores.push("Raza");
-if(!edadInput) errores.push("Edad del perro");
-if(!pesoInput) errores.push("Peso");
-if(num <= 0) errores.push("Número de perros");
-if(!e) errores.push("Fecha de entrada");
-if(!s) errores.push("Fecha de salida");
-if(hayErrorFechas()) errores.push("Revisa fechas y horarios");
-if(!check) errores.push("Confirma tamaño del perro");
+  limpiarErrores();
 
-let box = document.getElementById("errorBox");
+  if(!nombreInput){
+    document.getElementById("errorNombre").innerText = "Introduce el nombre";
+  }
 
-if(errores.length > 0){
-  box.style.display = "block";
-  box.innerText = "Casi listo 🐾 Solo nos falta:\n• " + errores.join("\n• ");
-}else{
-  box.style.display = "none";
-  box.innerText = "";
-}
-if(
-  !nombreInput ||
-  !razaInput ||
-  !edadInput ||
-  !pesoInput ||
-  num <= 0 ||
-  !e ||
-  !s ||
-  !check ||
-  total === 0 ||
-  hayErrorFechas()
-){
-  boton.href="#";
-  boton.classList.remove("active");
-  boton.style.opacity="0.6";
+  if(!razaInput){
+    document.getElementById("errorRaza").innerText = "Introduce la raza";
+  }
+
+  if(!edadInput){
+    document.getElementById("errorEdad").innerText = "Introduce la edad";
+  }
+
+  if(!pesoInput){
+    document.getElementById("errorPeso").innerText = "Introduce el peso";
+  }
+
   validarFechas();
-  return;
-}
-  validarFechas();
+
+  if(
+    !nombreInput ||
+    !razaInput ||
+    !edadInput ||
+    !pesoInput ||
+    num <= 0 ||
+    !e ||
+    !s ||
+    !check ||
+    total === 0 ||
+    hayErrorFechas()
+  ){
+    box.style.display = "block";
+    box.innerText = "Revisa los datos 👇";
+
+    boton.href="#";
+    boton.classList.remove("active");
+    boton.style.opacity="0.6";
+    return;
+  }else{
+    box.style.display = "none";
+  }
 
   boton.classList.add("active");
   boton.style.opacity="1";
 
   let texto=`¡Hola, Cleo!
 
-Nombre del perro: ${nombreInput || "-"}
-Raza: ${razaInput || "-"}
-Edad: ${edadInput || "-"}
-Peso: ${pesoInput ? pesoInput + " kg" : "-"}
+Nombre del perro: ${nombreInput}
+Raza: ${razaInput}
+Edad: ${edadInput}
+Peso: ${pesoInput} kg
 
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
@@ -589,7 +530,13 @@ Precio: ${total}€`;
 
   boton.href="https://wa.me/34640949118?text="+encodeURIComponent(texto);
 }
+
+
+</html>
+
 </script>
+
+  </script>
 
 </body>
 </html>
