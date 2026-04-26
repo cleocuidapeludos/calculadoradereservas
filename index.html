@@ -457,7 +457,7 @@ function validarFechas(){
     let entradaHora = entradaDate.getHours();
 
     if(entradaHora < 7 || entradaHora >= 22){
-      errorEntrada.innerText = "Horario: 07:00–22:00 🐾";
+      errorEntrada.innerText = "La entrada debe ser entre las 07:00 y las 22:00";
     }
   }
 
@@ -466,7 +466,7 @@ function validarFechas(){
     let salidaHora = salidaDate.getHours();
 
     if(salidaHora < 7 || salidaHora >= 22){
-      errorSalida.innerText = "Horario: 07:00–22:00 🐾";
+      errorSalida.innerText = "La salida debe ser entre las 07:00 y las 22:00";
     }
   }
 
@@ -475,7 +475,7 @@ function validarFechas(){
     let salidaDate = new Date(s);
 
     if(salidaDate <= entradaDate){
-      errorSalida.innerText = "La salida debe ser después";
+      errorSalida.innerText = "La salida debe ser después de la entrada";
     }
   }
 }
@@ -549,7 +549,7 @@ if(!pesoInput) errores.push("Peso");
 if(!e) errores.push("Fecha de entrada");
 if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
-if(hayErrorFechas()) errores.push("Revisar fechas y horarios");
+if(hayErrorFechas()) errores.push("Revisa las fechas y horarios");
 
 box.innerText = "Casi listo 🐾 Solo nos falta:\n• " + errores.join("\n• ");
 
