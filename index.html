@@ -507,7 +507,18 @@ if(
   hayErrorFechas()
 ){
   box.style.display = "block";
-  box.innerText = "Revisa los datos 👇";
+let errores = [];
+
+if(!nombreInput) errores.push("Nombre del perro");
+if(!razaInput) errores.push("Raza");
+if(!edadInput) errores.push("Edad");
+if(!pesoInput) errores.push("Peso");
+if(!e) errores.push("Fecha de entrada");
+if(!s) errores.push("Fecha de salida");
+if(!check) errores.push("Confirmar tamaño del perro");
+if(hayErrorFechas()) errores.push("Revisar fechas y horarios");
+
+box.innerText = "Casi listo 🐾 Solo nos falta:\n• " + errores.join("\n• ");
 
   boton.removeAttribute("href");
   boton.classList.remove("active");
