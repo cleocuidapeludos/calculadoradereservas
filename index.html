@@ -485,19 +485,24 @@ function update(){
 validarFechas();
 
 if(
+  !nombreInput ||
+  !razaInput ||
+  !edadInput ||
+  !pesoInput ||
+  num <= 0 ||
   !e ||
   !s ||
+  !check ||
   total === 0 ||
   hayErrorFechas()
 ){
   box.style.display = "block";
-  box.innerText = "Selecciona fechas válidas 🐾";
+  box.innerText = "Revisa los datos 👇";
 
   boton.removeAttribute("href");
   boton.classList.remove("active");
   boton.style.opacity="0.6";
   boton.style.pointerEvents = "none";
-  boton.innerText = "Selecciona fechas";
 
   return;
 }else{
