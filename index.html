@@ -246,6 +246,23 @@ input[type="checkbox"]{
   }
   
 </style>
+#errorBox{
+  font-size:13px;
+  line-height:1.5;
+  border:1px solid #f3d2b8;
+  color:#8a5a3c;
+}
+
+#errorBox ul{
+  margin-top:8px;
+   padding:0
+}
+
+  #errorBox li{
+
+  margin-bottom:4px;
+
+}
 </head>
 
 <body>
@@ -285,9 +302,9 @@ Cleo te responderá lo antes posible 😊
   
 <div id="errorBox" style="
   display:none;
-  background:#fff4f4;
-  border:1px solid #f5c2c2;
-  color:#b94a48;
+background:#fff7f0;
+border:1px solid #f3d2b8;
+color:#8a5a3c;
   padding:14px 16px;
   border-radius:14px;
   font-size:13px;
@@ -551,7 +568,9 @@ if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
 if(hayErrorFechas()) errores.push("Revisa las fechas y horarios");
 
-box.innerText = "🐾 Para poder ayudarte con la reserva, solo necesitamos:\n\n• " + errores.join("\n• ");
+box.innerHTML = "🐾 Para continuar, solo necesitamos:<ul><li>" 
+  + errores.join("</li><li>") + 
+  "</li></ul>";
 
   boton.removeAttribute("href");
   boton.classList.remove("active");
