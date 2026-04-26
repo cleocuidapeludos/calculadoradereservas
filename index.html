@@ -424,6 +424,22 @@ function change(v){
   document.getElementById("num").innerText=num;
   update();
 } 
+  function setSoc(valor){
+  sociabilidad = valor;
+
+  // quitar selección de ambos
+  document.getElementById("p1").classList.remove("active");
+  document.getElementById("p2").classList.remove("active");
+
+  // activar solo el elegido
+  if(valor === "Sociable"){
+    document.getElementById("p1").classList.add("active");
+  } else {
+    document.getElementById("p2").classList.add("active");
+  }
+
+  update();
+}
   function handleClick(e){
   e.preventDefault();   // 👈 evita comportamiento raro del link
   validarActivo = true;
