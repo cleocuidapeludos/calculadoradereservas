@@ -348,6 +348,7 @@ Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo
 <script>
 let num=1;
 let sociabilidad="Sociable";
+let validarActivo = false;
 
 function formatearFecha(f){
   if(!f) return "-";
@@ -464,6 +465,7 @@ function update(){
   let boton = document.getElementById("link");
   let box = document.getElementById("errorBox");
 
+  if(validarActivo){
   limpiarErrores();
 
   if(!nombreInput){
@@ -530,8 +532,7 @@ Precio: ${total}€`;
 
   boton.href="https://wa.me/34640949118?text="+encodeURIComponent(texto);
 }
-
-update();
+}
 
 </script>
 
