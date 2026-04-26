@@ -269,7 +269,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 ¡Repetiremos seguro! — María G.
 </div>
 
-<a id="link" class="btn" target="_blank">
+<a id="link" class="btn" onclick="handleClick(event)">
 Reservar por WhatsApp
 </a>
   <div id="errorBox" style="
@@ -368,6 +368,11 @@ function change(v){
   document.getElementById("num").innerText=num;
   update();
 } 
+  function handleClick(e){
+  e.preventDefault();   // 👈 evita comportamiento raro del link
+  validarActivo = true;
+  update();
+}
 
   function calc(){
   let e = entrada.value;
