@@ -551,8 +551,7 @@ if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
 if(hayErrorFechas()) errores.push("Revisa las fechas y horarios");
 
-box.innerText = "🐾 Para poder ayudarte con la reserva, solo necesitamos:
-  \n• " + errores.join("\n• ");
+box.innerText = "🐾 Para poder ayudarte con la reserva, solo necesitamos:\n\n• " + errores.join("\n• ");
 
   boton.removeAttribute("href");
   boton.classList.remove("active");
