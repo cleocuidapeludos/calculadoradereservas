@@ -286,7 +286,7 @@ Consultar disponibilidad por WhatsApp
 Cleo te responderá lo antes posible 😊
 </p>
   
-  <div id="errorBox" style="
+ <div id="errorBox" style="
   display:none;
   background:#fff4f4;
   border:1px solid #f5c2c2;
@@ -298,31 +298,64 @@ Cleo te responderá lo antes posible 😊
   margin-bottom:16px;
   line-height:1.4;
 "></div>
+
+  </div>
   
-<div class="card section">
+<div class="card">
 
-  <div class="section-title">Datos de tu peludo</div>
-
-  <div class="row">
-    ...
+  <div style="font-weight:800; font-size:18px; margin-bottom:16px;">
+    Datos de tu peludo 🐶
   </div>
 
-  <div style="display:flex; gap:16px; width:100%;">
-    ...
+  <div>
+    <label>Nombre</label>
+    <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+    <div id="errorNombre" class="error-text"></div>
+  </div>
+
+  <div>
+    <label>Raza</label>
+    <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+    <div id="errorRaza" class="error-text"></div>
+  </div>
+
+  <div style="display:flex; gap:16px;">
+    <div style="flex:1;">
+      <label>Edad</label>
+      <input id="edad" placeholder="Ej. 2 años" oninput="update()">
+      <div id="errorEdad" class="error-text"></div>
+    </div>
+
+    <div style="flex:1;">
+      <label>Peso (kg)</label>
+      <input id="peso" placeholder="Ej. 8" oninput="update()">
+      <div id="errorPeso" class="error-text"></div>
+    </div>
   </div>
 
   <label>Número de perros</label>
-  <div class="counter">...</div>
+  <div class="counter">
+    <button onclick="change(-1)">−</button>
+    <span id="num">1</span>
+    <button onclick="change(1)">+</button>
+  </div>
 
   <label>Sociabilidad</label>
-  <div class="pills">...</div>
+  <div class="pills">
+    <div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
+    <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
+  </div>
 
   <div class="check">
-    ...
+    <input type="checkbox" id="check" onchange="update()">
+    <span>
+      Confirmo que mi perro es <b>pequeño o mediano</b>
+      <span style="color:#6f6f6f;">(no razas grandes)</span>
+    </span>
   </div>
 
   <p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:8px;">
-    Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo y seguro 🐾
+    Solo aceptamos perritos pequeños y medianos 🐾
   </p>
 
 </div>
