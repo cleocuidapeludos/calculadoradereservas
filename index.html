@@ -556,7 +556,7 @@ if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
 if(hayErrorFechas()) errores.push("Revisa las fechas y horarios");
 
-box.innerHTML = "🐾 Para continuar, solo necesitamos:<ul><li>" 
+box.innerHTML = "<strong>🐾 Para continuar, solo necesitamos:</strong><ul><li>"
   + errores.join("</li><li>") + 
   "</li></ul>";
 
