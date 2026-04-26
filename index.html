@@ -482,19 +482,27 @@ function update(){
     document.getElementById("errorPeso").innerText = "Introduce el peso";
   }
 
-  validarFechas();
-{
-    box.style.display = "block";
-    box.innerText = "Revisa los datos 👇";
+validarFechas();
 
-    boton.removeAttribute("href");
-    boton.classList.remove("active");
-    boton.style.opacity="0.6";
-    boton.style.pointerEvents = "none";
-    return;
-  }else{
-    box.style.display = "none";
-  }
+if(
+  !e ||
+  !s ||
+  total === 0 ||
+  hayErrorFechas()
+){
+  box.style.display = "block";
+  box.innerText = "Selecciona fechas válidas 🐾";
+
+  boton.removeAttribute("href");
+  boton.classList.remove("active");
+  boton.style.opacity="0.6";
+  boton.style.pointerEvents = "none";
+  boton.innerText = "Selecciona fechas";
+
+  return;
+}else{
+  box.style.display = "none";
+}
 
   boton.classList.add("active");
   boton.style.opacity="1";
