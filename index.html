@@ -241,68 +241,12 @@ input[type="checkbox"]{
 </div>
 
 <div class="card">
-
-<div class="row">
-  <div>
-    <label>Nombre</label>
-    <input id="nombre" placeholder="Ej. Luna" oninput="update()">
-    <div id="errorNombre" class="error-text"></div>
-  </div>
-
-  <div>
-    <label>Raza</label>
-    <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
-    <div id="errorRaza" class="error-text"></div>
-  </div>
-</div>
-
-<div style="display:flex; gap:16px; width:100%;">
-  <div style="flex:1; min-width:0;">
-    <label>Edad</label>
-    <input id="edad" placeholder="Ej. 2 años (aprox.)" oninput="update()">
-    <div id="errorEdad" class="error-text"></div>
-  </div>
-  <div style="flex:1; min-width:0;">
-    <label>Peso (kg)</label>
-    <input id="peso" placeholder="Ej. 8" oninput="update()">
-    <div id="errorPeso" class="error-text"></div>
-  </div>
-</div>
-
-<label>Número de perros</label>
-<div class="counter">
-  <button onclick="change(-1)">−</button>
-  <span id="num">1</span>
-  <button onclick="change(1)">+</button>
-</div>
-
-<label>Entrada</label>
+  <label>Entrada</label>
 <input type="datetime-local" id="entrada" oninput="validarFechas(); update()" onchange="validarFechas(); update()">
 <div id="errorEntrada" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
 <label>Salida</label>
 <input type="datetime-local" id="salida" oninput="validarFechas(); update()" onchange="validarFechas(); update()">
 <div id="errorSalida" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
-
-<label>Sociabilidad</label>
-<div class="pills">
-<div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
-<div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
-</div>
-
-<div class="check">
-  <input type="checkbox" id="check" onchange="update()">
-  <span>
-    Confirmo que mi perro es <b>pequeño o mediano</b> 
-    <span style="color:#6f6f6f;">(no razas grandes)</span>
-  </span>
-</div>
-
-<p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:8px;">
-Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo y seguro 🐾
-</p>
-
-</div>
-
 <div class="total">
 <div>TOTAL ESTIMADO</div>
 <div class="price" id="total">0€</div>
@@ -343,6 +287,59 @@ Reservar por WhatsApp
 <p style="text-align:center;font-size:12px;color:#888;">
 Cleo te responderá lo antes posible 😊
 </p>
+<div class="row">
+  <div>
+    <label>Nombre</label>
+    <input id="nombre" placeholder="Ej. Luna" oninput="update()">
+    <div id="errorNombre" class="error-text"></div>
+  </div>
+
+  <div>
+    <label>Raza</label>
+    <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
+    <div id="errorRaza" class="error-text"></div>
+  </div>
+</div>
+
+<div style="display:flex; gap:16px; width:100%;">
+  <div style="flex:1; min-width:0;">
+    <label>Edad</label>
+    <input id="edad" placeholder="Ej. 2 años (aprox.)" oninput="update()">
+    <div id="errorEdad" class="error-text"></div>
+  </div>
+  <div style="flex:1; min-width:0;">
+    <label>Peso (kg)</label>
+    <input id="peso" placeholder="Ej. 8" oninput="update()">
+    <div id="errorPeso" class="error-text"></div>
+  </div>
+</div>
+
+<label>Número de perros</label>
+<div class="counter">
+  <button onclick="change(-1)">−</button>
+  <span id="num">1</span>
+  <button onclick="change(1)">+</button>
+</div>
+
+<label>Sociabilidad</label>
+<div class="pills">
+<div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
+<div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
+</div>
+
+<div class="check">
+  <input type="checkbox" id="check" onchange="update()">
+  <span>
+    Confirmo que mi perro es <b>pequeño o mediano</b> 
+    <span style="color:#6f6f6f;">(no razas grandes)</span>
+  </span>
+</div>
+
+<p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:8px;">
+Solo aceptamos perritos pequeños y medianos para mantener un ambiente tranquilo y seguro 🐾
+</p>
+
+</div>
 
 </div> <!-- container -->
 
@@ -486,19 +483,7 @@ function update(){
   }
 
   validarFechas();
-
-  if(
-    !nombreInput ||
-    !razaInput ||
-    !edadInput ||
-    !pesoInput ||
-    num <= 0 ||
-    !e ||
-    !s ||
-    !check ||
-    total === 0 ||
-    hayErrorFechas()
-  ){
+{
     box.style.display = "block";
     box.innerText = "Revisa los datos 👇";
 
