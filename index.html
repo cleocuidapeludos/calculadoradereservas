@@ -440,10 +440,16 @@ function change(v){
 
   update();
 }
-  function handleClick(e){
-  e.preventDefault();   // 👈 evita comportamiento raro del link
+function handleClick(e){
   validarActivo = true;
   update();
+
+  let boton = document.getElementById("link");
+
+  // si el botón NO está activo → bloquear click
+  if(!boton.classList.contains("active")){
+    e.preventDefault();
+  }
 }
 
   function calc(){
