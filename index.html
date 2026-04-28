@@ -306,17 +306,26 @@ input[type="checkbox"]{
 .sticky-bar{
   position:fixed;
   bottom:0;
-  left:0;
+
+  left:50%;
+  transform:translateX(-50%); /* 👈 CENTRADO REAL */
+
   width:100%;
   max-width:420px;
+
   background:white;
+
   padding:14px 16px;
-  padding-bottom: calc(14px + env(safe-area-inset-bottom)); /* 👈 AQUÍ */
+  padding-bottom: calc(14px + env(safe-area-inset-bottom));
+
   display:flex;
   justify-content:space-between;
   align-items:center;
+
   box-shadow:0 -10px 25px rgba(0,0,0,0.08);
   z-index:999;
+
+  border-radius:16px 16px 0 0; /* 👈 opcional pero top */
 }
 
 #stickyBtn{
