@@ -491,33 +491,35 @@ function handleClick(e){
   function calc(){
   let e = entrada.value;
   let s = salida.value;
+  let cachorro = document.getElementById("cachorro")?.checked;
+
   if(!e || !s) return 0;
 
   let h = (new Date(s) - new Date(e)) / 3600000;
   if(h <= 0) return 0;
 
-  if(h <= 24) return 20 * num;
+  let total = 0;
 
-  return (Math.floor(h/24)*20 + (h%24>0?18:0)) * num;
-}
+  if(h <= 24){
+    total = 20 * num;
 
-function hayErrorFechas(){
-  let e = entrada.value;
-  let s = salida.value;
+    if(cachorro){
+      total += 2 * num;
+    }
 
-  if(!e || !s) return false;
+    return total;
+  }
 
-  let entradaDate = new Date(e);
-  let salidaDate = new Date(s);
+  let dias = Math.floor(h/24);
+  let extra = (h%24>0?1:0);
 
-  let entradaHora = entradaDate.getHours();
-  let salidaHora = salidaDate.getHours();
+  total = (dias * 20 + extra * 18) * num;
 
-  if(entradaHora < 7 || entradaHora >= 22) return true;
-  if(salidaHora < 7 || salidaHora >= 22) return true;
-  if(salidaDate <= entradaDate) return true;
+  if(cachorro){
+    total += (dias + extra) * 2 * num;
+  }
 
-  return false;
+  return total;
 }
 
 function validarFechas(){
