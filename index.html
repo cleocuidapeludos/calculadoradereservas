@@ -307,9 +307,10 @@ input[type="checkbox"]{
   position:fixed;
   bottom:0;
 
-  left:50%;
-  transform:translateX(-50%); /* 👈 CENTRADO REAL */
+  left:0;
+  right:0; /* 👈 CLAVE */
 
+  margin:auto;
   width:100%;
   max-width:420px;
 
@@ -325,7 +326,7 @@ input[type="checkbox"]{
   box-shadow:0 -10px 25px rgba(0,0,0,0.08);
   z-index:999;
 
-  border-radius:16px 16px 0 0; /* 👈 opcional pero top */
+  border-radius:16px 16px 0 0;
 }
 
 #stickyBtn{
@@ -730,6 +731,36 @@ if(sexo === "Macho"){
 }
   let formularioValido =
   let stickyPrice = document.getElementById("stickyPrice");
+let stickyBtn = document.getElementById("stickyBtn");
+
+if(stickyPrice){
+  stickyPrice.innerText = total + "€";
+}
+
+if(stickyBtn){
+  if(formularioValido){
+    stickyBtn.classList.add("active");
+    stickyBtn.innerText = "Consultar por WhatsApp";
+  }else{
+    stickyBtn.classList.remove("active");
+    stickyBtn.innerText = "Completa los datos";
+  }
+  let formularioValido =
+  duenoInput &&
+  nombreInput &&
+  razaInput &&
+  (edadInput || cachorro) &&
+  pesoInput &&
+  sexo &&
+  esterilizado &&
+  num > 0 &&
+  e &&
+  s &&
+  check &&
+  total > 0 &&
+  !hayErrorFechas();
+
+let stickyPrice = document.getElementById("stickyPrice");
 let stickyBtn = document.getElementById("stickyBtn");
 
 if(stickyPrice){
