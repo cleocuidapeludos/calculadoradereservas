@@ -303,7 +303,34 @@ input[type="checkbox"]{
   display:block;
   font-weight:600;
 }
+.sticky-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:white;
+  padding:14px 16px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom)); /* 👈 AQUÍ */
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 -10px 25px rgba(0,0,0,0.08);
+  z-index:999;
+}
 
+#stickyBtn{
+  background:#cfd8d3;
+  border:none;
+  padding:14px 18px;
+  border-radius:16px;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+#stickyBtn.active{
+  background:#25D366;
+}
 </style>
 </head>
   
@@ -706,6 +733,32 @@ num > 0 &&
   total > 0 &&
   !hayErrorFechas();
 
+    let stickyPrice = document.getElementById("stickyPrice");
+let stickyBtn = document.getElementById("stickyBtn");
+
+if(stickyPrice){
+  stickyPrice.innerText = total + "€";
+}
+
+if(stickyBtn){
+  if(formularioValido){
+    stickyBtn.classList.add("active");
+    stickyBtn.innerText = "Consultar por WhatsApp";
+  }else{
+    stickyBtn.classList.remove("active");
+    stickyBtn.innerText = "Completa los datos";
+  }
+}
+  if(stickyBtn){
+  stickyBtn.onclick = (e) => {
+    handleClick(e);
+
+    if(formularioValido){
+      document.getElementById("link").click();
+    }
+  };
+}
+
 // activar botón SIEMPRE en base a esto
 if(formularioValido){
   boton.classList.add("active");
@@ -797,7 +850,6 @@ Número de perros: ${num}
 ${num > 1 ? "Tenemos más de un peludo, te contamos detalles por aquí" : ""}
 
 Sociabilidad: ${sociabilidad}
-Sociabilidad: ${sociabilidad}
 
 Entrada: ${formatearFecha(e)}
 Salida: ${formatearFecha(s)}
@@ -811,7 +863,14 @@ Precio: ${total}€`;
 update();
 
 </script>
+<div class="sticky-bar">
+  <div>
+    <div style="font-size:12px; color:#888;">TOTAL ESTIMADO</div>
+    <div id="stickyPrice" class="price">0€</div>
+  </div>
 
+  <button id="stickyBtn">Completa los datos</button>
+</div>
 </body>
 
 </html>
