@@ -778,15 +778,11 @@ if(stickyBtn){
     stickyBtn.classList.remove("active");
     stickyBtn.innerText = "Completa los datos";
   }
-
-  stickyBtn.onclick = (e) => {
-    handleClick(e);
-
-    if(formularioValido){
-      document.getElementById("link").click();
-    }
-  };
-}
+  
+stickyBtn.onclick = () => {
+  document.getElementById("link").click();
+};
+  
   duenoInput &&
   nombreInput &&
   razaInput &&
