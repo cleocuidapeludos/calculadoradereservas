@@ -410,6 +410,10 @@ Cleo te responderá lo antes posible 😊
     <button onclick="change(1)">+</button>
   </div>
 
+  <p style="font-size:12px; color:#8c8c8c; margin-top:-10px;">
+Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
+</p>
+
   <label>Sociabilidad</label>
   <div class="pills">
     <div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
@@ -694,7 +698,7 @@ if(sexo === "Macho"){
   (edadInput || cachorro) &&
  pesoInput &&
 sexo &&
-sexo && esterilizado
+esterilizado &&
 num > 0 &&
   e &&
   s &&
@@ -790,6 +794,9 @@ Edad: ${cachorro ? "Cachorro (<1 año)" : edadInput}
 Peso: ${pesoInput} kg
 Sexo: ${sexoTexto}
 Número de perros: ${num}
+${num > 1 ? "Tenemos más de un peludo 🐶🐶, te contamos detalles por aquí 👇" : ""}
+
+Sociabilidad: ${sociabilidad}
 Sociabilidad: ${sociabilidad}
 
 Entrada: ${formatearFecha(e)}
