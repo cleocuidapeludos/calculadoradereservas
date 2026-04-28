@@ -764,18 +764,42 @@ if(stickyBtn){
   }
 stickyBtn.onclick = () => {
 
-    validarActivo = true;
+  validarActivo = true;
+  update();
 
+  let duenoInput = document.getElementById("dueno").value;
+  let nombreInput = document.getElementById("nombre").value;
+  let razaInput = document.getElementById("raza").value;
+  let edadInput = document.getElementById("edad").value;
+  let pesoInput = document.getElementById("peso").value;
+  let cachorro = document.getElementById("cachorro")?.checked;
 
-    let boton = document.getElementById("link");
+  let e = entrada.value;
+  let s = salida.value;
 
-    if(boton.classList.contains("active")){
+  let total = calc();
 
-      boton.click();
+  if(!duenoInput || !nombreInput || !razaInput || (!edadInput && !cachorro) || !pesoInput || !e || !s || total === 0 || hayErrorFechas()){
+    return;
+  }
 
-    }
+  let texto = `¡Hola!
+Me gustaría consultar disponibilidad para mi peludo:
+Nombre del dueño: ${duenoInput}
+Nombre del perro: ${nombreInput}
+Raza: ${razaInput}
+Edad: ${cachorro ? "Cachorro (<1 año)" : edadInput}
+Peso: ${pesoInput} kg
+Número de perros: ${num}
 
-  };
+Entrada: ${formatearFecha(e)}
+Salida: ${formatearFecha(s)}
+
+Precio: ${total}€`;
+
+  window.location.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
+
+};
 
 }
   
