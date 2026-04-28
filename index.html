@@ -351,9 +351,13 @@ Cleo te responderá lo antes posible 😊
   <div style="font-weight:800; font-size:18px; margin-bottom:16px;">
     Datos de tu peludo 🐶
   </div>
-
+<div>
+  <label>Nombre del dueño</label>
+  <input id="dueno" placeholder="Ej. María" oninput="update()">
+  <div id="errorDueno" class="error-text"></div>
+</div>
   <div>
-    <label>Nombre</label>
+    <label>Nombre del peludo</label>
     <input id="nombre" placeholder="Ej. Luna" oninput="update()">
     <div id="errorNombre" class="error-text"></div>
   </div>
@@ -596,7 +600,7 @@ function limpiarErrores(){
 
 function update(){
 
-
+  let duenoInput = document.getElementById("dueno").value;
   let nombreInput = document.getElementById("nombre").value;
   let razaInput = document.getElementById("raza").value;
   let edadInput = document.getElementById("edad").value;
@@ -614,6 +618,7 @@ function update(){
   let box = document.getElementById("errorBox");
 
   let formularioValido =
+  duenoInput &&
   nombreInput &&
   razaInput &&
   (edadInput || cachorro) &&
@@ -638,6 +643,10 @@ if(formularioValido){
 
   if(validarActivo){
   limpiarErrores();
+
+  if(!duenoInput){
+  document.getElementById("errorDueno").innerText = "Introduce tu nombre";
+}
 
   if(!nombreInput){
     document.getElementById("errorNombre").innerText = "Introduce el nombre";
@@ -671,7 +680,7 @@ if(
 ){
   box.style.display = "block";
 let errores = [];
-
+if(!duenoInput) errores.push("Nombre del dueño");
 if(!nombreInput) errores.push("Nombre del perro");
 if(!razaInput) errores.push("Raza");
 if(!edadInput && !cachorro) errores.push("Edad");
@@ -700,7 +709,7 @@ box.innerHTML = "<strong>🐾 Para continuar, solo necesitamos:</strong><ul><li>
 
   let texto=`¡Hola!
 Me gustaría consultar disponibilidad para mi peludo:
-
+Nombre del dueño: ${duenoInput}
 Nombre del perro: ${nombreInput}
 Raza: ${razaInput}
 Edad: ${cachorro ? "Cachorro (<1 año)" : edadInput}
