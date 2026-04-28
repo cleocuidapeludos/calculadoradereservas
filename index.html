@@ -477,7 +477,7 @@ function change(v){
   update();
 }
 function handleClick(e){
-  validarActivo = true;
+  validarActivo = false;
   update();
 
   let boton = document.getElementById("link");
@@ -612,6 +612,29 @@ function update(){
 
   let boton = document.getElementById("link");
   let box = document.getElementById("errorBox");
+
+  let formularioValido =
+  nombreInput &&
+  razaInput &&
+  (edadInput || cachorro) &&
+  pesoInput &&
+  num > 0 &&
+  e &&
+  s &&
+  check &&
+  total > 0 &&
+  !hayErrorFechas();
+
+// activar botón SIEMPRE en base a esto
+if(formularioValido){
+  boton.classList.add("active");
+  boton.style.opacity="1";
+  boton.style.pointerEvents = "auto";
+}else{
+  boton.classList.remove("active");
+  boton.style.opacity="0.6";
+  boton.style.pointerEvents = "none";
+}
 
   if(validarActivo){
   limpiarErrores();
