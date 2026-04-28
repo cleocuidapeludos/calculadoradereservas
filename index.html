@@ -770,26 +770,19 @@ if(stickyBtn){
 
     update();
 
-let valido =
+stickyBtn.onclick = () => {
 
-    duenoInput &&
-    nombreInput &&
-    razaInput &&
-    (edadInput || cachorro) &&
-    pesoInput &&
-    sexo &&
-    esterilizado &&
-    num > 0 &&
-    e &&
-    s &&
-    check &&
-    total > 0 &&
-    !hayErrorFechas();
+  validarActivo = true;
+  update();
 
-  if(valido){
+  let boton = document.getElementById("link");
 
-    document.getElementById("link").click();
+  // 👇 ESTA ES LA CLAVE
+  if(boton.classList.contains("active")){
+    boton.click();
   }
+
+};
 
   };
 
