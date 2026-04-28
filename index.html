@@ -519,6 +519,22 @@ function setSexo(valor){
 
   update();
 }
+function setEsterilizado(valor){
+  esterilizado = valor;
+
+  // reset visual
+  document.getElementById("estSi").classList.remove("active");
+  document.getElementById("estNo").classList.remove("active");
+
+  // activar el seleccionado
+  if(valor === "Sí"){
+    document.getElementById("estSi").classList.add("active");
+  } else {
+    document.getElementById("estNo").classList.add("active");
+  }
+
+  update();
+}
   
 function handleClick(e){
   validarActivo = true;
@@ -678,7 +694,7 @@ if(sexo === "Macho"){
   (edadInput || cachorro) &&
  pesoInput &&
 sexo &&
-(sexo === "Hembra" || (sexo === "sexo" && esterilizado)) &&
+sexo && esterilizado
 num > 0 &&
   e &&
   s &&
@@ -742,7 +758,7 @@ if(!razaInput) errores.push("Raza");
 if(!edadInput && !cachorro) errores.push("Edad");
 if(!pesoInput) errores.push("Peso");
 if(!sexo) errores.push("Sexo");
-if(sexo === "Macho" && !esterilizado) errores.push("Esterilización");
+if(!esterilizado) errores.push("Esterilización");
 if(!e) errores.push("Fecha de entrada");
 if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
