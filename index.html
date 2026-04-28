@@ -390,6 +390,20 @@ Cleo te responderá lo antes posible 😊
   </span>
 </div>
 
+  <label>Sexo</label>
+<div class="pills">
+  <div id="sexoMacho" class="pill" onclick="setSexo('Macho')">Macho</div>
+  <div id="sexoHembra" class="pill" onclick="setSexo('Hembra')">Hembra</div>
+</div>
+
+<div id="bloqueEsterilizado" style="display:none; margin-top:12px;">
+  <label>¿Está esterilizado?</label>
+  <div class="pills">
+    <div id="estSi" class="pill" onclick="setEsterilizado('Sí')">Sí</div>
+    <div id="estNo" class="pill" onclick="setEsterilizado('No')">No</div>
+  </div>
+</div>
+
   <label>Número de perros</label>
   <div class="counter">
     <button onclick="change(-1)">−</button>
@@ -445,6 +459,8 @@ Trato cariñoso, paseos diarios y muchas fotos.
 let num=1;
 let sociabilidad="Sociable";
 let validarActivo = false;
+let sexo = "";
+let esterilizado = "";
 
 function formatearFecha(f){
   if(!f) return "-";
@@ -480,6 +496,39 @@ function change(v){
 
   update();
 }
+function setSexo(valor){
+  sexo = valor;
+
+  document.getElementById("sexoMacho").classList.remove("active");
+  document.getElementById("sexoHembra").classList.remove("active");
+
+  if(valor === "Macho"){
+    document.getElementById("sexoMacho").classList.add("active");
+    document.getElementById("bloqueEsterilizado").style.display = "block";
+  } else {
+    document.getElementById("sexoHembra").classList.add("active");
+    document.getElementById("bloqueEsterilizado").style.display = "none";
+    esterilizado = ""; // reset
+  }
+
+  update();
+}
+
+function setEsterilizado(valor){
+  esterilizado = valor;
+
+  document.getElementById("estSi").classList.remove("active");
+  document.getElementById("estNo").classList.remove("active");
+
+  if(valor === "Sí"){
+    document.getElementById("estSi").classList.add("active");
+  } else {
+    document.getElementById("estNo").classList.add("active");
+  }
+
+  update();
+}
+  
 function handleClick(e){
   validarActivo = true;
   update();
@@ -623,6 +672,8 @@ function update(){
   razaInput &&
   (edadInput || cachorro) &&
   pesoInput &&
+  sexo &&
+  (sexo === "Hembra" || (sexo === "Macho" && esterilizado)) &&
   num > 0 &&
   e &&
   s &&
@@ -685,6 +736,8 @@ if(!nombreInput) errores.push("Nombre del perro");
 if(!razaInput) errores.push("Raza");
 if(!edadInput && !cachorro) errores.push("Edad");
 if(!pesoInput) errores.push("Peso");
+if(!sexo) errores.push("Sexo");
+if(sexo === "Macho" && !esterilizado) errores.push("Esterilización");
 if(!e) errores.push("Fecha de entrada");
 if(!s) errores.push("Fecha de salida");
 if(!check) errores.push("Confirma que tu perro es pequeño o mediano");
