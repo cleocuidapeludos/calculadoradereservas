@@ -761,20 +761,6 @@ if(stickyBtn){
   }else{
     stickyBtn.classList.remove("active");
     stickyBtn.innerText = "Completa los datos";
-    stickyBtn.onclick = (e) => {
-
-  validarActivo = true;
-
-  update();
-
-  let boton = document.getElementById("link");
-
-  // si ya es válido → abre WhatsApp
-  if(boton.classList.contains("active")){
-    boton.click();
-  }
-
-};
   }
 // 👇 AQUÍ VA ESTO
 
