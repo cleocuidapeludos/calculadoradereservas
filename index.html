@@ -1,1485 +1,743 @@
 <head>
 
- 
-
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2">
-
- 
 
 <link rel="apple-touch-icon" sizes="180x180" href="/calculadoradereservas/icono-app.png">
 
- 
-
 <link rel="icon" href="./icono-192.png?v=1" sizes="192x192">
-
 <link rel="icon" href="./icono-512.png?v=1" sizes="512x512">
-
   
-
 <link rel="manifest" href="/calculadoradereservas/manifest.json">
 
- 
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
- 
 
 <title>Cleo Cuida Peludos</title>
 
- 
-
 <style>
-
 :root{
-
   --orange:#f36d3b;
-
 }
-
- 
 
 body{
-
   font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-
   background:linear-gradient(180deg, #f9f6f2 0%, #e7d6c3 100%);
-
   margin:0;
-
   padding:20px;
-
 }
-
- 
 
 .container{
-
   max-width:420px;
-
   margin:auto;
-
 }
-
- 
 
 .logo{
-
   text-align:center;
-
   margin-bottom:12px;
-
 }
 
- 
-
 .logo-circle{
-
   width:72px;
-
   height:72px;
-
   background:#fde6d6;
-
   border-radius:50%;
 
- 
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
- 
 
   margin:0 auto 16px;
 
- 
-
   overflow:visible; 
-
 }
-
- 
 
 .logo-circle img{
 
- 
-
   width:120%;
-
- 
 
   height:auto;
 
- 
-
   object-fit:contain;
 
- 
-
 }
-
- 
 
 h1{
-
   text-align:center;
-
   font-size:26px;
-
   margin:0;
-
   font-weight:800;
-
   line-height:1.2;
-
 }
-
- 
 
 .sub{
-
   text-align:center;
-
   color:#8c8c8c;
-
   margin-top:8px;
-
   font-size:15px;
-
 }
-
- 
 
 .card{
-
   background:#f7f3ef;
-
   padding:20px;
-
   border-radius:24px;
-
   border:1px solid #ece5dd;
-
   box-shadow:0 6px 16px rgba(0,0,0,0.04);;
-
   margin-bottom:20px;
 
- 
-
   overflow:hidden;
-
 }
-
- 
 
 label{font-weight:700;font-size:14px;display:block;margin-bottom:6px;}
 
- 
-
 input{
-
   width:100%;
-
   padding:18px 16px;
-
   border-radius:16px;
-
   background:#fffaf5;
-
   border:2px solid #f0d8c2;
-
   margin-bottom:18px;
-
   font-size:16px;
-
   box-sizing:border-box;
-
 }
-
- 
 
 input[type="datetime-local"]{
-
   -webkit-appearance: none;
-
   appearance: none;
-
   height:56px;
-
   padding:18px 16px;
-
   display:block;
-
   text-align:center;
-
 }
-
- 
 
 input[type="checkbox"]{
-
   width:20px;
-
   height:20px;
-
   margin:0;
-
   accent-color: var(--orange);
-
   cursor:pointer;
-
 }
-
- 
 
 .counter{
-
   display:flex;
-
   align-items:center;
-
   justify-content:space-between;
 
- 
-
   background:#fffaf5;
-
   border:2px solid #f0d8c2;
-
   
-
   border-radius:16px;
-
   padding:12px 16px;
 
- 
-
   margin-bottom:18px;
-
   width:100%;
-
   box-sizing:border-box;
-
 }
-
- 
 
 .counter button{
-
   border:none;
-
   background:#eee;
-
   width:35px;
-
   height:35px;
-
   border-radius:50%;
-
 }
-
- 
 
 .pills{display:flex;gap:10px;}
 
- 
-
 .pill{
-
   flex:1;
-
   height:60px;
-
   border-radius:20px;
-
   background:#eee;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   text-align:center;        
-
   padding:0 10px;         
-
   cursor:pointer;
-
   font-weight:600;
-
 }
-
- 
 
 .pill.active{
-
   background:var(--orange);
-
   color:white;
-
 }
-
- 
 
 .check{
-
   margin-top:15px;
-
   background:#f6f2ee;
-
   padding:14px;
-
   border-radius:14px;
-
   font-size:13px;
-
   display:flex;
-
   align-items:flex-start;
-
   gap:10px;
 
- 
-
   width:100%;
-
   box-sizing:border-box;
-
 }
-
- 
 
 .check span{
-
   flex:1;
-
   word-break:break-word;
-
 }
-
- 
 
 .total{
-
   background:white;
-
   padding:20px;
-
   border-radius:24px;
-
   box-shadow:0 10px 25px rgba(0,0,0,0.05);
-
 }
-
- 
 
 .price{
-
   font-size:36px;
-
   font-weight:800;
-
   color:var(--orange);
-
 }
-
- 
 
 .review{
-
   background:#fdebd3;
-
   border:1px solid #f3cfa4;
-
   padding:18px;
-
   border-radius:20px;
-
   margin:20px 0;
-
 }
-
- 
 
   .error-text{
-
   color:#d9534f;
-
   font-size:12px;
-
   margin-top:-10px;
-
   margin-bottom:10px;
-
 }
-
- 
 
 @media (min-width: 768px){
-
   .review{
-
     max-width:420px;
-
     margin:20px auto;
-
     text-align:center;
-
   }
-
 }
-
- 
 
   .total{
-
   margin-bottom:20px;
-
 }
-
- 
 
 .section{
-
   margin-top:28px;
-
 }
-
 .card:first-of-type{
-
   margin-top:0;
-
   }
 
- 
-
 .cachorro-box{
-
   margin-top:-12px;
-
   background:#f6f2ee;
-
   border-radius:14px;
-
   padding:14px;
-
   display:flex;
-
   align-items:flex-start;
-
   gap:10px;
-
 }
-
- 
 
 #cachorro{
-
   accent-color: var(--orange);
-
   width:20px;
-
   height:20px;
-
   margin-top:2px;
-
 }
-
- 
 
 .cachorro-extra{
-
   font-size:12px;
-
   color:#f36d3b;
-
   margin-top:4px;
-
   display:block;
-
   font-weight:600;
-
 }
-
 .sticky-bar{
-
   position:fixed;
-
   bottom:0;
 
- 
-
   left:0;
-
   right:0;
 
- 
-
   margin:auto;
-
   width:100%;
-
   max-width:420px;
-
- 
 
   box-sizing:border-box;
 
- 
-
   background:white;
 
- 
-
   padding:14px 16px;
-
   padding-bottom: calc(14px + env(safe-area-inset-bottom));
 
- 
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
 
- 
-
   box-shadow:0 -10px 25px rgba(0,0,0,0.08);
-
   z-index:999;
 
- 
-
   border-radius:16px 16px 0 0;
-
 }
-
- 
 
 #stickyBtn{
-
   background:#cfd8d3;
-
   border:none;
-
   padding:14px 18px;
-
   border-radius:16px;
-
   color:white;
-
   font-weight:700;
-
   cursor:pointer;
-
   font-size:14px;
-
   transition: background 0.2s;
-
 }
-
- 
 
 #stickyBtn.error{
-
   background:#d9534f;
-
 }
-
- 
 
 #stickyBtn.active{
-
   background:#25D366;
-
 }
-
 </style>
-
 </head>
-
   
-
 <body>
-
- 
 
 <div class="container">
 
- 
-
 <div class="logo">
-
- 
 
   <div class="logo-circle">
 
- 
-
     <img src="logo-perro.png" alt="Cleo Cuida Peludos">
 
- 
-
   </div>
-
- 
 
   <h1>Cuidamos de tu peludo como si fuera nuestro 🐶</h1>
-
   <div class="sub">Calcula el precio de tu reserva</div>
-
 </div>
 
- 
-
 <div class="card">
-
   <label>Entrada</label>
-
 <input type="datetime-local" id="entrada" oninput="validarFechas(); update()" onchange="validarFechas(); update()">
-
 <div id="errorEntrada" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
-
 <label>Salida</label>
-
 <input type="datetime-local" id="salida" oninput="validarFechas(); update()" onchange="validarFechas(); update()">
-
 <div id="errorSalida" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
-
 <div class="total">
-
 <div>TOTAL ESTIMADO</div>
-
 <div class="price" id="total">0€</div>
-
 </div>
-
   
-
 </div>
-
   
-
 <div class="card">
-
- 
 
   <div style="font-weight:800; font-size:18px; margin-bottom:16px;">
-
     Datos de tu peludo 🐶
-
   </div>
-
 <div>
-
   <label>Nombre del dueño</label>
-
 <input id="dueno" placeholder="Ej. María" oninput="clearError('errorDueno'); update()">  <div id="errorDueno" class="error-text"></div>
-
 </div>
-
   <div>
-
     <label>Nombre del peludo</label>
-
     <input id="nombre" placeholder="Ej. Luna" oninput="update()">
-
     <div id="errorNombre" class="error-text"></div>
-
   </div>
-
- 
 
   <div>
-
     <label>Raza</label>
-
     <input id="raza" placeholder="Ej. Mestizo" oninput="update()">
-
     <div id="errorRaza" class="error-text"></div>
-
   </div>
-
- 
 
   <div style="display:flex; gap:16px;">
-
     <div style="flex:1;">
-
       <label>Edad</label>
-
       <input id="edad" placeholder="Ej. 2 años" oninput="update()">
-
       <div id="errorEdad" class="error-text"></div>
-
     </div>
-
- 
 
     <div style="flex:1;">
-
       <label>Peso (kg)</label>
-
       <input id="peso" placeholder="Ej. 8" oninput="update()">
-
       <div id="errorPeso" class="error-text"></div>
-
     </div>
-
   </div>
-
- 
 
   <div class="check cachorro-box">
-
   <input type="checkbox" id="cachorro" onchange="update()">
-
   <span>
-
     <b>Es cachorro (menos de 1 año)</b><br>
-
     <span class="cachorro-extra">+2€/día adicional</span>
-
   </span>
-
 </div>
-
- 
 
   <label>Sexo</label>
-
 <div class="pills">
-
   <div id="sexoMacho" class="pill" onclick="setSexo('Macho')">Macho</div>
-
   <div id="sexoHembra" class="pill" onclick="setSexo('Hembra')">Hembra</div>
-
 </div>
-
- 
 
 <div id="bloqueEsterilizado" style="display:none; margin-top:12px;">
-
   <label>¿Está esterilizado?</label>
-
   <div class="pills">
-
     <div id="estSi" class="pill" onclick="setEsterilizado('Sí')">Sí</div>
-
     <div id="estNo" class="pill" onclick="setEsterilizado('No')">No</div>
-
   </div>
-
 </div>
-
- 
 
   <label>Número de perros</label>
-
   <div class="counter">
-
     <button onclick="change(-1)">−</button>
-
     <span id="num">1</span>
-
     <button onclick="change(1)">+</button>
-
   </div>
-
- 
 
   <p style="font-size:12px; color:#8c8c8c; margin-top:-10px;">
-
 Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
-
 </p>
-
- 
 
   <label>Sociabilidad</label>
-
   <div class="pills">
-
     <div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
-
     <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
-
   </div>
 
- 
-
 <div class="check">
-
   <input type="checkbox" id="check" onchange="update()">
-
   <span>
-
     <b>Confirmo que mi perro es pequeño o mediano</b>
-
   </span>
-
 </div>
-
- 
 
 <p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:8px;">
-
   Solo aceptamos perritos pequeños y medianos 
-
 </p>
 
- 
-
 </div>
-
- 
 
 <div class="card">
 
- 
-
   <div style="font-weight:700; font-size:14px; margin-bottom:10px;">
-
   💡 Cómo se calcula el precio
-
   </div>
-
- 
 
   <div style="font-size:13px; color:#6f6f6f; line-height:1.5;">
-
     Guardería de día: <b>18€</b><br>
-
     Estancia con noche (24 h): <b>20€</b><br>
-
     Día adicional: <b>18€</b><br>
-
     Noche adicional: <b>20€</b> (por perro)
-
   </div>
 
- 
-
 </div>
-
- 
 
 <div class="review">
-
 🧡 <strong>"Mi perrita volvió feliz."</strong><br>
-
 Trato cariñoso, paseos diarios y muchas fotos.  
-
 ¡Repetiremos seguro! — María G.
-
 </div>
-
- 
 
 </div> <!-- container -->
 
- 
-
 <div class="sticky-bar">
-
   <div>
-
     <div style="font-size:12px; color:#888;">TOTAL ESTIMADO</div>
-
     <div id="stickyPrice" class="price">0€</div>
-
   </div>
 
- 
-
   <button id="stickyBtn">Consultar por WhatsApp</button>
-
 </div>
 
- 
-
 <script>
-
 let num=1;
-
 let sociabilidad="Sociable";
-
 let validarActivo = false;
-
 let sexo = "";
-
 let esterilizado = "";
 
- 
-
 function formatearFecha(f){
-
   if(!f) return "-";
-
   let d = new Date(f);
-
   return d.toLocaleString('es-ES',{
-
     day:'2-digit',
-
     month:'2-digit',
-
     year:'numeric',
-
     hour:'2-digit',
-
     minute:'2-digit'
-
   });
-
 }
-
- 
 
 function change(v){
-
   num+=v;
-
   if(num<1) num=1;
-
   document.getElementById("num").innerText=num;
-
   update();
-
 } 
 
- 
-
 function setSoc(valor){
-
   sociabilidad = valor;
-
   document.getElementById("p1").classList.remove("active");
-
   document.getElementById("p2").classList.remove("active");
-
   if(valor === "Sociable"){
-
     document.getElementById("p1").classList.add("active");
-
   } else {
-
     document.getElementById("p2").classList.add("active");
-
   }
-
   update();
-
 }
-
- 
 
 function setSexo(valor){
-
   sexo = valor;
-
   document.getElementById("sexoMacho").classList.remove("active");
-
   document.getElementById("sexoHembra").classList.remove("active");
-
   if(valor === "Macho"){
-
     document.getElementById("sexoMacho").classList.add("active");
-
   } else {
-
     document.getElementById("sexoHembra").classList.add("active");
-
   }
-
   document.getElementById("bloqueEsterilizado").style.display = "block";
-
   esterilizado = "";
-
   document.getElementById("estSi").classList.remove("active");
-
   document.getElementById("estNo").classList.remove("active");
-
   update();
-
 }
-
- 
 
 function setEsterilizado(valor){
-
   esterilizado = valor;
-
   document.getElementById("estSi").classList.remove("active");
-
   document.getElementById("estNo").classList.remove("active");
-
   if(valor === "Sí"){
-
     document.getElementById("estSi").classList.add("active");
-
   } else {
-
     document.getElementById("estNo").classList.add("active");
-
   }
-
   update();
-
 }
 
- 
-
 function calc(){
-
   let e = entrada.value;
-
   let s = salida.value;
-
   let cachorro = document.getElementById("cachorro")?.checked;
-
- 
 
   if(!e || !s) return 0;
 
- 
-
   let h = (new Date(s) - new Date(e)) / 3600000;
-
   if(h <= 0) return 0;
-
- 
 
   let total = 0;
 
- 
-
   if(h <= 24){
-
     total = 20 * num;
-
     if(cachorro) total += 2 * num;
-
     return total;
-
   }
-
- 
 
   let dias = Math.floor(h/24);
-
   let extra = (h%24>0?1:0);
-
   total = (dias * 20 + extra * 18) * num;
-
   if(cachorro) total += (dias + extra) * 2 * num;
 
- 
-
   return total;
-
 }
-
- 
 
 function hayErrorFechas(){
-
   let e = entrada.value;
-
   let s = salida.value;
-
   if(!e || !s) return false;
-
   let entradaDate = new Date(e);
-
   let salidaDate = new Date(s);
-
   let entradaHora = entradaDate.getHours();
-
   let salidaHora = salidaDate.getHours();
-
   if(entradaHora < 7 || entradaHora >= 22) return true;
-
   if(salidaHora < 7 || salidaHora >= 22) return true;
-
   if(salidaDate <= entradaDate) return true;
-
   return false;
-
 }
-
- 
 
 function validarFechas(){
-
   let e = entrada.value;
-
   let s = salida.value;
-
- 
 
   let errorEntrada = document.getElementById("errorEntrada");
-
   let errorSalida = document.getElementById("errorSalida");
 
- 
-
   errorEntrada.innerText = "";
-
   errorSalida.innerText = "";
 
- 
-
   if(e){
-
     let entradaDate = new Date(e);
-
     let entradaHora = entradaDate.getHours();
-
     if(entradaHora < 7 || entradaHora >= 22){
-
       errorEntrada.innerText = "La entrada debe ser entre las 07:00 y las 22:00";
-
     }
-
   }
-
- 
 
   if(s){
-
     let salidaDate = new Date(s);
-
     let salidaHora = salidaDate.getHours();
-
     if(salidaHora < 7 || salidaHora >= 22){
-
       errorSalida.innerText = "La salida debe ser entre las 07:00 y las 22:00";
-
     }
-
   }
-
- 
 
   if(e && s){
-
     let entradaDate = new Date(e);
-
     let salidaDate = new Date(s);
-
     if(salidaDate <= entradaDate){
-
       errorSalida.innerText = "La salida debe ser después de la entrada";
-
     }
-
   }
-
 }
-
- 
 
 function limpiarErrores(){
-
   const ids = ["errorNombre","errorRaza","errorEdad","errorPeso"];
-
   ids.forEach(id=>{
-
     let el = document.getElementById(id);
-
     if(el) el.innerText = "";
-
   });
-
 }
-
- 
 
 function clearError(id){
-
   let el = document.getElementById(id);
-
   if(el) el.innerText = "";
-
 }
 
- 
-
 function update(){
-
   let duenoInput = document.getElementById("dueno").value;
-
   let nombreInput = document.getElementById("nombre").value;
-
   let razaInput = document.getElementById("raza").value;
-
   let edadInput = document.getElementById("edad").value;
-
   let pesoInput = document.getElementById("peso").value;
-
   let cachorro = document.getElementById("cachorro")?.checked;
 
- 
-
   let e = entrada.value;
-
   let s = salida.value;
-
   let check = document.getElementById("check").checked;
 
- 
-
   let total = calc();
-
   document.getElementById("total").innerText = total + "€";
 
- 
-
   let stickyPrice = document.getElementById("stickyPrice");
-
   let stickyBtn = document.getElementById("stickyBtn");
-
- 
 
   if(stickyPrice) stickyPrice.innerText = total + "€";
 
- 
-
   let sexoTexto = "";
-
   if(sexo === "Hembra"){
-
     sexoTexto = esterilizado ? "Hembra (esterilizada)" : "Hembra (sin esterilizar)";
-
   }
-
   if(sexo === "Macho"){
-
     sexoTexto = esterilizado === "Sí" ? "Macho (castrado)" : "Macho (sin castrar)";
-
   }
-
- 
 
   let formularioValido =
-
     duenoInput &&
-
     nombreInput &&
-
     razaInput &&
-
     (edadInput || cachorro) &&
-
     pesoInput &&
-
     sexo &&
-
     esterilizado &&
-
     num > 0 &&
-
     e &&
-
     s &&
-
     check &&
-
     total > 0 &&
-
     !hayErrorFechas();
-
- 
 
   if(stickyBtn){
-
     stickyBtn.classList.remove("active","error");
 
- 
-
     if(formularioValido){
-
       stickyBtn.classList.add("active");
-
       stickyBtn.innerText = "Consultar por WhatsApp";
-
     } else if(validarActivo){
-
       stickyBtn.classList.add("error");
-
       stickyBtn.innerText = "Faltan datos";
-
     } else {
-
       stickyBtn.innerText = "Consultar por WhatsApp";
-
     }
-
   }
-
- 
 
   if(validarActivo){
-
     limpiarErrores();
 
- 
-
     if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre";
-
     if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre";
-
     if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza";
-
     if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad";
-
     if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso";
 
- 
-
     validarFechas();
-
   }
-
 }
 
- 
-
 document.getElementById("stickyBtn").addEventListener("click", function(){
-
   validarActivo = true;
-
   update();
 
- 
-
   let duenoInput = document.getElementById("dueno").value;
-
   let nombreInput = document.getElementById("nombre").value;
-
   let razaInput = document.getElementById("raza").value;
-
   let edadInput = document.getElementById("edad").value;
-
   let pesoInput = document.getElementById("peso").value;
-
   let cachorro = document.getElementById("cachorro")?.checked;
-
   let e = entrada.value;
-
   let s = salida.value;
-
   let check = document.getElementById("check").checked;
-
   let total = calc();
 
- 
-
   let sexoTexto = "";
-
   if(sexo === "Hembra"){
-
     sexoTexto = esterilizado ? "Hembra (esterilizada)" : "Hembra (sin esterilizar)";
-
   }
-
   if(sexo === "Macho"){
-
     sexoTexto = esterilizado === "Sí" ? "Macho (castrado)" : "Macho (sin castrar)";
-
   }
-
- 
 
   let formularioValido =
-
     duenoInput &&
-
     nombreInput &&
-
     razaInput &&
-
     (edadInput || cachorro) &&
-
     pesoInput &&
-
     sexo &&
-
     esterilizado &&
-
     num > 0 &&
-
     e &&
-
     s &&
-
     check &&
-
     total > 0 &&
-
     !hayErrorFechas();
-
- 
 
   if(!formularioValido) return;
 
- 
-
   let texto=`¡Hola!
-
 Me gustaría consultar disponibilidad para mi peludo:
-
 Nombre del dueño: ${duenoInput}
-
 Nombre del perro: ${nombreInput}
-
 Raza: ${razaInput}
-
 Edad: ${cachorro ? "Cachorro (<1 año)" : edadInput}
-
 Peso: ${pesoInput} kg
-
 Sexo: ${sexoTexto}
-
 Número de perros: ${num}
-
 ${num > 1 ? "Tenemos más de un peludo, te contamos detalles por aquí" : ""}
-
- 
 
 Sociabilidad: ${sociabilidad}
 
- 
-
 Entrada: ${formatearFecha(e)}
-
 Salida: ${formatearFecha(s)}
-
- 
 
 Precio: ${total}€`;
 
- 
-
   window.location.href = "https://wa.me/34640949118?text=" + encodeURIComponent(texto);
-
 });
 
- 
-
 update();
-
 </script>
 
- 
-
 </body>
-
 </html>
