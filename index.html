@@ -1,6 +1,5 @@
 <head>
 
-<title>Cleo Cuida Peludos v2</title>
  
 
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=2">
@@ -899,7 +898,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 
  
 
-  <button id="stickyBtn">Consultar disponibilidad por WhatsApp</button>
+  <button id="stickyBtn">Consultar por WhatsApp</button>
 
 </div>
 
@@ -1309,7 +1308,7 @@ function update(){
 
       stickyBtn.classList.add("active");
 
-      stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
+      stickyBtn.innerText = "Consultar por WhatsApp";
 
     } else if(validarActivo){
 
@@ -1319,7 +1318,7 @@ function update(){
 
     } else {
 
-      stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
+      stickyBtn.innerText = "Consultar por WhatsApp";
 
     }
 
@@ -1333,15 +1332,15 @@ function update(){
 
  
 
-    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre **";
+    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre";
 
-    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
+    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre";
 
-    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
+    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza";
 
-    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
+    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad";
 
-    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
+    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso";
 
  
 
@@ -1484,5 +1483,3 @@ update();
 </body>
 
 </html>
-
-<!-- redeploy -->
