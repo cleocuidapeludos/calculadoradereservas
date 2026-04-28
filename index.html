@@ -509,6 +509,7 @@ function handleClick(e){
 
     return total;
   }
+  
 
   let dias = Math.floor(h/24);
   let extra = (h%24>0?1:0);
@@ -520,6 +521,31 @@ function handleClick(e){
   }
 
   return total;
+}
+function hayErrorFechas(){
+
+  let e = entrada.value;
+
+  let s = salida.value;
+
+  if(!e || !s) return false;
+
+  let entradaDate = new Date(e);
+
+  let salidaDate = new Date(s);
+
+  let entradaHora = entradaDate.getHours();
+
+  let salidaHora = salidaDate.getHours();
+
+  if(entradaHora < 7 || entradaHora >= 22) return true;
+
+  if(salidaHora < 7 || salidaHora >= 22) return true;
+
+  if(salidaDate <= entradaDate) return true;
+
+  return false;
+
 }
 
 function validarFechas(){
