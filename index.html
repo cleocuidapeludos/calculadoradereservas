@@ -498,24 +498,24 @@ function change(v){
 function setSexo(valor){
   sexo = valor;
 
+  // reset
   document.getElementById("sexoMacho").classList.remove("active");
   document.getElementById("sexoHembra").classList.remove("active");
+
+  // activar el seleccionado 👇
+  if(valor === "Macho"){
+    document.getElementById("sexoMacho").classList.add("active");
+  } else {
+    document.getElementById("sexoHembra").classList.add("active");
+  }
+
+  // mostrar esterilizado siempre
   document.getElementById("bloqueEsterilizado").style.display = "block";
 
-  update();
-}
-
-function setEsterilizado(valor){
-  esterilizado = valor;
-
+  // reset esterilizado al cambiar sexo (IMPORTANTE)
+  esterilizado = "";
   document.getElementById("estSi").classList.remove("active");
   document.getElementById("estNo").classList.remove("active");
-
-  if(valor === "Sí"){
-    document.getElementById("estSi").classList.add("active");
-  } else {
-    document.getElementById("estNo").classList.add("active");
-  }
 
   update();
 }
@@ -678,7 +678,7 @@ if(sexo === "Macho"){
   (edadInput || cachorro) &&
   pesoInput &&
   sexo &&
-  (sexo === "Hembra" || (sexo === "Macho" && esterilizado)) &&
+  (sexo === "Hembra" || (sexo === "sexo" && esterilizado)) &&
   num > 0 &&
   e &&
   s &&
