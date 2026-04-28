@@ -732,8 +732,22 @@ if(sexo === "Macho"){
     ? "Macho (castrado)"
     : "Macho (sin castrar)";
 }
-  let formularioValido =
-  let stickyPrice = document.getElementById("stickyPrice");
+let formularioValido =
+  duenoInput &&
+  nombreInput &&
+  razaInput &&
+  (edadInput || cachorro) &&
+  pesoInput &&
+  sexo &&
+  esterilizado &&
+  num > 0 &&
+  e &&
+  s &&
+  check &&
+  total > 0 &&
+  !hayErrorFechas();
+
+let stickyPrice = document.getElementById("stickyPrice");
 let stickyBtn = document.getElementById("stickyBtn");
 
 if(stickyPrice){
@@ -748,6 +762,38 @@ if(stickyBtn){
     stickyBtn.classList.remove("active");
     stickyBtn.innerText = "Completa los datos";
   }
+// 👇 AQUÍ VA ESTO
+
+  stickyBtn.onclick = (e) => {
+
+    validarActivo = true;
+
+    update();
+
+let valido =
+
+    duenoInput &&
+    nombreInput &&
+    razaInput &&
+    (edadInput || cachorro) &&
+    pesoInput &&
+    sexo &&
+    esterilizado &&
+    num > 0 &&
+    e &&
+    s &&
+    check &&
+    total > 0 &&
+    !hayErrorFechas();
+
+  if(valido){
+
+    document.getElementById("link").click();
+  }
+
+  };
+
+}
   
 if(formularioValido){
   boton.classList.add("active");
