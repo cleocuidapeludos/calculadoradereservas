@@ -669,6 +669,16 @@ function update(){
   let boton = document.getElementById("link");
   let box = document.getElementById("errorBox");
 
+  let sexoTexto = "";
+if(sexo === "Hembra"){
+  sexoTexto = esterilizado ? "Hembra (esterilizada)" : "Hembra (sin esterilizar)";
+}
+
+if(sexo === "Macho"){
+  sexoTexto = esterilizado === "Sí"
+    ? "Macho (castrado)"
+    : "Macho (sin castrar)";
+}
   let formularioValido =
   duenoInput &&
   nombreInput &&
@@ -770,7 +780,7 @@ Nombre del perro: ${nombreInput}
 Raza: ${razaInput}
 Edad: ${cachorro ? "Cachorro (<1 año)" : edadInput}
 Peso: ${pesoInput} kg
-
+Sexo: ${sexoTexto}
 Número de perros: ${num}
 Sociabilidad: ${sociabilidad}
 
