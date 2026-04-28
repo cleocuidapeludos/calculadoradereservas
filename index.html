@@ -748,56 +748,7 @@ if(stickyBtn){
     stickyBtn.classList.remove("active");
     stickyBtn.innerText = "Completa los datos";
   }
-  let formularioValido =
-  duenoInput &&
-  nombreInput &&
-  razaInput &&
-  (edadInput || cachorro) &&
-  pesoInput &&
-  sexo &&
-  esterilizado &&
-  num > 0 &&
-  e &&
-  s &&
-  check &&
-  total > 0 &&
-  !hayErrorFechas();
-
-let stickyPrice = document.getElementById("stickyPrice");
-let stickyBtn = document.getElementById("stickyBtn");
-
-if(stickyPrice){
-  stickyPrice.innerText = total + "€";
-}
-
-if(stickyBtn){
-  if(formularioValido){
-    stickyBtn.classList.add("active");
-    stickyBtn.innerText = "Consultar por WhatsApp";
-  }else{
-    stickyBtn.classList.remove("active");
-    stickyBtn.innerText = "Completa los datos";
-  }
   
-stickyBtn.onclick = () => {
-  document.getElementById("link").click();
-};
-  
-  duenoInput &&
-  nombreInput &&
-  razaInput &&
-  (edadInput || cachorro) &&
- pesoInput &&
-sexo &&
-esterilizado &&
-num > 0 &&
-  e &&
-  s &&
-  check &&
-  total > 0 &&
-  !hayErrorFechas();
-
-// activar botón SIEMPRE en base a esto
 if(formularioValido){
   boton.classList.add("active");
   boton.style.opacity="1";
