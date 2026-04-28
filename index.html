@@ -294,7 +294,8 @@ input[type="checkbox"]{
 }
  
 #stickyBtn.error{
-  background:#d9534f;
+  background:#e8ded5; /* beige suave */
+  color:#8a5a3c;
 }
  
 #stickyBtn.active{
@@ -657,7 +658,7 @@ function update(){
       stickyBtn.innerText = "Consultar por WhatsApp";
     } else if(validarActivo){
       stickyBtn.classList.add("error");
-      stickyBtn.innerText = "ompleta los datos para continuar";
+      stickyBtn.innerText = "Completa los datos para continuar";
     } else {
       stickyBtn.innerText = "Consultar por WhatsApp";
     }
@@ -666,11 +667,11 @@ function update(){
   if(validarActivo){
     limpiarErrores();
  
-    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre";
-    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre";
-    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza";
-    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad";
-    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso";
+    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre * ";
+    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
+    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
+    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad*";
+    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso*";
  
     validarFechas();
   }
