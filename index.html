@@ -575,6 +575,7 @@ function update(){
   let razaInput = document.getElementById("raza").value;
   let edadInput = document.getElementById("edad").value;
   let pesoInput = document.getElementById("peso").value;
+  let cachorro = document.getElementById("cachorro")?.checked;
 
   let e = entrada.value;
   let s = salida.value;
@@ -597,9 +598,9 @@ function update(){
     document.getElementById("errorRaza").innerText = "Introduce la raza";
   }
 
-  if(!edadInput){
-    document.getElementById("errorEdad").innerText = "Introduce la edad";
-  }
+  if(!edadInput && !cachorro){
+  document.getElementById("errorEdad").innerText = "Introduce la edad";
+}
 
   if(!pesoInput){
     document.getElementById("errorPeso").innerText = "Introduce el peso";
