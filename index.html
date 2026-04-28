@@ -651,7 +651,7 @@ let errores = [];
 
 if(!nombreInput) errores.push("Nombre del perro");
 if(!razaInput) errores.push("Raza");
-if(!edadInput) errores.push("Edad");
+if(!edadInput && !cachorro) errores.push("Edad");
 if(!pesoInput) errores.push("Peso");
 if(!e) errores.push("Fecha de entrada");
 if(!s) errores.push("Fecha de salida");
