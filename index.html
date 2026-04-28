@@ -762,29 +762,23 @@ if(stickyBtn){
     stickyBtn.classList.remove("active");
     stickyBtn.innerText = "Completa los datos";
   }
-// 👇 AQUÍ VA ESTO
-
-  stickyBtn.onclick = (e) => {
+stickyBtn.onclick = () => {
 
     validarActivo = true;
 
     update();
 
-stickyBtn.onclick = () => {
+    let boton = document.getElementById("link");
 
-  validarActivo = true;
-  update();
+    if(boton.classList.contains("active")){
 
-  let boton = document.getElementById("link");
+      boton.click();
 
-  // 👇 ESTA ES LA CLAVE
-  if(boton.classList.contains("active")){
-    boton.click();
-  }
-
-};
+    }
 
   };
+
+}
 
 }
   
