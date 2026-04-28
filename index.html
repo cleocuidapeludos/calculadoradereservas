@@ -448,7 +448,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
     <div id="stickyPrice" class="price">0€</div>
   </div>
 
-  <button id="stickyBtn">Consultar por WhatsApp</button>
+  <button id="stickyBtn">Consultar disponibilidad por WhatsApp</button>
 </div>
 
 <script>
@@ -653,12 +653,12 @@ function update(){
 
     if(formularioValido){
       stickyBtn.classList.add("active");
-      stickyBtn.innerText = "Consultar por WhatsApp";
+      stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     } else if(validarActivo){
       stickyBtn.classList.add("error");
       stickyBtn.innerText = "Completa los datos";
     } else {
-      stickyBtn.innerText = "Consultar por WhatsApp";
+      stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     }
   }
 
@@ -717,6 +717,7 @@ document.getElementById("stickyBtn").addEventListener("click", function(){
 
   let texto=`¡Hola!
 Me gustaría consultar disponibilidad para mi peludo:
+
 Nombre del dueño: ${duenoInput}
 Nombre del perro: ${nombreInput}
 Raza: ${razaInput}
