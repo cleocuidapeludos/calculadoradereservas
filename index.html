@@ -500,15 +500,7 @@ function setSexo(valor){
 
   document.getElementById("sexoMacho").classList.remove("active");
   document.getElementById("sexoHembra").classList.remove("active");
-
-  if(valor === "Macho"){
-    document.getElementById("sexoMacho").classList.add("active");
-    document.getElementById("bloqueEsterilizado").style.display = "block";
-  } else {
-    document.getElementById("sexoHembra").classList.add("active");
-    document.getElementById("bloqueEsterilizado").style.display = "none";
-    esterilizado = ""; // reset
-  }
+  document.getElementById("bloqueEsterilizado").style.display = "block";
 
   update();
 }
