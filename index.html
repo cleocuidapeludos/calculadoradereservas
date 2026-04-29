@@ -29,6 +29,7 @@ body{
 .container{
   max-width:420px;
   margin:auto;
+  padding-bottom:120px;
 }
 
 .logo{
@@ -649,7 +650,7 @@ function update(){
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     } else if(validarActivo){
       stickyBtn.classList.add("error");
-      stickyBtn.innerText = "Completa los campos marcados *";
+      stickyBtn.innerText = "Completa los campos marcados (*)";
     } else {
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     }
