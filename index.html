@@ -374,6 +374,7 @@ input[type="checkbox"]{
   <div id="sexoMacho" class="pill" onclick="setSexo('Macho')">Macho</div>
   <div id="sexoHembra" class="pill" onclick="setSexo('Hembra')">Hembra</div>
 </div>
+  <div id="errorSexo" class="error-text"></div>
 
 <div id="bloqueEsterilizado" style="display:none; margin-top:12px;">
   <label>¿Está esterilizado?</label>
@@ -670,7 +671,7 @@ function update(){
 
   if(validarActivo){
     limpiarErrores();
-
+    if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
     if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
     if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
     if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
