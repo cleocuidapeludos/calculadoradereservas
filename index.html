@@ -575,6 +575,14 @@ function validarFechas(){
     let salidaHora = salidaDate.getHours();
     if(salidaHora < 7 || salidaHora >= 22){
       errorSalida.innerText = "La salida debe ser entre las 07:00 y las 22:00";
+       // 👇 NUEVO: campos vacíos
+
+  if(!e){
+    errorEntrada.innerText = "Introduce fecha de entrada *";
+  }
+
+  if(!s){
+    errorSalida.innerText = "Introduce fecha de salida *";
     }
   }
 
