@@ -562,6 +562,7 @@ function validarFechas(){
   errorEntrada.innerText = "";
   errorSalida.innerText = "";
 
+  // 👉 VALIDACIONES normales (si hay valor)
   if(e){
     let entradaDate = new Date(e);
     let entradaHora = entradaDate.getHours();
@@ -583,6 +584,17 @@ function validarFechas(){
     let salidaDate = new Date(s);
     if(salidaDate <= entradaDate){
       errorSalida.innerText = "La salida debe ser después de la entrada";
+    }
+  }
+
+  // 👉 SOLO cuando hace click en el botón
+  if(validarActivo){
+    if(!e){
+      errorEntrada.innerText = "Introduce fecha de entrada *";
+    }
+
+    if(!s){
+      errorSalida.innerText = "Introduce fecha de salida *";
     }
   }
 }
