@@ -396,7 +396,7 @@ Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
 
   <label>Sociabilidad</label>
   <div class="pills">
-    <div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
+    <div id="p1" class="pill" onclick="setSoc('Sociable')">Sociable</div>
     <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
   </div>
 
@@ -448,7 +448,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 
 <script>
 let num=1;
-let sociabilidad="Sociable";
+let sociabilidad="";
 let validarActivo = false;
 let sexo = "";
 let esterilizado = "";
@@ -661,6 +661,7 @@ function update(){
     pesoInput &&
     sexo &&
     esterilizado &&
+    && sociabilidad &&
     num > 0 &&
     e &&
     s &&
@@ -682,17 +683,31 @@ function update(){
     }
   }
 
-  if(validarActivo){
-    limpiarErrores();
+if(validarActivo){
+  limpiarErrores();
 
-    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
-    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
-    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
-    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
-    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
+  // Datos básicos
+  if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
+  if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre del perro *";
+  if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
+  if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
+  if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
 
-    validarFechas();
-  }
+  // Sexo + esterilizado
+  if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
+  if(sexo && !esterilizado) document.getElementById("errorEsterilizado").innerText = "Indica si está esterilizado *";
+
+  // Sociabilidad
+  if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona una opción *";
+
+  // Número de perros
+  if(num === 0) document.getElementById("errorNum").innerText = "Indica cuántos perros son *";
+
+  // Checkbox tamaño
+  if(!check) document.getElementById("errorCheck").innerText = "Confirma el tamaño del perro *";
+
+  // Fechas
+  validarFechas();
 }
 
 document.getElementById("stickyBtn").addEventListener("click", function(){
