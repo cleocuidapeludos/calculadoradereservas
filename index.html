@@ -408,6 +408,7 @@ Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
     <b>Confirmo que mi perro es pequeño o mediano</b>
   </span>
 </div>
+  <div id="errorCheck" class="error-text"></div>
 
 <p style="font-size:12px;color:#8c8c8c;text-align:center;margin-top:0px;">
   Solo aceptamos perritos pequeños y medianos 
@@ -675,6 +676,7 @@ function update(){
     limpiarErrores();
     if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
     if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona la sociabilidad *";
+    if(!check) document.getElementById("errorCheck").innerText = "Confirma el tamaño del perro *";
     if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
     if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
     if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
