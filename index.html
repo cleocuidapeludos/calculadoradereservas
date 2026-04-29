@@ -400,6 +400,7 @@ Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
     <div id="p1" class="pill" onclick="setSoc('Sociable')">Sociable</div>
     <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
   </div>
+  <div id="errorSoc" class="error-text"></div>
 
 <div class="check">
   <input type="checkbox" id="check" onchange="update()">
@@ -672,6 +673,7 @@ function update(){
   if(validarActivo){
     limpiarErrores();
     if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
+    if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona la sociabilidad *";
     if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
     if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
     if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
