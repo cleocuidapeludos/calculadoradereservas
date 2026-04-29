@@ -396,7 +396,7 @@ Si tienes más de un peludo, podrás contarnos detalles por WhatsApp 🐾
 
   <label>Sociabilidad</label>
   <div class="pills">
-    <div id="p1" class="pill" onclick="setSoc('Sociable')">Sociable</div>
+    <div id="p1" class="pill active" onclick="setSoc('Sociable')">Sociable</div>
     <div id="p2" class="pill" onclick="setSoc('Prefiere estar solo')">Prefiere estar solo</div>
   </div>
 
@@ -448,7 +448,7 @@ Trato cariñoso, paseos diarios y muchas fotos.
 
 <script>
 let num=1;
-let sociabilidad="";
+let sociabilidad="Sociable";
 let validarActivo = false;
 let sexo = "";
 let esterilizado = "";
@@ -562,11 +562,9 @@ function validarFechas(){
   errorEntrada.innerText = "";
   errorSalida.innerText = "";
 
-  // 👉 VALIDACIONES (si hay valor)
   if(e){
     let entradaDate = new Date(e);
     let entradaHora = entradaDate.getHours();
-
     if(entradaHora < 7 || entradaHora >= 22){
       errorEntrada.innerText = "La entrada debe ser entre las 07:00 y las 22:00";
     }
@@ -575,7 +573,6 @@ function validarFechas(){
   if(s){
     let salidaDate = new Date(s);
     let salidaHora = salidaDate.getHours();
-
     if(salidaHora < 7 || salidaHora >= 22){
       errorSalida.innerText = "La salida debe ser entre las 07:00 y las 22:00";
     }
@@ -584,20 +581,8 @@ function validarFechas(){
   if(e && s){
     let entradaDate = new Date(e);
     let salidaDate = new Date(s);
-
     if(salidaDate <= entradaDate){
       errorSalida.innerText = "La salida debe ser después de la entrada";
-    }
-  }
-
-  // 👉 SOLO SI estás en modo validación (click botón)
-  if(validarActivo){
-    if(!e){
-      errorEntrada.innerText = "Introduce fecha de entrada *";
-    }
-
-    if(!s){
-      errorSalida.innerText = "Introduce fecha de salida *";
     }
   }
 }
@@ -613,32 +598,6 @@ function limpiarErrores(){
 function clearError(id){
   let el = document.getElementById(id);
   if(el) el.innerText = "";
-}
-function scrollToFirstError(){
-
-   // 1. PRIORIDAD: fechas
-
-  if(!entrada.value || document.getElementById("errorEntrada").innerText){
-    entrada.scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
-
-  }
-
-  if(!salida.value || document.getElementById("errorSalida").innerText){
-    salida.scrollIntoView({ behavior: "smooth", block: "center" });
-    return;
-
-  }
-  const firstError = document.querySelector(".error-text:not(:empty)");
-
-  if(firstError){
-    const input = firstError.previousElementSibling;
-
-    if(input){
-      input.scrollIntoView({ behavior: "smooth", block: "center" });
-      input.focus();
-    }
-  }
 }
 
 function update(){
@@ -676,7 +635,6 @@ function update(){
     pesoInput &&
     sexo &&
     esterilizado &&
-    sociabilidad &&
     num > 0 &&
     e &&
     s &&
@@ -698,31 +656,17 @@ function update(){
     }
   }
 
-if(validarActivo){
-  limpiarErrores();
+  if(validarActivo){
+    limpiarErrores();
 
-  // Datos básicos
-  if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
-  if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre del perro *";
-  if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
-  if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
-  if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
+    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
+    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
+    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
+    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
+    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
 
-  // Sexo + esterilizado
-  if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
-  if(sexo && !esterilizado) document.getElementById("errorEsterilizado").innerText = "Indica si está esterilizado *";
-
-  // Sociabilidad
-  if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona una opción *";
-
-  // Número de perros
-  if(num === 0) document.getElementById("errorNum").innerText = "Indica cuántos perros son *";
-
-  // Checkbox tamaño
-  if(!check) document.getElementById("errorCheck").innerText = "Confirma el tamaño del perro *";
-
-  // Fechas
-  validarFechas();
+    validarFechas();
+  }
 }
 
 document.getElementById("stickyBtn").addEventListener("click", function(){
@@ -756,7 +700,6 @@ document.getElementById("stickyBtn").addEventListener("click", function(){
     pesoInput &&
     sexo &&
     esterilizado &&
-    sociabilidad && 
     num > 0 &&
     e &&
     s &&
@@ -764,10 +707,7 @@ document.getElementById("stickyBtn").addEventListener("click", function(){
     total > 0 &&
     !hayErrorFechas();
 
-if(!formularioValido){
-  scrollToFirstError();
-  return;
-}
+  if(!formularioValido) return;
 
   let texto=`¡Hola!
 Me gustaría consultar disponibilidad para mi peludo:
