@@ -599,6 +599,18 @@ function clearError(id){
   let el = document.getElementById(id);
   if(el) el.innerText = "";
 }
+function scrollToFirstError(){
+  const firstError = document.querySelector(".error-text:not(:empty)");
+
+  if(firstError){
+    const input = firstError.previousElementSibling;
+
+    if(input){
+      input.scrollIntoView({ behavior: "smooth", block: "center" });
+      input.focus();
+    }
+  }
+}
 
 function update(){
   let duenoInput = document.getElementById("dueno").value;
@@ -650,7 +662,7 @@ function update(){
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     } else if(validarActivo){
       stickyBtn.classList.add("error");
-      stickyBtn.innerText = "Completa los campos marcados (*)";
+      stickyBtn.innerText = "Completa los campos marcados(*)";
     } else {
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     }
@@ -707,7 +719,10 @@ document.getElementById("stickyBtn").addEventListener("click", function(){
     total > 0 &&
     !hayErrorFechas();
 
-  if(!formularioValido) return;
+if(!formularioValido){
+  scrollToFirstError();
+  return;
+}
 
   let texto=`¡Hola!
 Me gustaría consultar disponibilidad para mi peludo:
