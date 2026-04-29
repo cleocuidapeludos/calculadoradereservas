@@ -562,19 +562,11 @@ function validarFechas(){
   errorEntrada.innerText = "";
   errorSalida.innerText = "";
 
-  // ✅ PRIMERO: vacíos
-  if(!e){
-    errorEntrada.innerText = "Introduce fecha de entrada *";
-  }
-
-  if(!s){
-    errorSalida.innerText = "Introduce fecha de salida *";
-  }
-
-  // ✅ LUEGO: validaciones
+  // 👉 VALIDACIONES (si hay valor)
   if(e){
     let entradaDate = new Date(e);
     let entradaHora = entradaDate.getHours();
+
     if(entradaHora < 7 || entradaHora >= 22){
       errorEntrada.innerText = "La entrada debe ser entre las 07:00 y las 22:00";
     }
@@ -583,6 +575,7 @@ function validarFechas(){
   if(s){
     let salidaDate = new Date(s);
     let salidaHora = salidaDate.getHours();
+
     if(salidaHora < 7 || salidaHora >= 22){
       errorSalida.innerText = "La salida debe ser entre las 07:00 y las 22:00";
     }
@@ -591,8 +584,20 @@ function validarFechas(){
   if(e && s){
     let entradaDate = new Date(e);
     let salidaDate = new Date(s);
+
     if(salidaDate <= entradaDate){
       errorSalida.innerText = "La salida debe ser después de la entrada";
+    }
+  }
+
+  // 👉 SOLO SI estás en modo validación (click botón)
+  if(validarActivo){
+    if(!e){
+      errorEntrada.innerText = "Introduce fecha de entrada *";
+    }
+
+    if(!s){
+      errorSalida.innerText = "Introduce fecha de salida *";
     }
   }
 }
