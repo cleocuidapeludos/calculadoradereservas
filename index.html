@@ -628,6 +628,46 @@ function clearError(id){
   if(el) el.innerText = "";
 }
 
+function scrollToFirstError(){
+
+  if(!entrada.value || document.getElementById("errorEntrada").innerText){
+    entrada.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  if(!salida.value || document.getElementById("errorSalida").innerText){
+    salida.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  const orden = ["dueno","nombre","raza","edad","peso","sexoMacho","p1","check"];
+
+  for(let id of orden){
+    let el = document.getElementById(id);
+
+    if(id === "sexoMacho" && !sexo){
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    if(id === "p1" && !sociabilidad){
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    if(id === "check" && !document.getElementById("check").checked){
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    if(el && el.value === ""){
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.focus();
+      return;
+    }
+  }
+}
+
 function update(){
   let duenoInput = document.getElementById("dueno").value;
   let nombreInput = document.getElementById("nombre").value;
@@ -679,7 +719,7 @@ function update(){
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     } else if(validarActivo){
       stickyBtn.classList.add("error");
-      stickyBtn.innerText = "Completa los campos marcados(*)";
+      stickyBtn.innerText = "Completa los campos";
     } else {
       stickyBtn.innerText = "Consultar disponibilidad por WhatsApp";
     }
@@ -739,7 +779,10 @@ document.getElementById("stickyBtn").addEventListener("click", function(){
     total > 0 &&
     !hayErrorFechas();
 
-  if(!formularioValido) return;
+  if(!formularioValido){
+  scrollToFirstError();
+  return;
+}
 
   let texto=`¡Hola!
 Me gustaría consultar disponibilidad para mi peludo:
