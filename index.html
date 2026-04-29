@@ -605,14 +605,12 @@ function scrollToFirstError(){
 
   if(!entrada.value || document.getElementById("errorEntrada").innerText){
     entrada.scrollIntoView({ behavior: "smooth", block: "center" });
-    entrada.focus();
     return;
 
   }
 
   if(!salida.value || document.getElementById("errorSalida").innerText){
     salida.scrollIntoView({ behavior: "smooth", block: "center" });
-    salida.focus();
     return;
 
   }
