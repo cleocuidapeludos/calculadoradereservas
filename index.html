@@ -325,10 +325,6 @@ background:#f8a57a;
 <label>Salida</label>
 <input type="datetime-local" id="salida" oninput="validarFechas(); update()" onchange="validarFechas(); update()">
 <div id="errorSalida" style="color:#d9534f; font-size:12px; margin-top:-10px; margin-bottom:10px;"></div>
-<div class="total">
-<div>TOTAL ESTIMADO</div>
-<div class="price" id="total">0€</div>
-</div>
   
 </div>
   
@@ -618,7 +614,6 @@ function update(){
   let check = document.getElementById("check").checked;
 
   let total = calc();
-  document.getElementById("total").innerText = total + "€";
 
   let stickyPrice = document.getElementById("stickyPrice");
   let stickyBtn = document.getElementById("stickyBtn");
