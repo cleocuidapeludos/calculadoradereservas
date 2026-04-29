@@ -397,6 +397,7 @@ input[type="checkbox"]{
     <div id="estSi" class="pill" onclick="setEsterilizado('Sí')">Sí</div>
     <div id="estNo" class="pill" onclick="setEsterilizado('No')">No</div>
   </div>
+  <div id="errorEsterilizado" class="error-text"></div>
 </div>
 
   <label>Número de perros</label>
@@ -529,6 +530,7 @@ function setEsterilizado(valor){
   } else {
     document.getElementById("estNo").classList.add("active");
   }
+  document.getElementById("errorEsterilizado").innerText = "";
   update();
 }
 
@@ -620,7 +622,15 @@ function validarFechas(){
 }
 
 function limpiarErrores(){
-  const ids = ["errorNombre","errorRaza","errorEdad","errorPeso","errorSoc"];
+  const ids = [
+    "errorNombre",
+    "errorRaza",
+    "errorEdad",
+    "errorPeso",
+    "errorSoc",
+    "errorEsterilizado"
+  ];
+
   ids.forEach(id=>{
     let el = document.getElementById(id);
     if(el) el.innerText = "";
@@ -735,19 +745,25 @@ function update(){
     }
   }
 
-  if(validarActivo){
-    limpiarErrores();
-    if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
-    if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona la sociabilidad *";
-    if(!check) document.getElementById("errorCheck").innerText = "Confirma el tamaño del perro *";
-    if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
-    if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
-    if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
-    if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
-    if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
+if(validarActivo){
+  limpiarErrores();
 
-    validarFechas();
+  if(!sexo) document.getElementById("errorSexo").innerText = "Selecciona el sexo *";
+
+  if(sexo && !esterilizado){
+    document.getElementById("errorEsterilizado").innerText = "Selecciona si está esterilizado *";
   }
+
+  if(!sociabilidad) document.getElementById("errorSoc").innerText = "Selecciona la sociabilidad *";
+  if(!check) document.getElementById("errorCheck").innerText = "Confirma el tamaño del perro *";
+  if(!duenoInput) document.getElementById("errorDueno").innerText = "Introduce tu nombre *";
+  if(!nombreInput) document.getElementById("errorNombre").innerText = "Introduce el nombre *";
+  if(!razaInput) document.getElementById("errorRaza").innerText = "Introduce la raza *";
+  if(!edadInput && !cachorro) document.getElementById("errorEdad").innerText = "Introduce la edad *";
+  if(!pesoInput) document.getElementById("errorPeso").innerText = "Introduce el peso *";
+
+  validarFechas();
+}
 }
 
 document.getElementById("stickyBtn").addEventListener("click", function(){
