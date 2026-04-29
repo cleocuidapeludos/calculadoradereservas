@@ -664,11 +664,17 @@ function scrollToFirstError(){
       return;
     }
 
-    if(el && el.value === ""){
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
-      el.focus();
-      return;
-    }
+ // 👉 SALTAR edad si es cachorro
+if(id === "edad"){
+  let cachorro = document.getElementById("cachorro")?.checked;
+  if(cachorro) continue;
+}
+
+if(el && el.value === ""){
+  el.scrollIntoView({ behavior: "smooth", block: "center" });
+  el.focus();
+  return;
+}
   }
 }
 
