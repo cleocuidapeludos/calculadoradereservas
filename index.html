@@ -600,6 +600,22 @@ function clearError(id){
   if(el) el.innerText = "";
 }
 function scrollToFirstError(){
+
+   // 1. PRIORIDAD: fechas
+
+  if(!entrada.value || document.getElementById("errorEntrada").innerText){
+    entrada.scrollIntoView({ behavior: "smooth", block: "center" });
+    entrada.focus();
+    return;
+
+  }
+
+  if(!salida.value || document.getElementById("errorSalida").innerText){
+    salida.scrollIntoView({ behavior: "smooth", block: "center" });
+    salida.focus();
+    return;
+
+  }
   const firstError = document.querySelector(".error-text:not(:empty)");
 
   if(firstError){
